@@ -38,23 +38,9 @@ void Interaction::setCurrentLength(int length) {
     m_current_length = length;
 }
 
-int Interaction::getId() const {
-    return m_id;
-}
-
-QString Interaction::getTitle() const {
-    return m_title;
-}
-
-QString Interaction::getDescription() const {
-    return m_description;
-}
-
-int Interaction::getCurrentLength() const {
-    return m_current_length;
-}
-
-quarre::InteractionModuleEnum Interaction::getModuleId() const {
-    return m_module_type;
-}
+int Interaction::getId() const {return m_id;}
+QString Interaction::getTitle() const {return m_title;}
+QString Interaction::getDescription() const {return m_description;}
+int Interaction::getCurrentLength() const {return m_current_length;}
+quarre::InteractionModuleEnum Interaction::getModuleId() const {return m_module_type;}
 

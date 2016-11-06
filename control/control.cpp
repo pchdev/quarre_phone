@@ -25,6 +25,8 @@ void Control::initModuleLinking(OSBridge *os_control,
     r_module_manager = module_manager;
     r_mainwindow = mainwindow;
 
+    r_sensor_manager->setController(this);
+
 }
 
 void Control::setInteractionModulesReferences(QList<InteractionModule *> interaction_modules) {
@@ -136,6 +138,8 @@ void Control::gestureCallback(QGestureEnum gesture, qreal value) const {
 void Control::sensorCallback(QRawSensorDataEnum sensor, qreal value) const {
 
 }
+
+void Control::onServerConnectionEstablished() const {} // maybe irrelevant in that case...
 
 
 

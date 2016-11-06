@@ -36,6 +36,7 @@ void WebSocketManager::sendMessage(QString message) const {
 }
 
 void WebSocketManager::onConnected() const {
+    emit connectedToServer();
     is_connected = true;
     QObject::connect(m_socket, SIGNAL(textMessageReceived(QString)), this, SLOT(parseReceivedTextMessage(QString)));
     QObject::connect(m_socket, SIGNAL(binaryMessageReceived(QByteArray)), this, SLOT(parseReceivedBinaryMessage(QByteArray)));
@@ -46,18 +47,19 @@ void WebSocketManager::parseReceivedTextMessage(QString message) {
 
     qDebug() << "ws msg received: " << message;
     QStringList splitted_message = message.split(' ');
-    QString address = splitted_message[0];
+    QString address = splitted_message.at(0);
 
+    // matching signal emission
     if(address == "/stop") emit interruptAll();
-    else if(address == "/register/id") emit receivedIdFromServer();
+    else if(address == "/register/id") emit receivedIdFromServer(splitted_message.at(1));
     else if(address == "/test/accelerometers") emit requestedAccelerometersTest();
     else if(address == "/test/rotation") emit requestedRotationTest();
     else if(address == "/test/azimuth") emit requestedCompassTest();
     else if(address == "/scenario/begin") emit scenarioHasStarted();
     else if(address == "/scenario/end") emit scenarioHasEnded();
     else if(address == "/interaction/next") emit incomingInteraction();
-    else if(address == "/interaction/next/begin") emit beginningInteraction();
-    else if(address == "/interaction/current/end") emit endingInteraction();
+    else if(address == "/interaction/next/begin") emit beginningInteraction(splitted_message.at(1));
+    else if(address == "/interaction/current/end") emit endingInteraction(splitted_message.at(1));
 
 }
 

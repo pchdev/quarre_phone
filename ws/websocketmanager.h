@@ -18,8 +18,9 @@ public:
     void reConnect(QUrl host_url);
 
 signals:
+    void connectedToServer();
     void interruptAll();
-    void receivedIdFromServer();
+    void receivedIdFromServer(int);
     void requestedAccelerometersTest();
     void requestedEndingOfAccelerometersTest();
     void requestedRotationTest();

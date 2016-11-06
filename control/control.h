@@ -45,6 +45,7 @@ public slots:
     void onServerIpChange(QString ip) const;
     void onServerConnectionRequest() const;
     void onServerConnectionConfirmationRequest() const;
+    void onServerConnectionEstablished() const;
     void onReceivedId(int id) const;
     void onInterruptAll() const;
     void onScenarioBeginning() const;

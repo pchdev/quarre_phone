@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     QObject::connect(&ws_manager, SIGNAL(endingInteraction(int)), &controller, SLOT(onInteractionEnding(int)));
     QObject::connect(&ws_manager, SIGNAL(incomingInteraction(QList<int>)), &controller, SLOT(onIncomingInteraction(QList<int>)));
     QObject::connect(&ws_manager, SIGNAL(interruptAll()), &controller, SLOT(onInterruptAll()));
-    QObject::connect(&ws_manager, SIGNAL(receivedIdFromServer()), &controller, SLOT(onReceivedId(int)));
+    QObject::connect(&ws_manager, SIGNAL(receivedIdFromServer(int)), &controller, SLOT(onReceivedId(int)));
 
     // exec application
     w.show();

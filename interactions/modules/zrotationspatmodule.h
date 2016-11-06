@@ -15,6 +15,8 @@ public:
     void stopModule();
     void onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value);
     void onReceivedGesture(quarre::QGestureEnum gesture);
+    QList<quarre::QGestureEnum> getQGestureRequirements();
+    QList<quarre::QRawSensorDataEnum> getQRawSensorDataRequirements();
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;

@@ -8,14 +8,6 @@ ZRotationSpatModule::ZRotationSpatModule(quarre::Control *controller, qreal angl
 
 ZRotationSpatModule::~ZRotationSpatModule() {}
 
-quarre::InteractionModuleEnum ZRotationSpatModule::getModuleEnumReference() {
-    return quarre::Z_Rotation_spat;
-}
-
-void ZRotationSpatModule::refreshView() {
-    this->update();
-}
-
 void ZRotationSpatModule::paintEvent(QPaintEvent *event) {
 
     // init
@@ -59,6 +51,18 @@ void ZRotationSpatModule::paintEvent(QPaintEvent *event) {
 
 }
 
+quarre::InteractionModuleEnum ZRotationSpatModule::getModuleEnumReference() {
+    return quarre::Z_Rotation_spat;
+}
+
+QList<quarre::QGestureEnum> ZRotationSpatModule::getQGestureRequirements() {}
+QList<quarre::QRawSensorDataEnum> ZRotationSpatModule::getQRawSensorDataRequirements() {
+    QList<quarre::QRawSensorDataEnum> list;
+    list << quarre::Rotation_z;
+    return list;
+}
+
+void ZRotationSpatModule::onReceivedGesture(quarre::QGestureEnum gesture) {}
 void ZRotationSpatModule::onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value) {
     if(sensor == quarre::Rotation_z) {
         m_azimuth = value;

@@ -48,10 +48,6 @@ TouchSpatModule::~TouchSpatModule() {
     delete m_osc_polling_timer;
 }
 
-quarre::InteractionModuleEnum TouchSpatModule::getModuleEnumReference() {
-    return quarre::TouchSpat;
-}
-
 void TouchSpatModule::paintEvent(QPaintEvent *event) {
 
     float w = width();
@@ -163,14 +159,13 @@ void TouchSpatModule::stopModule() {
     is_active = false;
 }
 
-// no sensor data | gesture required
-QList<quarre::QGestureEnum> TouchSpatModule::getQGestureRequirements() {
-    return NULL;
+quarre::InteractionModuleEnum TouchSpatModule::getModuleEnumReference() {
+    return quarre::TouchSpat;
 }
 
-QList<quarre::QRawSensorDataEnum> TouchSpatModule::getQRawSensorDataRequirements() {
-    return NULL;
-}
+// no sensor data | gesture required
+QList<quarre::QGestureEnum> TouchSpatModule::getQGestureRequirements() {return NULL;}
+QList<quarre::QRawSensorDataEnum> TouchSpatModule::getQRawSensorDataRequirements() {return NULL;}
 
 // these should return errors, as no data is required
 void TouchSpatModule::onReceivedGesture(quarre::QGestureEnum gesture) {}
