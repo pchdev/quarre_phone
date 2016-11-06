@@ -4,8 +4,8 @@ using namespace quarre;
 
 ScenarioFollower::ScenarioFollower() :
     m_scenario_status(0),
-    m_next_interaction(nullptr),
-    m_current_interaction(nullptr) {}
+    m_next_interaction(0),
+    m_current_interaction(0) {}
 
 ScenarioFollower::~ScenarioFollower() {}
 

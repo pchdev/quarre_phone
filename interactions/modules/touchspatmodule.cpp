@@ -7,6 +7,7 @@
 #define TOUCH_AREA_SIZE 50
 
 TouchSpatModule::TouchSpatModule(quarre::Control *controller, uint8_t num_speakers, uint8_t num_sources) :
+    quarre::InteractionModule(),
     m_num_speakers(num_speakers),
     m_num_sources(num_sources),
     is_active(false),
@@ -162,6 +163,15 @@ void TouchSpatModule::stopModule() {
     is_active = false;
 }
 
+// no sensor data | gesture required
+QList<quarre::QGestureEnum> TouchSpatModule::getQGestureRequirements() {
+    return NULL;
+}
 
+QList<quarre::QRawSensorDataEnum> TouchSpatModule::getQRawSensorDataRequirements() {
+    return NULL;
+}
 
-
+// these should return errors, as no data is required
+void TouchSpatModule::onReceivedGesture(quarre::QGestureEnum gesture) {}
+void TouchSpatModule::onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value) {}

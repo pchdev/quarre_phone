@@ -2,13 +2,11 @@
 
 using namespace quarre;
 
-InteractionModule::InteractionModule() {
-   // num_instantiated_modules++;
-}
+InteractionModule::InteractionModule() :
+    am_qgesture_requirements(new QList),
+    am_qraw_sensor_data_requirements(new QList) {}
 
-InteractionModule::~InteractionModule() {
-    //num_instantiated_modules--;
-}
+InteractionModule::~InteractionModule() {}
 
 void InteractionModule::setController(quarre::Control *control) {
     r_control = control;

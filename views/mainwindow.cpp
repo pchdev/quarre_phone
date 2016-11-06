@@ -5,15 +5,17 @@
 
 #define MODULE_SIZE_RATIO 0.95
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     QMainWindow(parent),
     m_central_widget(new QWidget(this)),
     m_main_layout(new QVBoxLayout(m_central_widget)),
     m_stacked_widget(new QStackedWidget),
     m_combo_box(new QComboBox),
     m_connect_button(new QPushButton("connect to server")),
+    m_prefs_button(new QPushButton("server_prefs")),
     m_label_id(new QLabel("ID: " + QString::number(0))),
     m_next_interaction_title(new QLabel("néant")),
+    r_control(control),
     ui(new Ui::MainWindow) {
 
     ui->setupUi(this);
@@ -51,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_connect_button->setMinimumHeight(50);
     info_layout_1->addWidget(m_connect_button, 0, Qt::AlignCenter);
     info_layout_1->addWidget(m_label_id, 0, Qt::AlignCenter);
+    info_layout_1->addWidget(m_prefs_button, 0, Qt::AlignCenter);
 
     // 2nd line - next interaction infos
     QGridLayout *info_layout_2 = new QGridLayout;
@@ -93,11 +96,53 @@ MainWindow::MainWindow(QWidget *parent) :
     m_curr_interaction_descr->setFont(label_font);
 
     // SIGNAL / SLOTS UI CONNECTIONS
-   // QObject::connect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(registerToServer()));
+    QObject::connect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(onServerConnectionRequest()));
+    QObject::connect(m_prefs_button, SIGNAL(pressed()), this, SLOT(onPrefsButtonPressing()));
     QObject::connect(m_combo_box, SIGNAL(activated(int)), m_stacked_widget, SLOT(setCurrentIndex(int)));
-
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+}
+
+void MainWindow::onPrefsButtonPressing() {
+    bool ok;
+    QString address = QInputDialog::getText(this, tr("Quarrè remote server prefs."),
+                                           tr("server url"), QLineEdit::Normal,
+                                           QDir::home().dirName(), &ok);
+    if(ok && !address.isEmpty()) r_control->onServerIpChange(address);
+}
+
+void MainWindow::stackInteractionModules(QList<quarre::InteractionModule*> interaction_modules) {
+    foreach(quarre::InteractionModule *module, interaction_modules) {
+        m_stacked_widget->addWidget(module);
+        m_combo_box->addItem(tr("Interaction Module"));
+    }
+}
+
+void MainWindow::updateCurrentInteraction(quarre::Interaction *interaction) {
+    m_current_countdown->triggerTimer(interaction->getCurrentLength());
+    m_curr_interaction_title->setText(interaction->getTitle());
+    m_curr_interaction_descr->setText(interaction->getDescription());
+    m_combo_box->activated(interaction->getModuleId());
+}
+
+void MainWindow::updateNextInteraction(quarre::Interaction *interaction, int countdown_value) {
+    m_next_countdown->triggerTimer(countdown_value);
+    m_next_interaction_title->setText(interaction->getTitle());
+}
+
+void MainWindow::voidCurrentInteraction() {
+    m_current_countdown->stopTimer();
+    m_curr_interaction_title->setText("Néant");
+    m_curr_interaction_descr->setText("Aucune interaction");
+}
+
+void MainWindow::voidNextInteraction() {
+    m_next_countdown->stopTimer();
+    m_next_interaction_title->setText("néant");
+}
+
+void MainWindow::updateUserId(int id) {
+    m_label_id->setText("USER ID " + QString::number(id));
 }

@@ -1,6 +1,7 @@
 #include "zrotationspatmodule.h"
 
 ZRotationSpatModule::ZRotationSpatModule(quarre::Control *controller, qreal angle_offset) :
+    quarre::InteractionModule(),
     m_angle_offset(angle_offset) {
     setController(controller);
 }

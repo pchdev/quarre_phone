@@ -30,16 +30,23 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0, quarre::Control *control);
     ~MainWindow();
-    void updateWithNewInteraction(quarre::Interaction);
+    void updateCurrentInteraction(quarre::Interaction *interaction);
+    void updateNextInteraction(quarre::Interaction *interaction, int countdown_value);
+    void voidNextInteraction();
+    void voidCurrentInteraction();
+    void stackInteractionModules(QList<quarre::InteractionModule*> interaction_modules);
+    void updateUserId(int id);
+
+protected slots:
+    void onPrefsButtonPressing();
 
 private:
     Ui::MainWindow *ui;
     quarre::Control *r_control;
     quarre::CountdownWidget *m_next_countdown;
     quarre::CountdownWidget *m_current_countdown;
-    QList<quarre::InteractionModule*> ar_interaction_modules;
     QStackedWidget *m_stacked_widget;
     QComboBox *m_combo_box;
     QWidget *m_central_widget;

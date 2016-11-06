@@ -19,6 +19,8 @@ public:
     quarre::InteractionModuleEnum getModuleEnumReference();
     void startModule();
     void stopModule();
+    QList<quarre::QGestureEnum> getQGestureRequirements();
+    QList<quarre::QRawSensorDataEnum> getQRawSensorDataRequirements();
     void onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value);
     void onReceivedGesture(quarre::QGestureEnum gesture);
 

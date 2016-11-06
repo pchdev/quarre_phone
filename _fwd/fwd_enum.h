@@ -55,8 +55,22 @@ typedef enum {
     Azimuth,
     Rotation_x,
     Rotation_y,
-    Rotation_z
+    Rotation_z,
+    QRAWSENSORDATA_ENUMSIZE
 } QRawSensorDataEnum;
+
+static const char* qrawsensor_names[] = {
+    "accelerometers/x",
+    "accelerometers/y",
+    "accelerometers_z",
+    "compass/azimuth",
+    "rotation/x",
+    "rotation/y",
+    "rotation/z"
+};
+
+static_assert(sizeof(quarre::qrawsensor_names)/sizeof(char*) == quarre::QRAWSENSORDATA_ENUMSIZE,
+              "quarre raw sensor data : enum size don't match");
 
 }
 

@@ -22,10 +22,21 @@ public:
                 QList<quarre::QRawSensorDataEnum> raw_sensor_responses);
     ~Interaction();
 
+    int getId() const;
+    QString getTitle() const;
+    QString getDescription() const;
+    int getCurrentLength() const;
+    quarre::InteractionModuleEnum getModuleId() const;
+    QList<quarre::QGestureEnum> getGesturePollingRequirements() const;
+    QList<quarre::QRawSensorDataEnum> getRawSensorDataPollingRequirements() const;
+
+    void setCurrentLength(int length);
+
 private:
     int m_id;
     QString m_title;
     QString m_description;
+    int m_current_length;
     bool is_active;
     quarre::InteractionModuleEnum m_module_type;
     QList<quarre::QGestureEnum> am_gesture_responses;

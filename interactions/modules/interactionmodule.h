@@ -19,9 +19,10 @@ public:
     virtual quarre::InteractionModuleEnum getModuleEnumReference() = 0;
     virtual void startModule() = 0;
     virtual void stopModule() = 0;
-    virtual void onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value);
-    virtual void onReceivedGesture(quarre::QGestureEnum gesture);
-    //static int num_instantiated_modules;
+    virtual QList<quarre::QGestureEnum> getQGestureRequirements() = 0;
+    virtual QList<quarre::QRawSensorDataEnum> getQRawSensorDataRequirements() = 0;
+    virtual void onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value) = 0;
+    virtual void onReceivedGesture(quarre::QGestureEnum gesture) = 0;
     void setController(quarre::Control *control);
 
 protected:

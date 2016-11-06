@@ -3,23 +3,23 @@
 		"title": "Néant",
 		"description": "Aucune interaction",
         "module_type": "None",
-		"gesture_responses": [],
-		"sensor_responses": []
+        "osc_gesture_responses": [],
+        "osc_sensor_responses": [],
     },
 
     "interaction_1": {
         "title": "Introduction",
         "description": "présentation de l'installation",
         "module_type": "Introduction",
-        "gesture_responses": [],
-        "sensor_responses": []
+        "osc_gesture_responses": [],
+        "osc_sensor_responses": []
     },
 
     "interaction_2": {
         "title": "Déclenchement orage",
         "description": "Effectuez un mouvement de fouet avec l'appareil afin de déclencher l'orage",
         "module_type": "WhipGesture",
-        "gesture_responses": ["Whip"],
-        "sensor_responses": []
+        "osc_gesture_responses": ["Whip"],
+        "osc_sensor_responses": []
     }
 }
