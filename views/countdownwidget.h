@@ -15,7 +15,6 @@ class CountdownWidget : public QWidget {
 
 public:
     CountdownWidget(qreal font_ratio = 1);
-    void setController(quarre::Control *control);
     void triggerTimer(int length_in_seconds);
     void stopTimer();
     ~CountdownWidget();

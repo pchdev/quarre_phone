@@ -22,7 +22,7 @@ protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 protected slots:
-    void refreshView();
+    //void refreshView();
 
 private:
     qreal m_angle_offset;

@@ -1,5 +1,9 @@
 #include "modulemanager.h"
 
+// add the includes to the modules' headers here
+#include "touchspatmodule.h"
+#include "zrotationspatmodule.h"
+
 using namespace quarre;
 
 InteractionModuleManager::InteractionModuleManager() :

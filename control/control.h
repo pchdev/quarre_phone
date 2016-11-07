@@ -20,6 +20,9 @@ namespace quarre {
 class InteractionModule;
 class SensorManager;
 class UserDataManager;
+class InteractionModuleManager;
+class ScenarioFollower;
+class InteractionDatabase;
 
 class Control : public QObject {
 
@@ -34,7 +37,8 @@ public:
                            quarre::UserDataManager *data_manager,
                            quarre::ScenarioFollower *scenario_follower,
                            quarre::InteractionDatabase *interaction_db,
-                           quarre::InteractionModuleManager *module_manager);
+                           quarre::InteractionModuleManager *module_manager,
+                           MainWindow *mainwindow);
 
     void setInteractionModulesReferences(QList<InteractionModule*> interaction_modules);
     void moduleValueCallback(QString address, qreal value, bool vibrate) const;

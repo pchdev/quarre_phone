@@ -30,7 +30,7 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0, quarre::Control *control);
+    explicit MainWindow(QWidget *parent = 0, quarre::Control *control = 0);
     ~MainWindow();
     void updateCurrentInteraction(quarre::Interaction *interaction);
     void updateNextInteraction(quarre::Interaction *interaction, int countdown_value);

@@ -35,7 +35,7 @@ void WebSocketManager::sendMessage(QString message) const {
     m_socket->sendTextMessage(message);
 }
 
-void WebSocketManager::onConnected() const {
+void WebSocketManager::onConnected() {
     emit connectedToServer();
     is_connected = true;
     QObject::connect(m_socket, SIGNAL(textMessageReceived(QString)), this, SLOT(parseReceivedTextMessage(QString)));
@@ -51,15 +51,22 @@ void WebSocketManager::parseReceivedTextMessage(QString message) {
 
     // matching signal emission
     if(address == "/stop") emit interruptAll();
-    else if(address == "/register/id") emit receivedIdFromServer(splitted_message.at(1));
+    else if(address == "/register/id") emit receivedIdFromServer(splitted_message.at(1).toInt());
     else if(address == "/test/accelerometers") emit requestedAccelerometersTest();
     else if(address == "/test/rotation") emit requestedRotationTest();
     else if(address == "/test/azimuth") emit requestedCompassTest();
     else if(address == "/scenario/begin") emit scenarioHasStarted();
     else if(address == "/scenario/end") emit scenarioHasEnded();
-    else if(address == "/interaction/next") emit incomingInteraction();
-    else if(address == "/interaction/next/begin") emit beginningInteraction(splitted_message.at(1));
-    else if(address == "/interaction/current/end") emit endingInteraction(splitted_message.at(1));
+    else if(address == "/interaction/next") {
+        QList<int> parsed_list;
+        int id = splitted_message.at(1).toInt();
+        int length = splitted_message.at(2).toInt();
+        int starting_time = splitted_message.at(3).toInt();
+        parsed_list << id << length << starting_time;
+        emit incomingInteraction(parsed_list);
+    }
+    else if(address == "/interaction/next/begin") emit beginningInteraction(splitted_message.at(1).toInt());
+    else if(address == "/interaction/current/end") emit endingInteraction(splitted_message.at(1).toInt());
 
 }
 

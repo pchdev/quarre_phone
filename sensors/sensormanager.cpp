@@ -12,7 +12,7 @@ SensorManager::SensorManager() :
     m_gesture_manager(new QSensorGestureManager()),
     m_osc_polling_rate(50),
     m_view_refresh_rate(40),
-    m_osc_sensor_timer(new QTimer(this)) {
+    m_sensor_timer(new QTimer(this)) {
 
     qDebug() << "getting gesture IDs...";
 
@@ -24,7 +24,6 @@ SensorManager::SensorManager() :
 }
 
 SensorManager::~SensorManager() {
-
     delete m_rotation_reader;
     delete m_rotation_sensor;
     delete m_accelerometer_reader;
@@ -34,24 +33,20 @@ SensorManager::~SensorManager() {
     delete m_sensor_timer;
     delete m_sensor_gesture;
     delete m_gesture_manager;
-
 }
 
-void SensorManager::setController(quarre::Control *control) {
-    r_control = control;
-}
+void SensorManager::setController(quarre::Control *control) {r_control = control;}
 
 void SensorManager::onGestureDetection(QString gesture_id) {
-
     qDebug() << gesture_id << " detected!";
     for(int i = 0; i < quarre::QGESTURE_ENUMSIZE; i++) {
-        if(gesture_id == quarre::qgesture_names[i]) r_control->gestureCallback(i, 1);
+        if(gesture_id == quarre::qgesture_names[i]) r_control->gestureCallback(static_cast<quarre::QGestureEnum>(i), 1);
     }
 }
 
 void SensorManager::onSensorDataPolled() {
 
-    foreach(&sensor, am_sensor_polling) {
+    foreach(quarre::QRawSensorDataEnum sensor, am_sensor_polling) {
 
         qreal value;
 
@@ -83,29 +78,18 @@ void SensorManager::onSensorDataPolled() {
     }
 }
 
-void SensorManager::setRecognizedGestures(QList<QGestureEnum> gestures_to_be_recognized) {
-    am_recognized_gesture = gestures_to_be_recognized;
-}
-
-void SensorManager::setPolledSensors(QList<QRawSensorDataEnum> sensors_to_be_polled) {
-    am_sensor_polling = sensors_to_be_polled;
-}
-
-void SensorManager::startSensorPolling() const {
-    m_sensor_timer->start(GRANULARITY);
-}
-
-void SensorManager::stopSensorPolling() const {
-    m_sensor_timer->stop();
-
-}
-
-void SensorManager::startGestureRecognition() const {
+void SensorManager::setRecognizedGestures(QList<QGestureEnum> gestures_to_be_recognized) {am_recognized_gesture = gestures_to_be_recognized;}
+void SensorManager::setPolledSensors(QList<QRawSensorDataEnum> sensors_to_be_polled) {am_sensor_polling = sensors_to_be_polled;}
+void SensorManager::voidRecognizedGestures() {am_recognized_gesture.clear();}
+void SensorManager::voidPolledSensors() {am_sensor_polling.clear();}
+void SensorManager::startSensorPolling() const {m_sensor_timer->start(GRANULARITY);}
+void SensorManager::stopSensorPolling() const {m_sensor_timer->stop();}
+void SensorManager::startGestureRecognition() {
 
     // convert enum to qstrings
     QStringList recognizers;
 
-    foreach(&gesture, am_recognized_gesture) {
+    foreach(quarre::QGestureEnum gesture, am_recognized_gesture) {
         recognizers << quarre::qgesture_names[gesture];
     }
 
@@ -116,14 +100,8 @@ void SensorManager::startGestureRecognition() const {
 
 }
 
-void SensorManager::stopGestureRecognition() const {
+void SensorManager::stopGestureRecognition() {
     QObject::disconnect(m_sensor_gesture, SIGNAL(detected(QString)), this, SLOT(onGestureDetection(QString)));
     m_sensor_gesture->stopDetection();
     delete m_sensor_gesture;
 }
-
-
-
-
-
-

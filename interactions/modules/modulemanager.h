@@ -3,10 +3,6 @@
 
 #include "interactionmodule.h"
 
-// add the includes to the modules' headers here
-#include "touchspatmodule.h"
-#include "zrotationspatmodule.h"
-
 namespace quarre {
 
 class Control;

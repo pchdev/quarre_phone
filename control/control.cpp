@@ -36,12 +36,7 @@ void Control::setInteractionModulesReferences(QList<InteractionModule *> interac
     }
 }
 
-void Control::moduleValueCallback(QString address, qreal value, bool vibrate) const {
-    r_ws_manager->sendMessage(address + " " + value);
-    if(vibrate) r_os_control->vibrate(100);
-}
-
-// SLOTS -- TBI
+// SLOTS
 
 void Control::onServerIpChange(QString ip) const {
     QString address = "ws://" + ip;
@@ -49,10 +44,7 @@ void Control::onServerIpChange(QString ip) const {
     r_ws_manager->reConnect(url);
 }
 
-void Control::onServerConnectionRequest() const {
-    r_ws_manager->connect();
-}
-
+void Control::onServerConnectionRequest() const { r_ws_manager->connect();}
 void Control::onServerConnectionConfirmationRequest() const {}
 // send back a msg to ensure that the connection has been made succesfully - obsolete with ws
 
@@ -66,60 +58,95 @@ void Control::onInterruptAll() const {}
 
 void Control::onScenarioBeginning() const {}
 void Control::onScenarioEnding() const {} // just in case
-
-void Control::onIncomingInteraction(QList<int> interaction) const {
+void Control::onIncomingInteraction(QList<int> interaction) const { // [id, length, starting_time]
 
     // parse list // TBI
-    int countdown_value;
-    int interaction_length;
-    // check the database for the interaction // TBI
+    int interaction_id = interaction[0];
+    int interaction_length = interaction[1];
+    int interaction_starting_time = interaction[2];
+
+    // check the database for the interaction // TBI // should return a pointer to the interaction
     quarre::Interaction *interactionptr;
 
     // update the interaction's associated length
     interactionptr->setCurrentLength(interaction_length);
+
     // update the mainwindow
-    r_mainwindow->updateNextInteraction(interactionptr, countdown_value);
+    r_mainwindow->updateNextInteraction(interactionptr, interaction_starting_time);
+
     // update the scenario follower
     r_scenario_follower->setNextInteraction(interactionptr);
+
     // vibrate
     r_os_control->vibrate(200);
 
 }
 
-void Control::onInteractionBeginning(int interation_id) const {
+void Control::onInteractionBeginning(int interaction_id) const {
 
-    quarre::Interaction *interactionptr = r_scenario_follower->getCurrentInteraction();
+    // check the validity of interaction id, set it to active
+    quarre::Interaction *interaction = r_scenario_follower->getNextInteraction();
+    if(interaction_id != interaction->getId()) return;
+    interaction->setActive(true);
 
-    r_mainwindow->updateCurrentInteraction(interactionptr);
+    // if current interaction has not ended, shut it down
+    if(r_scenario_follower->getCurrentInteraction() != nullptr) {
+        this->onInteractionEnding(r_scenario_follower->getCurrentInteraction()->getId());
+    }
+
+    // check for sensor or gesture polling needs, pass them to the sensor manager
+    r_sensor_manager->setRecognizedGestures(interaction->getGesturePollingRequirements());
+    r_sensor_manager->setPolledSensors(interaction->getRawSensorDataPollingRequirements());
+
+    // get matching module, set it as the active module in the module manager, activate it
     quarre::InteractionModule *module = ar_interaction_modules[interaction_id];
+    r_module_manager->setActiveModule(module);
     module->startModule();
 
-    QList<quarre::QGestureEnum> qgesture_polling_req = interactionptr->getGesturePollingRequirements();
-    QList<quarre::QRawSensorDataEnum> qrawsensordata_polling_req =
-            interactionptr->getRawSensorDataPollingRequirements();
+    // update the current interaction in the mainwindow
+    r_mainwindow->updateCurrentInteraction(interaction);
 
-    foreach(quarre::QGestureEnum &gesture, qgesture_polling_req) {
-        r_sensor_manager->startGestureRecognition();
-    }
+    // poll sensors & gestures
+    r_sensor_manager->startGestureRecognition();
+    r_sensor_manager->startSensorPolling();
 
-    foreach(quarre::QRawSensorDataEnum &data, qrawsensordata_polling_req) {
-    }
-
+    // update the scenario follower
     r_scenario_follower->beginNextInteraction();
+
+    // vibrate
     r_os_control->vibrate(500);
 }
 
-// check the validness of interaction id
-// check for sensor or gesture polling needs
-// dispatch the interaction to mainwindow
-// activate the matching module
-// update the scenario follower
-// vibrate
-
 void Control::onInteractionEnding(int interaction_id) const {
-    quarre::Interaction *interactionptr;
+
+    // double check id
+    quarre::Interaction *interaction = r_scenario_follower->getCurrentInteraction();
+    if(interaction_id != interaction->getId()) return;
+
+    // deactivate interaction
+    interaction->setActive(false);
+    interaction->setCurrentLength(NULL);
+
+    // stop sensor manager activity, void its current targets
+
+    QList<quarre::QGestureEnum> empty_gesture_enum;
+
+    r_sensor_manager->stopGestureRecognition();
+    r_sensor_manager->stopSensorPolling();
+    r_sensor_manager->voidPolledSensors();
+    r_sensor_manager->voidRecognizedGestures();
+
+    // stop module
+    quarre::InteractionModule *module = r_module_manager->getActiveModule();
+    r_module_manager->setActiveModule(nullptr);
+    module->stopModule();
+
+    // void interaction from scenario follower and mainwindow
+    r_mainwindow->voidCurrentInteraction();
+    r_scenario_follower->voidCurrentInteraction();
 
 }
+
 // check the database for the interaction
 // check for sensor or gesture polling needs and shut them off
 // deactivate the matching module
@@ -128,15 +155,22 @@ void Control::onInteractionEnding(int interaction_id) const {
 // set interaction length to 0
 
 void Control::moduleValueCallback(QString address, qreal value, bool vibrate) const {
-
+    if(vibrate) r_os_control->vibrate(50);
+    r_ws_manager->sendMessage(address + " " + QString::number(value));
 }
 
 void Control::gestureCallback(QGestureEnum gesture, qreal value) const {
-
+    QString message = "/gesture" + QString::fromUtf8(quarre::qgesture_names[gesture]) + " " + QString::number(value);
+    r_ws_manager->sendMessage(message);
+    quarre::InteractionModule *module = r_module_manager->getActiveModule();
+    if(!module->getQGestureRequirements().isEmpty()) module->onReceivedGesture(gesture);
 }
 
 void Control::sensorCallback(QRawSensorDataEnum sensor, qreal value) const {
-
+    QString message = "/sensors" + QString::fromUtf8(quarre::qrawsensor_names[sensor]) + " " + QString::number(value);
+    r_ws_manager->sendMessage(message);
+    quarre::InteractionModule *module = r_module_manager->getActiveModule();
+    if(!module->getQRawSensorDataRequirements().isEmpty()) module->onReceivedSensorData(sensor, value);
 }
 
 void Control::onServerConnectionEstablished() const {} // maybe irrelevant in that case...

@@ -34,7 +34,7 @@ signals:
     void endingInteraction(int);
 
 protected slots:
-    void onConnected() const;
+    void onConnected();
     void parseReceivedTextMessage(QString message);
     void parseReceivedBinaryMessage(QByteArray message);
 

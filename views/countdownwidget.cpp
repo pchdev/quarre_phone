@@ -16,9 +16,7 @@ CountdownWidget::CountdownWidget(qreal font_ratio) :
 
 }
 
-CountdownWidget::~CountdownWidget() {
-    delete m_timer;
-}
+CountdownWidget::~CountdownWidget() {delete m_timer;}
 
 void CountdownWidget::paintEvent(QPaintEvent *event) {
 
@@ -94,8 +92,4 @@ void CountdownWidget::updateTick() {
 
     m_timer_phase = (float) m_current_tick/m_timer_end_point;
     this->update();
-}
-
-void CountdownWidget::setController(Control *control) {
-    r_control = control;
 }

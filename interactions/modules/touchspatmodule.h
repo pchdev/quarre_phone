@@ -9,6 +9,9 @@
 #include <math.h>
 #include <vector>
 
+namespace quarre {
+
+class InteractionModule;
 class TouchSpatModule : public quarre::InteractionModule {
 
     Q_OBJECT
@@ -43,5 +46,7 @@ private:
     std::vector<float> m_speaker_y;
     bool is_active;
 };
+
+}
 
 #endif // TOUCHSPATMODULE_H

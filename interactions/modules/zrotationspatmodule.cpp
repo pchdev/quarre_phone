@@ -69,3 +69,6 @@ void ZRotationSpatModule::onReceivedSensorData(quarre::QRawSensorDataEnum sensor
         this->update();
     }
 }
+
+void ZRotationSpatModule::startModule() {}
+void ZRotationSpatModule::stopModule() {}

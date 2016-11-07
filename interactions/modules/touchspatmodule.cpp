@@ -6,6 +6,8 @@
 #define OSC_GRANULARITY 50
 #define TOUCH_AREA_SIZE 50
 
+using namespace quarre;
+
 TouchSpatModule::TouchSpatModule(quarre::Control *controller, uint8_t num_speakers, uint8_t num_sources) :
     quarre::InteractionModule(),
     m_num_speakers(num_speakers),
@@ -164,8 +166,10 @@ quarre::InteractionModuleEnum TouchSpatModule::getModuleEnumReference() {
 }
 
 // no sensor data | gesture required
-QList<quarre::QGestureEnum> TouchSpatModule::getQGestureRequirements() {return NULL;}
-QList<quarre::QRawSensorDataEnum> TouchSpatModule::getQRawSensorDataRequirements() {return NULL;}
+QList<quarre::QGestureEnum> TouchSpatModule::getQGestureRequirements() {
+    QList<quarre::QGestureEnum> null_list; return null_list;}
+QList<quarre::QRawSensorDataEnum> TouchSpatModule::getQRawSensorDataRequirements() {
+    QList<quarre::QRawSensorDataEnum> null_list; return null_list;}
 
 // these should return errors, as no data is required
 void TouchSpatModule::onReceivedGesture(quarre::QGestureEnum gesture) {}

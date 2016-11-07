@@ -29,8 +29,10 @@ public:
     quarre::InteractionModuleEnum getModuleId() const;
     QList<quarre::QGestureEnum> getGesturePollingRequirements() const;
     QList<quarre::QRawSensorDataEnum> getRawSensorDataPollingRequirements() const;
+    bool isActive() const;
 
     void setCurrentLength(int length);
+    void setActive(bool active);
 
 private:
     int m_id;

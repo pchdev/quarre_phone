@@ -9,6 +9,7 @@
 
 namespace quarre {
 
+class Interaction;
 class InteractionDatabase {
 
 public:

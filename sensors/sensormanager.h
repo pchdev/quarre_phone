@@ -11,6 +11,10 @@
 #include <QSensorGestureManager>
 #include <QSensorGesture>
 
+// should have a separate timer to poll data in order to refresh view ?
+// thus control should have a separate callback
+
+
 namespace quarre {
 
 class Control;
@@ -24,12 +28,15 @@ public:
     void setController(quarre::Control *controller);
     void setRecognizedGestures(QList<quarre::QGestureEnum> gestures_to_be_recognized);
     void setPolledSensors(QList<quarre::QRawSensorDataEnum> sensors_to_be_polled);
-    void startGestureRecognition() const;
-    void stopGestureRecognition() const;
+    void voidRecognizedGestures();
+    void voidPolledSensors();
+    void startGestureRecognition();
+    void stopGestureRecognition();
     void startSensorPolling() const;
     void stopSensorPolling() const;
     void setOSCPollingRate();
     void setViewRefreshRate();
+
 
 protected slots:
     void onGestureDetection(QString gesture_id);
@@ -39,7 +46,7 @@ private:
     QList<quarre::QGestureEnum> am_recognized_gesture;
     QList<quarre::QRawSensorDataEnum> am_sensor_polling;
     quarre::Control *r_control;
-    QTimer *m_osc_sensor_timer;
+    QTimer *m_sensor_timer;
     QTimer *m_view_sensor_timer;
     int m_osc_polling_rate;
     int m_view_refresh_rate;
