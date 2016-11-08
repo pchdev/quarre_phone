@@ -35,6 +35,7 @@ signals:
 
 protected slots:
     void onConnected();
+    void onError(QAbstractSocket::SocketError);
     void parseReceivedTextMessage(QString message);
     void parseReceivedBinaryMessage(QByteArray message);
 

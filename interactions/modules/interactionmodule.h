@@ -2,13 +2,12 @@
 #define INTERACTIONMODULE_H
 
 #include <QWidget>
-#include "modulemanager.h"
 #include "../../control/control.h"
-#include "../../sensors/sensormanager.h"
 #include "../../_fwd/fwd_enum.h"
 
 namespace quarre {
 
+class Control;
 class InteractionModule : public QWidget {
 
     Q_OBJECT

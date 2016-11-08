@@ -8,20 +8,16 @@ WebSocketManager::WebSocketManager(QUrl url, bool connect_on_startup) :
     is_connected(false),
     m_server_url(url) {
     QObject::connect(m_socket, SIGNAL(connected()), this, SLOT(onConnected()));
-    if(connect_on_startup) m_socket->open(m_server_url);
+    QObject::connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(onError(QAbstractSocket::SocketError)));
 }
 
-WebSocketManager::~WebSocketManager() {
-    delete m_socket;
-}
+WebSocketManager::~WebSocketManager() {delete m_socket;}
 
 void WebSocketManager::connect() {
     if(!is_connected) m_socket->open(m_server_url);
 }
 
-void WebSocketManager::setServerUrl(QUrl url) {
-    m_server_url = url;
-}
+void WebSocketManager::setServerUrl(QUrl url) {m_server_url = url;}
 
 void WebSocketManager::reConnect(QUrl host_url) {
     m_server_url = host_url;
@@ -35,7 +31,13 @@ void WebSocketManager::sendMessage(QString message) const {
     m_socket->sendTextMessage(message);
 }
 
+void WebSocketManager::onError(QAbstractSocket::SocketError) {
+    qDebug() << m_socket->errorString();
+}
+
 void WebSocketManager::onConnected() {
+
+    qDebug() << "connected to server!";
     emit connectedToServer();
     is_connected = true;
     QObject::connect(m_socket, SIGNAL(textMessageReceived(QString)), this, SLOT(parseReceivedTextMessage(QString)));
