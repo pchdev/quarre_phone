@@ -26,8 +26,7 @@ SOURCES += main.cpp\
     interactions/models/interaction.cpp \
     interactions/db/interactiondatabase.cpp \
     interactions/modules/touchspatmodule.cpp \
-    interactions/modules/zrotationspatmodule.cpp \
-    ext-libs/jsoncpp/jsoncpp.cpp
+    interactions/modules/zrotationspatmodule.cpp
 
 HEADERS  += ws/websocketmanager.h \
     os/osbridge.h \
@@ -43,8 +42,6 @@ HEADERS  += ws/websocketmanager.h \
     interactions/db/interactiondatabase.h \
     interactions/modules/touchspatmodule.h \
     interactions/modules/zrotationspatmodule.h \
-    ext-libs/jsoncpp/json/json-forwards.h \
-    ext-libs/jsoncpp/json/json.h \
     _fwd/fwd_enum.h
 
 FORMS    += views/mainwindow.ui
@@ -63,4 +60,7 @@ DISTFILES += \
     android/gradlew.bat
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+RESOURCES += \
+    interactions/db/resources.qrc
 

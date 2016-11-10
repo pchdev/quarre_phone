@@ -47,9 +47,7 @@ private:
     QList<quarre::QRawSensorDataEnum> am_sensor_polling;
     quarre::Control *r_control;
     QTimer *m_sensor_timer;
-    QTimer *m_view_sensor_timer;
     int m_osc_polling_rate;
-    int m_view_refresh_rate;
     QCompass *m_compass;
     QCompassReading *m_compass_reader;
     QAccelerometer *m_accelerometer;

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/json">
+        <file>interactions.json</file>
+    </qresource>
+</RCC>

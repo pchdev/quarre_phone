@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     quarre::OSBridge os_bridge;
     quarre::SensorManager sensor_manager;
 
-    // initialize the main controller
+    // initialize the main control  ler
     quarre::Control controller;
 
     // initialize the main window view

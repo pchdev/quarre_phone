@@ -11,7 +11,6 @@ SensorManager::SensorManager() :
     m_rotation_sensor(new QRotationSensor()),
     m_gesture_manager(new QSensorGestureManager()),
     m_osc_polling_rate(50),
-    m_view_refresh_rate(40),
     m_sensor_timer(new QTimer(this)) {
 
     qDebug() << "getting gesture IDs...";

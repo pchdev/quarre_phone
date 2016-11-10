@@ -1,7 +1,12 @@
 #ifndef FWD_ENUM_H
 #define FWD_ENUM_H
 
+#include <QString>
+#include <QList>
+
 namespace quarre {
+
+// MODULES
 
 typedef enum {
     None,
@@ -11,8 +16,26 @@ typedef enum {
     Pads,
     Slider,
     WhipGesture,
-    CoverGesture
+    CoverGesture,
+    MODULE_ENUMSIZE
 } InteractionModuleEnum;
+
+static const QList<QString> module_names = {
+    "None",
+    "Introduction",
+    "TouchSpat",
+    "Z_Rotation_spat",
+    "Pads",
+    "Slider",
+    "WhipGesture",
+    "CoverGesture"
+};
+
+
+static_assert(module_names.length() == MODULE_ENUMSIZE,
+              "Module Enum's size doesn't match its QString translation");
+
+// QGESTURE
 
 typedef enum {
     Cover,
@@ -29,9 +52,7 @@ typedef enum {
     QGESTURE_ENUMSIZE
 } QGestureEnum;
 
-// allows const char* bindings
-
-static const char* qgesture_names[] = {
+static const QList<QString> qgesture_names = {
     "cover",
     "doubletap",
     "hover",
@@ -45,8 +66,11 @@ static const char* qgesture_names[] = {
     "whip"
 };
 
-static_assert(sizeof(quarre::qgesture_names)/sizeof(char*) == quarre::QGESTURE_ENUMSIZE,
-                     "quarre gestures : enum size don't match");
+static_assert(qgesture_names.length() == QGESTURE_ENUMSIZE,
+              "QGesture Enum's size doesn't match its QString translation");
+
+
+// RAW SENSOR DATA
 
 typedef enum {
     Accelerometer_x,
@@ -59,7 +83,7 @@ typedef enum {
     QRAWSENSORDATA_ENUMSIZE
 } QRawSensorDataEnum;
 
-static const char* qrawsensor_names[] = {
+static const QList<QString> qrawsensor_names = {
     "accelerometers/x",
     "accelerometers/y",
     "accelerometers_z",
@@ -69,8 +93,8 @@ static const char* qrawsensor_names[] = {
     "rotation/z"
 };
 
-static_assert(sizeof(quarre::qrawsensor_names)/sizeof(char*) == quarre::QRAWSENSORDATA_ENUMSIZE,
-              "quarre raw sensor data : enum size don't match");
+static_assert(qrawsensor_names.length() == QRAWSENSORDATA_ENUMSIZE,
+              "QRawSensorData Enum's size doesn't match its QString translation");
 
 }
 

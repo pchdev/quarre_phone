@@ -2,8 +2,11 @@
 #define INTERACTIONDATABASE_H
 
 #include "../models/interaction.h"
-#include "../../ext-libs/jsoncpp/json/json.h"
 #include <fstream>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QFile>
 
 // BRIDGE BETWEEN .JSON FORMAT INTERACTIONS & C++ OBJECTS
 
