@@ -14,11 +14,11 @@
 int main(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
-    QUrl default_url(QStringLiteral("ws://147.210.110.84:8080"));
+    QUrl default_url(QStringLiteral("ws://192.168.1.10:8080"));
 
     // initialize modules
     quarre::UserDataManager data_manager;
-    quarre::WebSocketManager ws_manager(default_url, false);
+    quarre::WebSocketManager ws_manager(default_url, true);
     quarre::InteractionDatabase interaction_db;
     quarre::ScenarioFollower scenario_follower;
     quarre::InteractionModuleManager module_manager;

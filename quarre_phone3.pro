@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     interactions/models/interaction.cpp \
     interactions/db/interactiondatabase.cpp \
     interactions/modules/touchspatmodule.cpp \
-    interactions/modules/zrotationspatmodule.cpp
+    interactions/modules/zrotationspatmodule.cpp \
+    interactions/modules/logininteraction.cpp
 
 HEADERS  += ws/websocketmanager.h \
     os/osbridge.h \
@@ -42,7 +43,8 @@ HEADERS  += ws/websocketmanager.h \
     interactions/db/interactiondatabase.h \
     interactions/modules/touchspatmodule.h \
     interactions/modules/zrotationspatmodule.h \
-    _fwd/fwd_enum.h
+    _fwd/fwd_enum.h \
+    interactions/modules/logininteraction.h
 
 FORMS    += views/mainwindow.ui
 

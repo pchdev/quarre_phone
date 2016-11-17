@@ -37,7 +37,7 @@ InteractionDatabase::InteractionDatabase() {
         QString title = json_interaction["title"].toString();
         QString description = json_interaction["description"].toString();
         QString string_module_type = json_interaction["module_type"].toString();
-        int module_enum_id = quarre::module_names2.indexOf(string_module_type);
+        int module_enum_id = quarre::module_names.indexOf(string_module_type);
         quarre::InteractionModuleEnum module_type = static_cast<quarre::InteractionModuleEnum>(module_enum_id);
 
         QJsonArray json_gesture_array = json_interaction["gesture_reponses"].toArray();

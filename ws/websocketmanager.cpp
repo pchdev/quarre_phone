@@ -59,7 +59,7 @@ void WebSocketManager::parseReceivedTextMessage(QString message) {
     else if(address == "/test/azimuth") emit requestedCompassTest();
     else if(address == "/scenario/begin") emit scenarioHasStarted();
     else if(address == "/scenario/end") emit scenarioHasEnded();
-    else if(address == "/interaction/next") {
+    else if(address == "/interaction/next/incoming") {
         QList<int> parsed_list;
         int id = splitted_message.at(1).toInt();
         int length = splitted_message.at(2).toInt();
@@ -67,6 +67,7 @@ void WebSocketManager::parseReceivedTextMessage(QString message) {
         parsed_list << id << length << starting_time;
         emit incomingInteraction(parsed_list);
     }
+
     else if(address == "/interaction/next/begin") emit beginningInteraction(splitted_message.at(1).toInt());
     else if(address == "/interaction/current/end") emit endingInteraction(splitted_message.at(1).toInt());
 

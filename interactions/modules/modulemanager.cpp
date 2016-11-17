@@ -3,6 +3,7 @@
 // add the includes to the modules' headers here
 #include "touchspatmodule.h"
 #include "zrotationspatmodule.h"
+#include "logininteraction.h"
 
 using namespace quarre;
 
@@ -12,7 +13,7 @@ InteractionModuleManager::InteractionModuleManager() :
     // instantiate modules here by pushing back into the module array, as below
     am_interaction_modules.push_back(new TouchSpatModule(0, 6, 2));
     am_interaction_modules.push_back(new ZRotationSpatModule(0, 0));
-
+    am_interaction_modules.push_back(new arbre_integral::LoginInteraction());
 }
 
 InteractionModuleManager::~InteractionModuleManager() {

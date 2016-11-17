@@ -160,14 +160,14 @@ void Control::moduleValueCallback(QString address, qreal value, bool vibrate) co
 }
 
 void Control::gestureCallback(QGestureEnum gesture, qreal value) const {
-    QString message = "/gesture" + QString::fromUtf8(quarre::qgesture_names[gesture]) + " " + QString::number(value);
+    QString message = "/gesture" + quarre::qgesture_names[gesture] + " " + QString::number(value);
     r_ws_manager->sendMessage(message);
     quarre::InteractionModule *module = r_module_manager->getActiveModule();
     if(!module->getQGestureRequirements().isEmpty()) module->onReceivedGesture(gesture);
 }
 
 void Control::sensorCallback(QRawSensorDataEnum sensor, qreal value) const {
-    QString message = "/sensors" + QString::fromUtf8(quarre::qrawsensor_names[sensor]) + " " + QString::number(value);
+    QString message = "/sensors" + quarre::qrawsensor_names[sensor] + " " + QString::number(value);
     r_ws_manager->sendMessage(message);
     quarre::InteractionModule *module = r_module_manager->getActiveModule();
     if(!module->getQRawSensorDataRequirements().isEmpty()) module->onReceivedSensorData(sensor, value);

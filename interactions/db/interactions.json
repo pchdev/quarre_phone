@@ -21,5 +21,13 @@
         "module_type": "WhipGesture",
         "gesture_responses": ["whip"],
         "sensor_responses": []
+    },
+
+    "interaction_3": {
+        "title": "AI : Login",
+        "description": "Mouvement de fouet: déclenchement",
+        "module_type": "WhipGesture",
+        "gesture_responses": ["whip"],
+        "sensor_responses": []
     }
 }

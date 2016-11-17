@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QList>
+#include <QtGlobal>
 
 namespace quarre {
 
@@ -17,10 +18,11 @@ typedef enum {
     Slider,
     WhipGesture,
     CoverGesture,
-    MODULE_ENUMSIZE
+    AI_LOGIN,
+    MODULE_ENUMSIZE // <-- always keep this one last, please...
 } InteractionModuleEnum;
 
-static const QList<QString> module_names = {
+static const QList<QString> module_names = { // is it really necessary ?
     "None",
     "Introduction",
     "TouchSpat",
@@ -28,12 +30,9 @@ static const QList<QString> module_names = {
     "Pads",
     "Slider",
     "WhipGesture",
-    "CoverGesture"
+    "CoverGesture",
+    "AI_LOGIN"
 };
-
-
-static_assert(module_names.length() == MODULE_ENUMSIZE,
-              "Module Enum's size doesn't match its QString translation");
 
 // QGESTURE
 
@@ -66,10 +65,6 @@ static const QList<QString> qgesture_names = {
     "whip"
 };
 
-static_assert(qgesture_names.length() == QGESTURE_ENUMSIZE,
-              "QGesture Enum's size doesn't match its QString translation");
-
-
 // RAW SENSOR DATA
 
 typedef enum {
@@ -92,9 +87,6 @@ static const QList<QString> qrawsensor_names = {
     "rotation/y",
     "rotation/z"
 };
-
-static_assert(qrawsensor_names.length() == QRAWSENSORDATA_ENUMSIZE,
-              "QRawSensorData Enum's size doesn't match its QString translation");
 
 }
 
