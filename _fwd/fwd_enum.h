@@ -19,7 +19,8 @@ typedef enum {
     WhipGesture,
     CoverGesture,
     AI_LOGIN,
-    MODULE_ENUMSIZE // <-- always keep this one last, please...
+    AI_TEXTVIEWER,
+    MODULE_ENUMSIZE // <-- always keep this one last, please, but static_assert has to be reimplemented with correct constexpr non-compatible with QLists.size()
 } InteractionModuleEnum;
 
 static const QList<QString> module_names = { // is it really necessary ?
@@ -31,7 +32,8 @@ static const QList<QString> module_names = { // is it really necessary ?
     "Slider",
     "WhipGesture",
     "CoverGesture",
-    "AI_LOGIN"
+    "AI_LOGIN",
+    "AI_TEXTVIEWER"
 };
 
 // QGESTURE

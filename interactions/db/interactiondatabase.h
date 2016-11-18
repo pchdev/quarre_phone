@@ -2,7 +2,6 @@
 #define INTERACTIONDATABASE_H
 
 #include "../models/interaction.h"
-#include <fstream>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
