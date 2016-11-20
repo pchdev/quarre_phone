@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     r_control(control),
     ui(new Ui::MainWindow) {
 
+
     ui->setupUi(this);
     setWindowTitle("QUARRE PHONE USER WINDOW");
 
@@ -50,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
 
     // 1st line - server infos
     QHBoxLayout *info_layout_1 = new QHBoxLayout;
-    m_connect_button->setMinimumHeight(50);
+    m_connect_button->setMinimumHeight(15);
     info_layout_1->addWidget(m_connect_button, 0, Qt::AlignCenter);
     info_layout_1->addWidget(m_label_id, 0, Qt::AlignCenter);
     info_layout_1->addWidget(m_prefs_button, 0, Qt::AlignCenter);
@@ -71,6 +72,8 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     m_curr_interaction_title = new QLabel("Aucune interaction");
     m_curr_interaction_descr = new QLabel("veuillez patienter jusqu'à la prochaine interaction...");
     m_curr_interaction_descr->setAlignment(Qt::AlignCenter);
+    m_curr_interaction_descr->setWordWrap(true);
+    m_curr_interaction_descr->setMinimumWidth(width() * 0.9);
     m_current_countdown = new quarre::CountdownWidget(ratio_font);
     m_current_countdown->setMinimumSize(height()*0.15*ratio_font, height()*0.15*ratio_font);
 
@@ -82,9 +85,8 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     info_layout->addWidget(m_curr_interaction_descr, 0, Qt::AlignCenter);
 
     // FONTS
-
     QFont label_font("Arial", 13*ratio_font, -1);
-    QFont label_button("Arial", 14 * ratio_font, -1);
+    QFont label_button("Arial", 12 * ratio_font, -1);
     QFont label_it("Arial", 13 * ratio_font, -1, true);
     QFont label_bold("Arial", 15 * ratio_font, QFont::Bold, false);
 
@@ -94,9 +96,11 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     m_next_interaction_title->setFont(label_font);
     m_curr_interaction_title->setFont(label_bold);
     m_curr_interaction_descr->setFont(label_font);
+    m_connect_button->setFont(label_button);
+    m_prefs_button->setFont(label_button);
 
     // SIGNAL / SLOTS UI CONNECTIONS
-    QObject::connect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(onServerConnectionRequest()));
+    QObject::connect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(processServerConnectionRequest()));
     QObject::connect(m_prefs_button, SIGNAL(pressed()), this, SLOT(onPrefsButtonPressing()));
     QObject::connect(m_combo_box, SIGNAL(activated(int)), m_stacked_widget, SLOT(setCurrentIndex(int)));
 }
@@ -110,7 +114,7 @@ void MainWindow::onPrefsButtonPressing() {
     QString address = QInputDialog::getText(this, tr("Quarrè remote server prefs."),
                                            tr("server url"), QLineEdit::Normal,
                                            QDir::home().dirName(), &ok);
-    if(ok && !address.isEmpty()) r_control->onServerIpChange(address);
+    if(ok && !address.isEmpty()) r_control->processServerIpChange(address);
 }
 
 void MainWindow::stackInteractionModules(QList<quarre::InteractionModule*> interaction_modules) {
@@ -136,6 +140,7 @@ void MainWindow::voidCurrentInteraction() {
     m_current_countdown->stopTimer();
     m_curr_interaction_title->setText("Néant");
     m_curr_interaction_descr->setText("Aucune interaction");
+    m_combo_box->activated(0);
 }
 
 void MainWindow::voidNextInteraction() {
@@ -145,4 +150,14 @@ void MainWindow::voidNextInteraction() {
 
 void MainWindow::updateUserId(int id) {
     m_label_id->setText("USER ID " + QString::number(id));
+}
+
+void MainWindow::setConnected() {
+    m_connect_button->setText("connected");
+    QObject::disconnect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(processServerConnectionRequest()));
+}
+
+void MainWindow::setDisconnected() {
+    m_connect_button->setText("connect to server");
+    QObject::connect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(processServerConnectionRequest()));
 }

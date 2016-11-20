@@ -11,9 +11,7 @@ InteractionDatabase::InteractionDatabase() {
     QFile loaded_interactions(":/json/interactions.json");
     if(!loaded_interactions.open(QIODevice::ReadOnly)) {
         qDebug() << "error: couldn't open interactions.json";
-    } else {
-        qDebug() << "interactions.json was succesfully opened";
-    }
+    } else {  qDebug() << "interactions.json was succesfully opened";}
 
     QJsonParseError error;
     QByteArray saved_data = loaded_interactions.readAll();
@@ -40,7 +38,7 @@ InteractionDatabase::InteractionDatabase() {
         int module_enum_id = quarre::module_names.indexOf(string_module_type);
         quarre::InteractionModuleEnum module_type = static_cast<quarre::InteractionModuleEnum>(module_enum_id);
 
-        QJsonArray json_gesture_array = json_interaction["gesture_reponses"].toArray();
+        QJsonArray json_gesture_array = json_interaction["gesture_responses"].toArray();
         QJsonArray json_sensor_array = json_interaction["sensor_responses"].toArray();
 
         QList<quarre::QGestureEnum> gesture_responses;
@@ -48,7 +46,9 @@ InteractionDatabase::InteractionDatabase() {
 
         for(int j = 0; j < json_gesture_array.count(); j++) {
             QString json_gesture = json_gesture_array[j].toString();
+            qDebug() << json_gesture;
             int gesture_enum_id = quarre::qgesture_names.indexOf(json_gesture);
+            qDebug() << gesture_enum_id;
             quarre::QGestureEnum gesture_enum = static_cast<quarre::QGestureEnum>(gesture_enum_id);
             gesture_responses << gesture_enum;
         }

@@ -41,22 +41,22 @@ public:
                            MainWindow *mainwindow);
 
     void setInteractionModulesReferences(QList<InteractionModule*> interaction_modules);
-    void moduleValueCallback(QString address, qreal value, bool vibrate) const;
-    void gestureCallback(quarre::QGestureEnum gesture, qreal value) const;
-    void sensorCallback(quarre::QRawSensorDataEnum sensor, qreal value) const;
+    void processModuleCallback(QString address, qreal value, bool vibrate) const;
+    void processGestureCallback(quarre::QGestureEnum gesture, qreal value) const;
+    void processSensorCallback(quarre::QRawSensorDataEnum sensor, qreal value) const;
 
 public slots:
-    void onServerIpChange(QString ip) const;
-    void onServerConnectionRequest() const;
-    void onServerConnectionConfirmationRequest() const;
-    void onServerConnectionEstablished() const;
-    void onReceivedId(int id) const;
-    void onInterruptAll() const;
-    void onScenarioBeginning() const;
-    void onScenarioEnding() const;
-    void onIncomingInteraction(QList<int> interaction) const;
-    void onInteractionBeginning(int interaction_id) const;
-    void onInteractionEnding(int interaction_id) const;
+    void processServerIpChange(QString ip) const;
+    void processServerConnectionRequest() const;
+    void processServerConnection() const;
+    void processServerDisconnection() const;
+    void processReceivedIdFromServer(int id) const;
+    void processGlobalInterruption() const;
+    void processScenarioBeginning() const;
+    void processScenarioEnding() const;
+    void processIncomingInteraction(QList<int> interaction) const;
+    void processingInteractionBeginning(int interaction_id) const;
+    void processInteractionEnding(int interaction_id) const;
 
 private:
     QList<InteractionModule*> ar_interaction_modules;

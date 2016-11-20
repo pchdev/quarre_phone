@@ -19,10 +19,12 @@ public:
     QList<quarre::InteractionModule*> getInteractionModulesAccesses() const;
     void setActiveModule(quarre::InteractionModule *module);
     quarre::InteractionModule* getActiveModule() const;
+    void setControl(quarre::Control *controller);
 
 private:
     QList<quarre::InteractionModule*> am_interaction_modules;
     quarre::InteractionModule *r_active_module;
+    quarre::Control *r_control;
 
 };
 

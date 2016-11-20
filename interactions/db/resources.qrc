@@ -2,4 +2,7 @@
     <qresource prefix="/json">
         <file>interactions.json</file>
     </qresource>
+    <qresource prefix="/projects/arbre_integral">
+        <file>textes.json</file>
+    </qresource>
 </RCC>

@@ -8,25 +8,42 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QFile>
+#include <QLabel>
+#include <QEvent>
+#include <QTouchEvent>
 
 namespace arbre_integral {
 
 class TextViewer : public quarre::InteractionModule {
 
-public:
+    Q_OBJECT
 
+public:
     TextViewer();
     ~TextViewer();
-    quarre::InteractionModuleEnum getModuleEnumReference() = 0;
-    void startModule() = 0;
-    void stopModule() = 0;
-    QList<quarre::QGestureEnum> getQGestureRequirements() = 0;
-    QList<quarre::QRawSensorDataEnum> getQRawSensorDataRequirements() = 0;
-    void onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value) = 0;
-    void onReceivedGesture(quarre::QGestureEnum gesture) = 0;
+    quarre::InteractionModuleEnum getModuleEnumReference();
+    void startModule();
+    void stopModule();
+    QList<quarre::QGestureEnum> getQGestureRequirements();
+    QList<quarre::QRawSensorDataEnum> getQRawSensorDataRequirements();
+    void onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value);
+    void onReceivedGesture(quarre::QGestureEnum gesture);
+
+signals:
+    void touchedModuleLeftSide();
+    void touchedModuleRightSide();
+
+protected slots:
+    void processModuleLeftTouch();
+    void processModuleRightTouch();
+
+protected:
+    bool event(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    QList<QJsonArray> m_cernes;
+    int m_index;
+    QList<QString> m_texts;
+    QLabel *m_current_text;
 
 };
 

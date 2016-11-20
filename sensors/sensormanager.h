@@ -43,7 +43,7 @@ protected slots:
     void onSensorDataPolled();
 
 private:
-    QList<quarre::QGestureEnum> am_recognized_gesture;
+    QStringList am_gesture_recognizers;
     QList<quarre::QRawSensorDataEnum> am_sensor_polling;
     quarre::Control *r_control;
     QTimer *m_sensor_timer;

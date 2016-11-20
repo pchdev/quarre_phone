@@ -43,11 +43,12 @@ int main(int argc, char *argv[]) {
     controller.setInteractionModulesReferences(module_manager.getInteractionModulesAccesses());
     w.stackInteractionModules(module_manager.getInteractionModulesAccesses());
 
-    QObject::connect(&ws_manager, SIGNAL(beginningInteraction(int)), &controller, SLOT(onInteractionBeginning(int)));
-    QObject::connect(&ws_manager, SIGNAL(endingInteraction(int)), &controller, SLOT(onInteractionEnding(int)));
-    QObject::connect(&ws_manager, SIGNAL(incomingInteraction(QList<int>)), &controller, SLOT(onIncomingInteraction(QList<int>)));
-    QObject::connect(&ws_manager, SIGNAL(interruptAll()), &controller, SLOT(onInterruptAll()));
-    QObject::connect(&ws_manager, SIGNAL(receivedIdFromServer(int)), &controller, SLOT(onReceivedId(int)));
+    QObject::connect(&ws_manager, SIGNAL(incomingInteraction(QList<int>)), &controller, SLOT(processIncomingInteraction(QList<int>)));
+    QObject::connect(&ws_manager, SIGNAL(beginningInteraction(int)), &controller, SLOT(processingInteractionBeginning(int)));
+    QObject::connect(&ws_manager, SIGNAL(endingInteraction(int)), &controller, SLOT(processInteractionEnding(int)));
+    QObject::connect(&ws_manager, SIGNAL(interruptAll()), &controller, SLOT(processGlobalInterruption()));
+    QObject::connect(&ws_manager, SIGNAL(receivedIdFromServer(int)), &controller, SLOT(processReceivedIdFromServer(int)));
+    QObject::connect(&ws_manager, SIGNAL(connectedToServer()), &controller, SLOT(processServerConnection()));
 
     // exec application
     ws_manager.connect();

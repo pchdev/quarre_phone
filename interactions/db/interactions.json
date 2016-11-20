@@ -2,7 +2,7 @@
 	"interaction_0": {
 		"title": "Néant",
 		"description": "Aucune interaction",
-        "module_type": "None",
+        "module_type": "AI_NULL",
         "gesture_responses": [],
         "sensor_responses": []
     },
@@ -10,23 +10,23 @@
     "interaction_1": {
         "title": "Introduction",
         "description": "présentation de l'installation",
-        "module_type": "Introduction",
+        "module_type": "AI_INTRODUCTION",
         "gesture_responses": [],
         "sensor_responses": []
     },
 
     "interaction_2": {
-        "title": "Déclenchement orage",
-        "description": "Effectuez un mouvement de fouet avec l'appareil afin de déclencher l'orage",
-        "module_type": "WhipGesture",
-        "gesture_responses": ["whip"],
+        "title": "LOGIN",
+        "description": "press pad to login.",
+        "module_type": "AI_LOGIN",
+        "gesture_responses": [],
         "sensor_responses": []
     },
 
     "interaction_3": {
-        "title": "AI : Login",
-        "description": "Mouvement de fouet: déclenchement",
-        "module_type": "WhipGesture",
+        "title": "Persite, Perce... // Fouet",
+        "description": "geste de fouet sur P",
+        "module_type": "AI_TEXTVIEWER",
         "gesture_responses": ["whip"],
         "sensor_responses": []
     }

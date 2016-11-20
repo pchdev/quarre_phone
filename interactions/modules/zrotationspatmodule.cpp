@@ -52,7 +52,7 @@ void ZRotationSpatModule::paintEvent(QPaintEvent *event) {
 }
 
 quarre::InteractionModuleEnum ZRotationSpatModule::getModuleEnumReference() {
-    return quarre::Z_Rotation_spat;
+    //return quarre::Z_Rotation_spat;
 }
 
 QList<quarre::QGestureEnum> ZRotationSpatModule::getQGestureRequirements() {}

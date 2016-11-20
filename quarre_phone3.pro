@@ -28,7 +28,11 @@ SOURCES += main.cpp\
     interactions/modules/touchspatmodule.cpp \
     interactions/modules/zrotationspatmodule.cpp \
     interactions/modules/logininteraction.cpp \
-    interactions/modules/textviewer.cpp
+    interactions/modules/textviewer.cpp \
+    interactions/modules/introduction.cpp \
+    interactions/modules/nullmodule.cpp \
+    interactions/modules/subelements/pad.cpp \
+    interactions/modules/gesture.cpp
 
 HEADERS  += ws/websocketmanager.h \
     os/osbridge.h \
@@ -46,7 +50,11 @@ HEADERS  += ws/websocketmanager.h \
     interactions/modules/zrotationspatmodule.h \
     _fwd/fwd_enum.h \
     interactions/modules/logininteraction.h \
-    interactions/modules/textviewer.h
+    interactions/modules/textviewer.h \
+    interactions/modules/introduction.h \
+    interactions/modules/nullmodule.h \
+    interactions/modules/subelements/pad.h \
+    interactions/modules/gesture.h
 
 FORMS    += views/mainwindow.ui
 

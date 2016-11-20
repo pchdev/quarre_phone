@@ -162,7 +162,7 @@ void TouchSpatModule::stopModule() {
 }
 
 quarre::InteractionModuleEnum TouchSpatModule::getModuleEnumReference() {
-    return quarre::TouchSpat;
+    //return quarre::TouchSpat;
 }
 
 // no sensor data | gesture required

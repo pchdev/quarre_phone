@@ -1,4 +1,5 @@
 #include "control.h"
+#include <QtDebug>
 
 using namespace quarre;
 
@@ -38,27 +39,24 @@ void Control::setInteractionModulesReferences(QList<InteractionModule *> interac
 
 // SLOTS
 
-void Control::onServerIpChange(QString ip) const {
+void Control::processServerIpChange(QString ip) const {
+    qDebug() << ip;
     QString address = "ws://" + ip;
     QUrl url(address);
     r_ws_manager->reConnect(url);
 }
 
-void Control::onServerConnectionRequest() const { r_ws_manager->connect();}
-void Control::onServerConnectionConfirmationRequest() const {}
-// send back a msg to ensure that the connection has been made succesfully - obsolete with ws
-
-void Control::onReceivedId(int id) const {
+void Control::processServerConnectionRequest() const { r_ws_manager->connect();}
+void Control::processReceivedIdFromServer(int id) const {
     r_data_manager->setUserId(id);
     r_mainwindow->updateUserId(id);
 }
-
-void Control::onInterruptAll() const {}
+void Control::processGlobalInterruption() const {}
 // reset application interaction management
 
-void Control::onScenarioBeginning() const {}
-void Control::onScenarioEnding() const {} // just in case
-void Control::onIncomingInteraction(QList<int> interaction) const { // [id, length, starting_time]
+void Control::processScenarioBeginning() const {}
+void Control::processScenarioEnding() const {} // just in case
+void Control::processIncomingInteraction(QList<int> interaction) const { // [id, length, starting_time]
 
     // parse list // TBI
     int interaction_id = interaction[0];
@@ -66,7 +64,7 @@ void Control::onIncomingInteraction(QList<int> interaction) const { // [id, leng
     int interaction_starting_time = interaction[2];
 
     // check the database for the interaction // TBI // should return a pointer to the interaction
-    quarre::Interaction *interactionptr;
+    quarre::Interaction *interactionptr = r_interaction_db->getInteraction(interaction_id);
 
     // update the interaction's associated length
     interactionptr->setCurrentLength(interaction_length);
@@ -82,7 +80,7 @@ void Control::onIncomingInteraction(QList<int> interaction) const { // [id, leng
 
 }
 
-void Control::onInteractionBeginning(int interaction_id) const {
+void Control::processingInteractionBeginning(int interaction_id) const {
 
     // check the validity of interaction id, set it to active
     quarre::Interaction *interaction = r_scenario_follower->getNextInteraction();
@@ -91,7 +89,7 @@ void Control::onInteractionBeginning(int interaction_id) const {
 
     // if current interaction has not ended, shut it down
     if(r_scenario_follower->getCurrentInteraction() != nullptr) {
-        this->onInteractionEnding(r_scenario_follower->getCurrentInteraction()->getId());
+        this->processInteractionEnding(r_scenario_follower->getCurrentInteraction()->getId());
     }
 
     // check for sensor or gesture polling needs, pass them to the sensor manager
@@ -99,7 +97,7 @@ void Control::onInteractionBeginning(int interaction_id) const {
     r_sensor_manager->setPolledSensors(interaction->getRawSensorDataPollingRequirements());
 
     // get matching module, set it as the active module in the module manager, activate it
-    quarre::InteractionModule *module = ar_interaction_modules[interaction_id];
+    quarre::InteractionModule *module = ar_interaction_modules[interaction->getModuleId()];
     r_module_manager->setActiveModule(module);
     module->startModule();
 
@@ -115,9 +113,12 @@ void Control::onInteractionBeginning(int interaction_id) const {
 
     // vibrate
     r_os_control->vibrate(500);
+
+    // void next_interaction
+    r_mainwindow->voidNextInteraction();
 }
 
-void Control::onInteractionEnding(int interaction_id) const {
+void Control::processInteractionEnding(int interaction_id) const {
 
     // double check id
     quarre::Interaction *interaction = r_scenario_follower->getCurrentInteraction();
@@ -145,6 +146,8 @@ void Control::onInteractionEnding(int interaction_id) const {
     r_mainwindow->voidCurrentInteraction();
     r_scenario_follower->voidCurrentInteraction();
 
+    r_os_control->vibrate(50);
+
 }
 
 // check the database for the interaction
@@ -154,27 +157,37 @@ void Control::onInteractionEnding(int interaction_id) const {
 // update scenario follower
 // set interaction length to 0
 
-void Control::moduleValueCallback(QString address, qreal value, bool vibrate) const {
+void Control::processModuleCallback(QString address, qreal value, bool vibrate) const {
     if(vibrate) r_os_control->vibrate(50);
     r_ws_manager->sendMessage(address + " " + QString::number(value));
 }
 
-void Control::gestureCallback(QGestureEnum gesture, qreal value) const {
-    QString message = "/gesture" + quarre::qgesture_names[gesture] + " " + QString::number(value);
+void Control::processGestureCallback(QGestureEnum gesture, qreal value) const {
+
+    QString message = "/gestures/" + quarre::qgesture_names[gesture] + " " + QString::number(value);
     r_ws_manager->sendMessage(message);
+    qDebug() << message;
     quarre::InteractionModule *module = r_module_manager->getActiveModule();
-    if(!module->getQGestureRequirements().isEmpty()) module->onReceivedGesture(gesture);
+    qDebug() << "got active module";
+    module->onReceivedGesture(gesture);
+    qDebug() << "updated module ui";
+    r_os_control->vibrate(100);
 }
 
-void Control::sensorCallback(QRawSensorDataEnum sensor, qreal value) const {
+void Control::processSensorCallback(QRawSensorDataEnum sensor, qreal value) const {
     QString message = "/sensors" + quarre::qrawsensor_names[sensor] + " " + QString::number(value);
     r_ws_manager->sendMessage(message);
     quarre::InteractionModule *module = r_module_manager->getActiveModule();
     if(!module->getQRawSensorDataRequirements().isEmpty()) module->onReceivedSensorData(sensor, value);
 }
 
-void Control::onServerConnectionEstablished() const {} // maybe irrelevant in that case...
+void Control::processServerConnection() const {
+    r_mainwindow->setConnected();
+}
 
+void Control::processServerDisconnection() const {
+    r_mainwindow->setDisconnected();
+}
 
 
 

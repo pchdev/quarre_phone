@@ -19,6 +19,7 @@ public:
 
 signals:
     void connectedToServer();
+    void disconnectedFromServer();
     void interruptAll();
     void receivedIdFromServer(int);
     void requestedAccelerometersTest();
@@ -35,6 +36,7 @@ signals:
 
 protected slots:
     void onConnected();
+    void onDisconnected();
     void onError(QAbstractSocket::SocketError);
     void parseReceivedTextMessage(QString message);
     void parseReceivedBinaryMessage(QByteArray message);

@@ -38,6 +38,8 @@ public:
     void voidCurrentInteraction();
     void stackInteractionModules(QList<quarre::InteractionModule*> interaction_modules);
     void updateUserId(int id);
+    void setConnected();
+    void setDisconnected();
 
 protected slots:
     void onPrefsButtonPressing();
