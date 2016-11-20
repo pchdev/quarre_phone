@@ -1,5 +1,7 @@
 #include "textviewer.h"
 #include <QLayout>
+#include <QScreen>
+#include <QApplication>
 
 
 using namespace arbre_integral;
@@ -10,12 +12,22 @@ TextViewer::TextViewer() :
 
     setAttribute(Qt::WA_AcceptTouchEvents);
 
+    // get screen infos
+    QScreen *screen = QApplication::screens().at(0);
+    qreal dpi = screen->logicalDotsPerInch();
+    QSize screen_size = screen->availableSize();
+    qreal screen_width = screen_size.width();
+    qreal ratio_font = screen_width*288/(dpi*1440);
+    qreal ratio = screen_width/1440.f;
+
     // layout
     QVBoxLayout *layout = new QVBoxLayout(this);
-    QFont font("Arial", 20, -1, true);
+    QFont font("Arial", 20 * ratio_font, -1, true);
     m_current_text->setWordWrap(false);
     m_current_text->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
     m_current_text->setFont(font);
+    m_current_text->setFixedWidth(screen_width * 0.95);
+
     layout->addWidget(m_current_text, 0, Qt::AlignCenter);
 
     // json parser for texts
@@ -90,5 +102,6 @@ QList<quarre::QGestureEnum> TextViewer::getQGestureRequirements() {
 QList<quarre::QRawSensorDataEnum> TextViewer::getQRawSensorDataRequirements() {
     QList<quarre::QRawSensorDataEnum> empty_list; return empty_list; }
 void TextViewer::onReceivedGesture(quarre::QGestureEnum gesture) {}
-void TextViewer::onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value) {}
-
+void TextViewer::onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value) {
+    m_index = value;
+    m_current_text->setText(m_texts[m_index]); }

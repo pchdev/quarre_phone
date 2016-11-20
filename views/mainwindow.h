@@ -41,6 +41,9 @@ public:
     void setConnected();
     void setDisconnected();
 
+protected:
+    void keyReleaseEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+
 protected slots:
     void onPrefsButtonPressing();
 

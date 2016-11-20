@@ -33,6 +33,7 @@ signals:
     void incomingInteraction(QList<int>);
     void beginningInteraction(int);
     void endingInteraction(int);
+    void readIndexUpdate(int);
 
 protected slots:
     void onConnected();

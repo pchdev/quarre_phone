@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
     QObject::connect(&ws_manager, SIGNAL(interruptAll()), &controller, SLOT(processGlobalInterruption()));
     QObject::connect(&ws_manager, SIGNAL(receivedIdFromServer(int)), &controller, SLOT(processReceivedIdFromServer(int)));
     QObject::connect(&ws_manager, SIGNAL(connectedToServer()), &controller, SLOT(processServerConnection()));
+    QObject::connect(&ws_manager, SIGNAL(readIndexUpdate(int)), &controller, SLOT(processReadIndexUpdate(int)));
 
     // exec application
     ws_manager.connect();

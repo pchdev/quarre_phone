@@ -25,7 +25,47 @@
 
     "interaction_3": {
         "title": "Persite, Perce... // Fouet",
+        "description": "BIOLOGIQUE_1 : geste de fouet sur P",
+        "module_type": "AI_TEXTVIEWER",
+        "gesture_responses": ["whip"],
+        "sensor_responses": []
+    },
+
+    "interaction_4": {
+        "title": "'Perfore, Plonge...' // Fouet",
         "description": "geste de fouet sur P",
+        "module_type": "AI_TEXTVIEWER",
+        "gesture_responses": ["whip"],
+        "sensor_responses": []
+    },
+
+    "interaction_5": {
+        "title": "'Symétrique' // Fouet",
+        "description": "BIOLOGIQUE_2 : déclenchement reverse...",
+        "module_type": "AI_TEXTVIEWER",
+        "gesture_responses": ["whip"],
+        "sensor_responses": []
+    },
+
+    "interaction_6": {
+        "title": "'Coup de ciseaux'// Fouet",
+        "description": "declenchement effet spatialisation, avec FOUET",
+        "module_type": "AI_TEXTVIEWER",
+        "gesture_responses": ["whip"],
+        "sensor_responses": []
+    },
+
+    "interaction_7": {
+        "title": "Milieu du texte // Fouet",
+        "description": "délitement progressif",
+        "module_type": "AI_TEXTVIEWER",
+        "gesture_responses": ["whip"],
+        "sensor_responses": []
+    },
+
+    "interaction_8": {
+        "title": "'Est-il un autre centre' // Fouet",
+        "description": "enlève-mot à chaque répétition",
         "module_type": "AI_TEXTVIEWER",
         "gesture_responses": ["whip"],
         "sensor_responses": []

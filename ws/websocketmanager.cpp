@@ -82,6 +82,7 @@ void WebSocketManager::parseReceivedTextMessage(QString message) {
 
     else if(address == "/interactions/next/begin") emit beginningInteraction(splitted_message.at(1).toInt());
     else if(address == "/interactions/current/end") emit endingInteraction(splitted_message.at(1).toInt());
+    else if(address == "/read_index") emit readIndexUpdate(splitted_message.at(1).toInt());
 
 }
 

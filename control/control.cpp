@@ -182,12 +182,13 @@ void Control::processSensorCallback(QRawSensorDataEnum sensor, qreal value) cons
 }
 
 void Control::processServerConnection() const {
-    r_mainwindow->setConnected();
-}
-
+    r_mainwindow->setConnected();}
 void Control::processServerDisconnection() const {
-    r_mainwindow->setDisconnected();
-}
+    r_mainwindow->setDisconnected(); }
 
-
-
+// speedy implementation, this is really bad...
+void Control::processReadIndexUpdate(int index) const {
+    if(r_module_manager->getActiveModule() == nullptr) return;
+    quarre::InteractionModule *module = r_module_manager->getActiveModule();
+    if(module->getModuleEnumReference() == quarre::AI_TEXTVIEWER)
+        module->onReceivedSensorData(quarre::Accelerometer_x, index);}

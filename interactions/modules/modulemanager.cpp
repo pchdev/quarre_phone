@@ -12,7 +12,7 @@
 using namespace quarre;
 
 InteractionModuleManager::InteractionModuleManager() :
-    r_active_module(0) {
+    r_active_module(nullptr) {
 
     // instantiate modules here by pushing back into the module array, as below
 

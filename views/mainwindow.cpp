@@ -105,8 +105,13 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     QObject::connect(m_combo_box, SIGNAL(activated(int)), m_stacked_widget, SLOT(setCurrentIndex(int)));
 }
 
-MainWindow::~MainWindow() {
-    delete ui;
+MainWindow::~MainWindow() { delete ui; }
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event) { // override to block back key
+    qDebug() << event->key();
+    if(event->key() == Qt::Key_Back) {
+        event->accept();
+    }
 }
 
 void MainWindow::onPrefsButtonPressing() {
