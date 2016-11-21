@@ -34,6 +34,7 @@ signals:
     void beginningInteraction(int);
     void endingInteraction(int);
     void readIndexUpdate(int);
+    void reset();
 
 protected slots:
     void onConnected();

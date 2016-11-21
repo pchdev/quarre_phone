@@ -20,6 +20,7 @@ public:
     QList<quarre::QRawSensorDataEnum> getQRawSensorDataRequirements();
     void onReceivedGesture(quarre::QGestureEnum gesture);
     void onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value);
+    void onReceivedMiscData(QString sender, qreal value);
 };
 
 }

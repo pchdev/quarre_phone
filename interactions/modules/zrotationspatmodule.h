@@ -15,6 +15,7 @@ public:
     void stopModule();
     void onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value);
     void onReceivedGesture(quarre::QGestureEnum gesture);
+    void onReceivedMiscData(QString sender, qreal value);
     QList<quarre::QGestureEnum> getQGestureRequirements();
     QList<quarre::QRawSensorDataEnum> getQRawSensorDataRequirements();
 

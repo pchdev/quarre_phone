@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     m_label_id(new QLabel("ID: " + QString::number(0))),
     m_next_interaction_title(new QLabel("néant")),
     r_control(control),
+    m_network_popup(new quarre::NetworkPopupWindow(this)),
     ui(new Ui::MainWindow) {
 
 
@@ -103,66 +104,61 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     QObject::connect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(processServerConnectionRequest()));
     QObject::connect(m_prefs_button, SIGNAL(pressed()), this, SLOT(onPrefsButtonPressing()));
     QObject::connect(m_combo_box, SIGNAL(activated(int)), m_stacked_widget, SLOT(setCurrentIndex(int)));
+
 }
 
 MainWindow::~MainWindow() { delete ui; }
 
-void MainWindow::keyReleaseEvent(QKeyEvent *event) { // override to block back key
+#ifdef Q_OS_ANDROID
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event) { // override to block android back key
     qDebug() << event->key();
     if(event->key() == Qt::Key_Back) {
-        event->accept();
-    }
-}
+        event->accept();}}
+
+#endif
 
 void MainWindow::onPrefsButtonPressing() {
-    bool ok;
-    QString address = QInputDialog::getText(this, tr("Quarrè remote server prefs."),
-                                           tr("server url"), QLineEdit::Normal,
-                                           QDir::home().dirName(), &ok);
-    if(ok && !address.isEmpty()) r_control->processServerIpChange(address);
-}
+    m_network_popup->exec();}
 
 void MainWindow::stackInteractionModules(QList<quarre::InteractionModule*> interaction_modules) {
     foreach(quarre::InteractionModule *module, interaction_modules) {
         m_stacked_widget->addWidget(module);
-        m_combo_box->addItem(tr("Interaction Module"));
-    }
-}
+        m_combo_box->addItem(tr("Interaction Module"));}}
 
 void MainWindow::updateCurrentInteraction(quarre::Interaction *interaction) {
     m_current_countdown->triggerTimer(interaction->getCurrentLength());
     m_curr_interaction_title->setText(interaction->getTitle());
     m_curr_interaction_descr->setText(interaction->getDescription());
-    m_combo_box->activated(interaction->getModuleId());
-}
+    m_combo_box->activated(interaction->getModuleId());}
 
 void MainWindow::updateNextInteraction(quarre::Interaction *interaction, int countdown_value) {
     m_next_countdown->triggerTimer(countdown_value);
-    m_next_interaction_title->setText(interaction->getTitle());
-}
+    m_next_interaction_title->setText(interaction->getTitle());}
 
 void MainWindow::voidCurrentInteraction() {
     m_current_countdown->stopTimer();
-    m_curr_interaction_title->setText("Néant");
-    m_curr_interaction_descr->setText("Aucune interaction");
-    m_combo_box->activated(0);
-}
+    m_curr_interaction_title->setText("Aucune interaction");
+    m_curr_interaction_descr->setText("veuillez patienter jusqu'à la prochaine interaction...");
+    m_combo_box->activated(3);}
 
 void MainWindow::voidNextInteraction() {
     m_next_countdown->stopTimer();
-    m_next_interaction_title->setText("néant");
-}
+    m_next_interaction_title->setText("néant");}
 
 void MainWindow::updateUserId(int id) {
-    m_label_id->setText("USER ID " + QString::number(id));
-}
+    m_label_id->setText("USER ID " + QString::number(id));}
 
 void MainWindow::setConnected() {
     m_connect_button->setText("connected");
-    QObject::disconnect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(processServerConnectionRequest()));
-}
+    QObject::disconnect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(processServerConnectionRequest()));}
 
 void MainWindow::setDisconnected() {
     m_connect_button->setText("connect to server");
-    QObject::connect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(processServerConnectionRequest()));
+    QObject::connect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(processServerConnectionRequest()));}
+
+void MainWindow::setController(quarre::Control *control) {
+    r_control = control;
+    QObject::connect(m_network_popup, SIGNAL(networkHostChange(QString)),
+                     r_control, SLOT(processServerIpChange(QString)));
 }

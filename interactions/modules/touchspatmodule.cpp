@@ -174,3 +174,4 @@ QList<quarre::QRawSensorDataEnum> TouchSpatModule::getQRawSensorDataRequirements
 // these should return errors, as no data is required
 void TouchSpatModule::onReceivedGesture(quarre::QGestureEnum gesture) {}
 void TouchSpatModule::onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value) {}
+void TouchSpatModule::onReceivedMiscData(QString sender, qreal value) {}

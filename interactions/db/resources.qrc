@@ -5,4 +5,7 @@
     <qresource prefix="/projects/arbre_integral">
         <file>textes.json</file>
     </qresource>
+    <qresource prefix="/network">
+        <file>hosts_ip.json</file>
+    </qresource>
 </RCC>

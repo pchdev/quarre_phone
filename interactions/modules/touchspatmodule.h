@@ -26,6 +26,7 @@ public:
     QList<quarre::QRawSensorDataEnum> getQRawSensorDataRequirements();
     void onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value);
     void onReceivedGesture(quarre::QGestureEnum gesture);
+    void onReceivedMiscData(QString sender, qreal value);
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;

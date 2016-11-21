@@ -16,7 +16,7 @@
     },
 
     "interaction_2": {
-        "title": "LOGIN",
+        "title": "\"LOGIN\"",
         "description": "press pad to login.",
         "module_type": "AI_LOGIN",
         "gesture_responses": [],

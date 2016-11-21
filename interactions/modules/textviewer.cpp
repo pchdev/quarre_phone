@@ -46,8 +46,7 @@ TextViewer::TextViewer() :
     else if(loaded_json.isObject()) qDebug() << "file is object";
     else if(loaded_json.isNull()) {
         qDebug() << "file is null";
-        qDebug() << error.errorString();
-    }
+        qDebug() << error.errorString();}
 
     QJsonArray main_array = loaded_json.array();
 
@@ -102,6 +101,8 @@ QList<quarre::QGestureEnum> TextViewer::getQGestureRequirements() {
 QList<quarre::QRawSensorDataEnum> TextViewer::getQRawSensorDataRequirements() {
     QList<quarre::QRawSensorDataEnum> empty_list; return empty_list; }
 void TextViewer::onReceivedGesture(quarre::QGestureEnum gesture) {}
-void TextViewer::onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value) {
-    m_index = value;
-    m_current_text->setText(m_texts[m_index]); }
+void TextViewer::onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value) {}
+void TextViewer::onReceivedMiscData(QString sender, qreal value) {
+    if(sender == "/read_index") {
+        m_index = value;
+        m_current_text->setText(m_texts[m_index]);}}

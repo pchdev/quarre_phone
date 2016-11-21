@@ -14,7 +14,9 @@
 int main(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
-    QUrl default_url(QStringLiteral("ws://192.168.1.10:8080"));
+    //QUrl default_url(QStringLiteral("ws://192.168.1.10:8080"));
+    QUrl default_url(QStringLiteral("ws://147.210.110.84:8080"));
+    //QUrl default_url(QStringLiteral("ws://192.168.2.118:8080"));
 
     // initialize modules
     quarre::UserDataManager data_manager;
@@ -25,7 +27,7 @@ int main(int argc, char *argv[]) {
     quarre::OSBridge os_bridge;
     quarre::SensorManager sensor_manager;
 
-    // initialize the main control  ler
+    // initialize the main controller
     quarre::Control controller;
 
     // initialize the main window view
@@ -50,6 +52,7 @@ int main(int argc, char *argv[]) {
     QObject::connect(&ws_manager, SIGNAL(receivedIdFromServer(int)), &controller, SLOT(processReceivedIdFromServer(int)));
     QObject::connect(&ws_manager, SIGNAL(connectedToServer()), &controller, SLOT(processServerConnection()));
     QObject::connect(&ws_manager, SIGNAL(readIndexUpdate(int)), &controller, SLOT(processReadIndexUpdate(int)));
+    QObject::connect(&ws_manager, SIGNAL(reset()), &controller, SLOT(processReset()));
 
     // exec application
     ws_manager.connect();

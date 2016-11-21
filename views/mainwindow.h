@@ -9,10 +9,10 @@
 #include <QComboBox>
 
 #include "countdownwidget.h"
+#include "networkpopupwindow.h"
 #include "interactions/modules/modulemanager.h"
 #include "interactions/modules/interactionmodule.h"
 #include "interactions/models/interaction.h"
-
 
 // fwds
 namespace Ui {
@@ -40,6 +40,7 @@ public:
     void updateUserId(int id);
     void setConnected();
     void setDisconnected();
+    void setController(quarre::Control *control);
 
 protected:
     void keyReleaseEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
@@ -62,6 +63,7 @@ private:
     QLabel *m_next_interaction_title;
     QLabel *m_curr_interaction_title;
     QLabel *m_curr_interaction_descr;
+    quarre::NetworkPopupWindow *m_network_popup;
 };
 
 #endif // MAINWINDOW_H

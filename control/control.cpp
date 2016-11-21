@@ -4,7 +4,6 @@
 using namespace quarre;
 
 Control::Control() {}
-
 Control::~Control() {}
 
 void Control::initModuleLinking(OSBridge *os_control,
@@ -27,6 +26,7 @@ void Control::initModuleLinking(OSBridge *os_control,
     r_mainwindow = mainwindow;
 
     r_sensor_manager->setController(this);
+    r_mainwindow->setController(this);
 
 }
 
@@ -40,8 +40,8 @@ void Control::setInteractionModulesReferences(QList<InteractionModule *> interac
 // SLOTS
 
 void Control::processServerIpChange(QString ip) const {
-    qDebug() << ip;
     QString address = "ws://" + ip;
+    qDebug() << address;
     QUrl url(address);
     r_ws_manager->reConnect(url);
 }
@@ -53,6 +53,18 @@ void Control::processReceivedIdFromServer(int id) const {
 }
 void Control::processGlobalInterruption() const {}
 // reset application interaction management
+
+void Control::processReset() const {
+    // void current and next interaction
+    if(r_scenario_follower->getCurrentInteraction() != nullptr) {
+        int id = r_scenario_follower->getCurrentInteraction()->getId();
+        this->processInteractionEnding(id);}
+
+    r_mainwindow->voidCurrentInteraction();
+    r_scenario_follower->voidNextInteraction();
+    r_mainwindow->voidNextInteraction();
+    r_os_control->vibrate(50);
+}
 
 void Control::processScenarioBeginning() const {}
 void Control::processScenarioEnding() const {} // just in case
@@ -122,6 +134,7 @@ void Control::processInteractionEnding(int interaction_id) const {
 
     // double check id
     quarre::Interaction *interaction = r_scenario_follower->getCurrentInteraction();
+    if(interaction == nullptr) return;
     if(interaction_id != interaction->getId()) return;
 
     // deactivate interaction
@@ -188,7 +201,4 @@ void Control::processServerDisconnection() const {
 
 // speedy implementation, this is really bad...
 void Control::processReadIndexUpdate(int index) const {
-    if(r_module_manager->getActiveModule() == nullptr) return;
-    quarre::InteractionModule *module = r_module_manager->getActiveModule();
-    if(module->getModuleEnumReference() == quarre::AI_TEXTVIEWER)
-        module->onReceivedSensorData(quarre::Accelerometer_x, index);}
+    ar_interaction_modules[3]->onReceivedMiscData("/read_index", index);}

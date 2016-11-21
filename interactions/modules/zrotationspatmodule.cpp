@@ -72,3 +72,4 @@ void ZRotationSpatModule::onReceivedSensorData(quarre::QRawSensorDataEnum sensor
 
 void ZRotationSpatModule::startModule() {}
 void ZRotationSpatModule::stopModule() {}
+void ZRotationSpatModule::onReceivedMiscData(QString sender, qreal value) {}

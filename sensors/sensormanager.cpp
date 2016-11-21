@@ -13,11 +13,10 @@ SensorManager::SensorManager() :
     m_osc_polling_rate(50),
     m_sensor_timer(new QTimer(this)) {
 
-    qDebug() << "getting gesture IDs...";
-
     foreach(const QString &gesture, m_gesture_manager->gestureIds()) {
         QStringList recognizer_signals = m_gesture_manager->recognizerSignals(gesture);
-        qDebug() << gesture; }}
+        qDebug() << gesture; }
+}
 
 SensorManager::~SensorManager() {
     delete m_rotation_reader;
@@ -28,18 +27,17 @@ SensorManager::~SensorManager() {
     delete m_compass;
     delete m_sensor_timer;
     delete m_sensor_gesture;
-    delete m_gesture_manager;
-}
+    delete m_gesture_manager; }
 
 void SensorManager::setController(quarre::Control *control) {r_control = control;}
 
-// SENSOR POLLING
-
+// SENSOR POLLING -- NOT YET IMPLEMENTED
 void SensorManager::setPolledSensors(QList<QRawSensorDataEnum> sensors_to_be_polled) {
     am_sensor_polling = sensors_to_be_polled; }
 
 void SensorManager::startSensorPolling() const {
-    m_sensor_timer->start(GRANULARITY); }
+    if(!am_sensor_polling.isEmpty())
+        m_sensor_timer->start(GRANULARITY); }
 
 void SensorManager::onSensorDataPolled() {
 
@@ -82,12 +80,8 @@ void SensorManager::stopSensorPolling() const { m_sensor_timer->stop(); }
 
 // convert enum to qstrings
 void SensorManager::setRecognizedGestures(QList<QGestureEnum> gestures_to_be_recognized) {
-
-    qDebug() << gestures_to_be_recognized;
-
     foreach(quarre::QGestureEnum gesture, gestures_to_be_recognized) {
         QString recognizer = "QtSensors." + quarre::qgesture_names[gesture];
-        qDebug() << "recognizer added: " << recognizer;
         am_gesture_recognizers << recognizer; }
     qDebug() << am_gesture_recognizers; }
 

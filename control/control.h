@@ -58,6 +58,7 @@ public slots:
     void processingInteractionBeginning(int interaction_id) const;
     void processInteractionEnding(int interaction_id) const;
     void processReadIndexUpdate(int index) const;
+    void processReset() const;
 
 private:
     QList<InteractionModule*> ar_interaction_modules;

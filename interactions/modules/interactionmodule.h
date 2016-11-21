@@ -22,6 +22,7 @@ public:
     virtual QList<quarre::QRawSensorDataEnum> getQRawSensorDataRequirements() = 0;
     virtual void onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value) = 0;
     virtual void onReceivedGesture(quarre::QGestureEnum gesture) = 0;
+    virtual void onReceivedMiscData(QString sender, qreal value);
     void setController(quarre::Control *control);
 
 protected:

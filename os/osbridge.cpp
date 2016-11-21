@@ -38,9 +38,7 @@ OSBridge::OSBridge() :
     if(m_wake_lock.isValid()) {
         m_wake_lock.callMethod<void>("acquire", "()V");
         qDebug() << "Locked device, cannot go to standby anymore";
-    } else {
-        qDebug() << "Unable to lock device..!!";
-    }
+    } else { qDebug() << "Unable to lock device..!!";}
 
 #endif
 
@@ -48,31 +46,26 @@ OSBridge::OSBridge() :
 
 }
 
-OSBridge::~OSBridge() {
-    delete m_torch_timer;
-}
+OSBridge::~OSBridge() { delete m_torch_timer; }
 
 #ifdef Q_OS_ANDROID
 
 void OSBridge::vibrate(int milliseconds) const {
     jlong ms = milliseconds;
     jboolean has_vibrator = m_vibrator.callMethod<jboolean>("hasVibrator", "()Z");
-    m_vibrator.callMethod<void>("vibrate", "(J)V", ms);
-}
+    m_vibrator.callMethod<void>("vibrate", "(J)V", ms);}
 
 void OSBridge::light(int milliseconds) const {
     // note, this only works if back camera is registered as the #0 id, need to check-it first
     QAndroidJniObject back_camera_id = QAndroidJniObject::fromString("0");
     jboolean on = true;
     m_camera_manager.callMethod<void>("setTorchMode", "(Ljava/lang/String;Z)V", back_camera_id.object<jstring>(), on);
-    m_torch_timer->start(milliseconds);
-}
+    m_torch_timer->start(milliseconds);}
 
 void OSBridge::torchTimerCallback() {
     QAndroidJniObject back_camera_id = QAndroidJniObject::fromString("0");
     jboolean off = false;
     m_camera_manager.callMethod<void>("setTorchMode", "(Ljava/lang/String;Z)V", back_camera_id.object<jstring>(), off);
-    m_torch_timer->stop();
-}
+    m_torch_timer->stop();}
 
 #endif
