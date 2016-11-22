@@ -8,7 +8,7 @@
 
 namespace quarre {
 
-class Pad : QWidget {
+class Pad : public QWidget {
 
     Q_OBJECT
 

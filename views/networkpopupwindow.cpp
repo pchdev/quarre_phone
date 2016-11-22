@@ -25,6 +25,8 @@ NetworkPopupWindow::NetworkPopupWindow(QWidget *parent) :
     layout->addWidget(combo_box, 0, Qt::AlignLeft);
     layout->addWidget(button_box, 0, Qt::AlignLeft);
 
+    setBackgroundRole(QPalette::Dark);
+
     connect(combo_box, SIGNAL(currentIndexChanged(int)), this, SLOT(onItemSelection(int)));
     connect(button_box, SIGNAL(accepted()), this, SLOT(onOk()));
     connect(button_box, SIGNAL(rejected()), this, SLOT(onCancel()));

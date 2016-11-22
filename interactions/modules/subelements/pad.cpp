@@ -4,6 +4,7 @@ using namespace quarre;
 
 Pad::Pad(InteractionModule *parent, uint8_t id) :
     m_state(false), r_parent(parent), m_id(id) {
+    setFixedSize(400, 400);
     setAttribute(Qt::WA_AcceptTouchEvents);}
 
 Pad::~Pad() {}
@@ -42,4 +43,4 @@ bool Pad::event(QEvent *event) {
 }
 
 void Pad::sendStateUpdateToParent() {
-    r_parent->onReceivedMiscData("pad_" + m_id, m_state);}
+    r_parent->onReceivedMiscData("pad_" + QString::number(m_id), m_state);}

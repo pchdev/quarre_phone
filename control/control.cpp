@@ -37,14 +37,19 @@ void Control::setInteractionModulesReferences(QList<InteractionModule *> interac
     }
 }
 
-// SLOTS
+// SERVER RELATED
 
 void Control::processServerIpChange(QString ip) const {
     QString address = "ws://" + ip;
     qDebug() << address;
     QUrl url(address);
-    r_ws_manager->reConnect(url);
-}
+    r_ws_manager->reConnect(url);}
+
+void Control::processServerConnection() const {
+    r_mainwindow->setConnected();}
+
+void Control::processServerDisconnection() const {
+    r_mainwindow->setDisconnected(); }
 
 void Control::processServerConnectionRequest() const { r_ws_manager->connect();}
 void Control::processReceivedIdFromServer(int id) const {
@@ -63,8 +68,9 @@ void Control::processReset() const {
     r_mainwindow->voidCurrentInteraction();
     r_scenario_follower->voidNextInteraction();
     r_mainwindow->voidNextInteraction();
-    r_os_control->vibrate(50);
-}
+    r_os_control->vibrate(50);}
+
+// INTERACTION & SCENARIO RELATED
 
 void Control::processScenarioBeginning() const {}
 void Control::processScenarioEnding() const {} // just in case
@@ -170,13 +176,13 @@ void Control::processInteractionEnding(int interaction_id) const {
 // update scenario follower
 // set interaction length to 0
 
+// CALLBACKS & DATA PASSING
+
 void Control::processModuleCallback(QString address, qreal value, bool vibrate) const {
     if(vibrate) r_os_control->vibrate(50);
-    r_ws_manager->sendMessage(address + " " + QString::number(value));
-}
+    r_ws_manager->sendMessage(address + " " + QString::number(value));}
 
 void Control::processGestureCallback(QGestureEnum gesture, qreal value) const {
-
     QString message = "/gestures/" + quarre::qgesture_names[gesture] + " " + QString::number(value);
     r_ws_manager->sendMessage(message);
     qDebug() << message;
@@ -184,21 +190,14 @@ void Control::processGestureCallback(QGestureEnum gesture, qreal value) const {
     qDebug() << "got active module";
     module->onReceivedGesture(gesture);
     qDebug() << "updated module ui";
-    r_os_control->vibrate(100);
-}
+    r_os_control->vibrate(100);}
 
 void Control::processSensorCallback(QRawSensorDataEnum sensor, qreal value) const {
     QString message = "/sensors" + quarre::qrawsensor_names[sensor] + " " + QString::number(value);
     r_ws_manager->sendMessage(message);
     quarre::InteractionModule *module = r_module_manager->getActiveModule();
-    if(!module->getQRawSensorDataRequirements().isEmpty()) module->onReceivedSensorData(sensor, value);
-}
+    if(!module->getQRawSensorDataRequirements().isEmpty()) module->onReceivedSensorData(sensor, value);}
 
-void Control::processServerConnection() const {
-    r_mainwindow->setConnected();}
-void Control::processServerDisconnection() const {
-    r_mainwindow->setDisconnected(); }
-
-// speedy implementation, this is really bad...
+// add an address request for module
 void Control::processReadIndexUpdate(int index) const {
     ar_interaction_modules[3]->onReceivedMiscData("/read_index", index);}

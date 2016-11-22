@@ -3,6 +3,7 @@
 
 #include "interactionmodule.h"
 #include "../../_fwd/fwd_enum.h"
+#include "subelements/pad.h"
 
 namespace arbre_integral {
 
