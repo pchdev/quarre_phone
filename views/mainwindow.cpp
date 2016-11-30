@@ -13,9 +13,11 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     m_combo_box(new QComboBox),
     m_connect_button(new QPushButton("connect to server")),
     m_prefs_button(new QPushButton("server_prefs")),
-    m_label_id(new QLabel("ID: " + QString::number(0))),
+    m_label_id(new QLabel("0")),
     m_next_interaction_title(new QLabel("néant")),
     r_control(control),
+    m_timer_count(60),
+    m_scenario_timer(new QTimer(this)),
     m_network_popup(new quarre::NetworkPopupWindow(this)),
     ui(new Ui::MainWindow) {
 
@@ -90,8 +92,9 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     QFont label_button("Arial", 12 * ratio_font, -1);
     QFont label_it("Arial", 13 * ratio_font, -1, true);
     QFont label_bold("Arial", 15 * ratio_font, QFont::Bold, false);
+    QFont label_timer("Arial", 17 * ratio_font, -1);
 
-    m_label_id->setFont(label_font);
+    m_label_id->setFont(label_timer);
     _next_interaction_title->setFont(label_it);
     _remaining_time->setFont(label_it);
     m_next_interaction_title->setFont(label_font);
@@ -104,6 +107,7 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     QObject::connect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(processServerConnectionRequest()));
     QObject::connect(m_prefs_button, SIGNAL(pressed()), this, SLOT(onPrefsButtonPressing()));
     QObject::connect(m_combo_box, SIGNAL(activated(int)), m_stacked_widget, SLOT(setCurrentIndex(int)));
+    QObject::connect(m_scenario_timer, SIGNAL(timeout()), this, SLOT(updateTimerTick()));
 
 }
 
@@ -159,6 +163,19 @@ void MainWindow::setDisconnected() {
 
 void MainWindow::setController(quarre::Control *control) {
     r_control = control;
+    m_current_countdown->setControl(control);
     QObject::connect(m_network_popup, SIGNAL(networkHostChange(QString)),
-                     r_control, SLOT(processServerIpChange(QString)));
+                     r_control, SLOT(processServerIpChange(QString)));}
+
+void MainWindow::startScenarioTimer() { m_scenario_timer->start(1000); }
+void MainWindow::stopScenarioTimer() {
+    m_scenario_timer->stop();
+    m_timer_count = 60;
+    m_label_id->setText("00:00");
+}
+void MainWindow::updateTimerTick() {
+    m_timer_count++;
+    int min = m_timer_count / 60;
+    int sec = m_timer_count % 60;
+    m_label_id->setText(QString::number(min) + ":" + QString::number(sec));
 }

@@ -30,6 +30,7 @@ public:
     void onReceivedGesture(quarre::QGestureEnum gesture);
     void onReceivedMiscData(QString sender, qreal value);
     void updateReadIndex(int index);
+    void setTextSize(int size, qreal screen_width);
 
 signals:
     void touchedModuleLeftSide();

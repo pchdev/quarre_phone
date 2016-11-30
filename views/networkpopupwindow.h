@@ -2,6 +2,8 @@
 #define NETWORKPOPUPWINDOW_H
 
 #include <QDialog>
+#include <QLineEdit>
+#include <QComboBox>
 
 namespace quarre {
 
@@ -14,14 +16,13 @@ public:
     ~NetworkPopupWindow();
 
 private:
-    int selected_item;
-    int item_selection;
+    QComboBox *m_combo_box;
+    QLineEdit *m_line_edit;
 
 signals:
     void networkHostChange(QString ip);
 
 protected slots:
-    void onItemSelection(int index);
     void onOk();
     void onCancel();
 

@@ -1,31 +1,33 @@
-#ifndef INTRODUCTION_H
-#define INTRODUCTION_H
+#ifndef LOOPCONTROL_H
+#define LOOPCONTROL_H
 
 #include "interactionmodule.h"
-#include "../../_fwd/fwd_enum.h"
+#include "subelements/pad.h"
+#include "textviewer.h"
 
 namespace arbre_integral {
 
-class Introduction : public quarre::InteractionModule {
+class LoopControl : public quarre::InteractionModule {
 
     Q_OBJECT
 
 public:
-    Introduction();
-    ~Introduction();
+    LoopControl(quarre::InteractionModule *viewer);
+    ~LoopControl();
     void startModule();
     void stopModule();
     quarre::InteractionModuleEnum getModuleEnumReference();
     QList<quarre::QGestureEnum> getQGestureRequirements();
     QList<quarre::QRawSensorDataEnum> getQRawSensorDataRequirements();
-    void onReceivedGesture(quarre::QGestureEnum gesture);
     void onReceivedSensorData(quarre::QRawSensorDataEnum sensor, qreal value);
+    void onReceivedGesture(quarre::QGestureEnum gesture);
     void onReceivedMiscData(QString sender, qreal value);
 
-protected slots:
-    void onPlayButtonPressed();
+private:
+    bool m_loop_started;
+
 };
 
 }
 
-#endif // INTRODUCTION_H
+#endif // LOOPCONTROL_H

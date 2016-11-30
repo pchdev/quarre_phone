@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     interactions/modules/nullmodule.cpp \
     interactions/modules/subelements/pad.cpp \
     interactions/modules/gesture.cpp \
-    views/networkpopupwindow.cpp
+    views/networkpopupwindow.cpp \
+    interactions/modules/loopcontrol.cpp
 
 HEADERS  += ws/websocketmanager.h \
     os/osbridge.h \
@@ -56,7 +57,8 @@ HEADERS  += ws/websocketmanager.h \
     interactions/modules/nullmodule.h \
     interactions/modules/subelements/pad.h \
     interactions/modules/gesture.h \
-    views/networkpopupwindow.h
+    views/networkpopupwindow.h \
+    interactions/modules/loopcontrol.h
 
 FORMS    += views/mainwindow.ui
 

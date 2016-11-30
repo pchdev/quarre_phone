@@ -42,6 +42,7 @@ public:
 
     void setInteractionModulesReferences(QList<InteractionModule*> interaction_modules);
     void processModuleCallback(QString address, qreal value, bool vibrate) const;
+    void processModuleCallback(QString address, bool vibrate) const;
     void processGestureCallback(quarre::QGestureEnum gesture, qreal value) const;
     void processSensorCallback(quarre::QRawSensorDataEnum sensor, qreal value) const;
 
@@ -61,6 +62,7 @@ public slots:
     void processReset() const;
 
 private:
+    void forceInteractionBeginning(int interaction_id) const;
     QList<InteractionModule*> ar_interaction_modules;
     quarre::OSBridge *r_os_control;
     quarre::WebSocketManager *r_ws_manager;

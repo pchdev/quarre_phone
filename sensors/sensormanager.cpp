@@ -93,7 +93,13 @@ void SensorManager::startGestureRecognition() {
                      this, SLOT(onGestureDetection(QString))); }
 
 void SensorManager::onGestureDetection(QString gesture_id) {
+
     qDebug() << gesture_id << " detected!";
+
+    if(gesture_id == "twistLeft" || gesture_id == "twistRight") {
+        gesture_id = "twist";
+    }
+
     for(int i = 0; i < quarre::QGESTURE_ENUMSIZE; i++) {
         if(gesture_id == quarre::qgesture_names[i])
             r_control->processGestureCallback(static_cast<quarre::QGestureEnum>(i), 1); }}

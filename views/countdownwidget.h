@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QWidget>
 #include <QPainter>
+#include <QEvent>
 #include <math.h>
 
 namespace quarre {
@@ -18,6 +19,7 @@ public:
     void triggerTimer(int length_in_seconds);
     void stopTimer();
     ~CountdownWidget();
+    void setControl(quarre::Control *control);
 
 protected slots:
     void updateTick();
@@ -26,6 +28,7 @@ signals:
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+    bool event(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
     qreal m_font_ratio;

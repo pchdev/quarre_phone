@@ -57,8 +57,8 @@ void WebSocketManager::parseReceivedTextMessage(QString message) {
     else if(address == "/test/accelerometers") emit requestedAccelerometersTest();
     else if(address == "/test/rotation") emit requestedRotationTest();
     else if(address == "/test/azimuth") emit requestedCompassTest();
-    else if(address == "/scenario/begin") emit scenarioHasStarted();
-    else if(address == "/scenario/end") emit scenarioHasEnded();
+    else if(address == "/scenario_begin") emit scenarioHasStarted();
+    else if(address == "/scenario_end") emit scenarioHasEnded();
     else if(address == "/interactions/next/incoming") {
 
         QString first_int = splitted_message.at(1); first_int.remove('['); first_int.remove(',');

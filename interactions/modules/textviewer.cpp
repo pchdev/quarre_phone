@@ -106,3 +106,11 @@ void TextViewer::onReceivedMiscData(QString sender, qreal value) {
     if(sender == "/read_index") {
         m_index = value;
         m_current_text->setText(m_texts[m_index]);}}
+
+void TextViewer::setTextSize(int size, qreal screen_width) {
+
+    //QFont font("Arial", size * ratio_font, -1, true);
+    //m_current_text->setFont(font);
+    //m_current_text->setFixedWidth(screen_width);
+
+}

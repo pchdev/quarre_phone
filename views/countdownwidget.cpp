@@ -1,9 +1,12 @@
 #include "countdownwidget.h"
 
+#include <QTouchEvent>
+
 #define REFRESH_RATE 25
 
 using namespace quarre;
 CountdownWidget::CountdownWidget(qreal font_ratio) :
+    r_control(nullptr),
     m_font_ratio(font_ratio),
     m_timer_end_point(0),
     m_current_tick(0),
@@ -11,7 +14,9 @@ CountdownWidget::CountdownWidget(qreal font_ratio) :
     m_timer_phase(0.f),
     m_timer_is_inf(false),
     m_timer(new QTimer(this)) {
-QObject::connect(m_timer, SIGNAL(timeout()), this, SLOT(updateTick()));}
+QObject::connect(m_timer, SIGNAL(timeout()), this, SLOT(updateTick()));
+setAttribute(Qt::WA_AcceptTouchEvents);}
+
 CountdownWidget::~CountdownWidget() {delete m_timer;}
 
 void CountdownWidget::paintEvent(QPaintEvent *event) {
@@ -81,4 +86,24 @@ void CountdownWidget::updateTick() {
         emit timeOver();}
     m_timer_phase = (float) m_current_tick/m_timer_end_point;
     this->update();
+}
+
+bool CountdownWidget::event(QEvent *event) { // GODMODE, always validate the interaction
+    switch(event->type()) {
+    case QEvent::TouchBegin: {
+        if(r_control != nullptr) {
+            r_control->processModuleCallback("/godmode", 1, true);
+            //r_control->processModuleCallback("/godmode", 0, false);
+        }
+    } break; // impulse
+    case QEvent::TouchEnd: {
+        //if(r_control != nullptr)
+            //r_control->processModuleCallback("/godmode", 0, false);
+    } break;
+        default: return QWidget::event(event); }
+    return true;
+}
+
+void CountdownWidget::setControl(quarre::Control *control) {
+    r_control = control;
 }

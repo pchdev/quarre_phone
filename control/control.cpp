@@ -72,8 +72,12 @@ void Control::processReset() const {
 
 // INTERACTION & SCENARIO RELATED
 
-void Control::processScenarioBeginning() const {}
-void Control::processScenarioEnding() const {} // just in case
+void Control::processScenarioBeginning() const {
+    r_mainwindow->startScenarioTimer();}
+
+void Control::processScenarioEnding() const {
+    r_mainwindow->stopScenarioTimer();}
+
 void Control::processIncomingInteraction(QList<int> interaction) const { // [id, length, starting_time]
 
     // parse list // TBI
@@ -99,6 +103,12 @@ void Control::processIncomingInteraction(QList<int> interaction) const { // [id,
 }
 
 void Control::processingInteractionBeginning(int interaction_id) const {
+
+    // if interaction is unannounced, force its triggering
+    if(r_scenario_follower->getNextInteraction() == nullptr) {
+        this->forceInteractionBeginning(interaction_id);
+        return;
+    }
 
     // check the validity of interaction id, set it to active
     quarre::Interaction *interaction = r_scenario_follower->getNextInteraction();
@@ -136,6 +146,10 @@ void Control::processingInteractionBeginning(int interaction_id) const {
     r_mainwindow->voidNextInteraction();
 }
 
+void Control::forceInteractionBeginning(int interaction_id) const {
+
+}
+
 void Control::processInteractionEnding(int interaction_id) const {
 
     // double check id
@@ -169,27 +183,22 @@ void Control::processInteractionEnding(int interaction_id) const {
 
 }
 
-// check the database for the interaction
-// check for sensor or gesture polling needs and shut them off
-// deactivate the matching module
-// update mainwindow
-// update scenario follower
-// set interaction length to 0
-
 // CALLBACKS & DATA PASSING
 
 void Control::processModuleCallback(QString address, qreal value, bool vibrate) const {
     if(vibrate) r_os_control->vibrate(50);
     r_ws_manager->sendMessage(address + " " + QString::number(value));}
 
+void Control::processModuleCallback(QString address, bool vibrate) const { // impulse only
+    if(vibrate) r_os_control->vibrate(50);
+    r_ws_manager->sendMessage(address);}
+
 void Control::processGestureCallback(QGestureEnum gesture, qreal value) const {
     QString message = "/gestures/" + quarre::qgesture_names[gesture] + " " + QString::number(value);
     r_ws_manager->sendMessage(message);
     qDebug() << message;
     quarre::InteractionModule *module = r_module_manager->getActiveModule();
-    qDebug() << "got active module";
     module->onReceivedGesture(gesture);
-    qDebug() << "updated module ui";
     r_os_control->vibrate(100);}
 
 void Control::processSensorCallback(QRawSensorDataEnum sensor, qreal value) const {

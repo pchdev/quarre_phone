@@ -41,12 +41,15 @@ public:
     void setConnected();
     void setDisconnected();
     void setController(quarre::Control *control);
+    void startScenarioTimer();
+    void stopScenarioTimer();
 
 protected:
     void keyReleaseEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
 
 protected slots:
     void onPrefsButtonPressing();
+    void updateTimerTick();
 
 private:
     Ui::MainWindow *ui;
@@ -64,6 +67,8 @@ private:
     QLabel *m_curr_interaction_title;
     QLabel *m_curr_interaction_descr;
     quarre::NetworkPopupWindow *m_network_popup;
+    QTimer *m_scenario_timer;
+    int m_timer_count;
 };
 
 #endif // MAINWINDOW_H
