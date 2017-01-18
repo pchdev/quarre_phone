@@ -20,8 +20,7 @@ public:
 signals:
     void connectedToServer();
     void disconnectedFromServer();
-    void interruptAll();
-    void receivedIdFromServer(int);
+    void requestedWebSocketId();
     void requestedAccelerometersTest();
     void requestedEndingOfAccelerometersTest();
     void requestedRotationTest();

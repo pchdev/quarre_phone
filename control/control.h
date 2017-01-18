@@ -52,7 +52,6 @@ public slots:
     void processServerConnection() const;
     void processServerDisconnection() const;
     void processReceivedIdFromServer(int id) const;
-    void processGlobalInterruption() const;
     void processScenarioBeginning() const;
     void processScenarioEnding() const;
     void processIncomingInteraction(QList<int> interaction) const;
@@ -60,6 +59,7 @@ public slots:
     void processInteractionEnding(int interaction_id) const;
     void processReadIndexUpdate(int index) const;
     void processReset() const;
+    void processWebSocketIdRequest() const;
 
 private:
     void forceInteractionBeginning(int interaction_id) const;

@@ -27,6 +27,21 @@ void Control::initModuleLinking(OSBridge *os_control,
 
     r_sensor_manager->setController(this);
     r_mainwindow->setController(this);
+    QList<quarre::InteractionModule*> modules = r_module_manager->getInteractionModulesAccesses();
+    setInteractionModulesReferences(modules);
+    r_mainwindow->stackInteractionModules(modules);
+
+    QObject::connect(r_ws_manager, SIGNAL(incomingInteraction(QList<int>)), this, SLOT(processIncomingInteraction(QList<int>)));
+    QObject::connect(r_ws_manager, SIGNAL(beginningInteraction(int)), this, SLOT(processingInteractionBeginning(int)));
+    QObject::connect(r_ws_manager, SIGNAL(endingInteraction(int)), this, SLOT(processInteractionEnding(int)));
+    QObject::connect(r_ws_manager, SIGNAL(receivedIdFromServer(int)), this, SLOT(processReceivedIdFromServer(int)));
+    QObject::connect(r_ws_manager, SIGNAL(connectedToServer()), this, SLOT(processServerConnection()));
+    QObject::connect(r_ws_manager, SIGNAL(disconnectedFromServer()), this, SLOT(processServerDisconnection()));
+    QObject::connect(r_ws_manager, SIGNAL(readIndexUpdate(int)), this, SLOT(processReadIndexUpdate(int)));
+    QObject::connect(r_ws_manager, SIGNAL(reset()), this, SLOT(processReset()));
+    QObject::connect(r_ws_manager, SIGNAL(scenarioHasStarted()), this, SLOT(processScenarioBeginning()));
+    QObject::connect(r_ws_manager, SIGNAL(scenarioHasEnded()), this, SLOT(processScenarioEnding()));
+    QObject::connect(r_ws_manager, SIGNAL(requestedWebSocketId()), this, SLOT(processWebSocketIdRequest()));
 
 }
 
@@ -51,13 +66,15 @@ void Control::processServerConnection() const {
 void Control::processServerDisconnection() const {
     r_mainwindow->setDisconnected(); }
 
+void Control::processWebSocketIdRequest() const {
+    r_ws_manager->sendMessage("/id phone");
+}
+
 void Control::processServerConnectionRequest() const { r_ws_manager->connect();}
 void Control::processReceivedIdFromServer(int id) const {
     r_data_manager->setUserId(id);
     r_mainwindow->updateUserId(id);
 }
-void Control::processGlobalInterruption() const {}
-// reset application interaction management
 
 void Control::processReset() const {
     // void current and next interaction
@@ -162,9 +179,7 @@ void Control::processInteractionEnding(int interaction_id) const {
     interaction->setCurrentLength(NULL);
 
     // stop sensor manager activity, void its current targets
-
     QList<quarre::QGestureEnum> empty_gesture_enum;
-
     r_sensor_manager->stopGestureRecognition();
     r_sensor_manager->stopSensorPolling();
     r_sensor_manager->voidPolledSensors();

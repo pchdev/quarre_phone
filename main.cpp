@@ -14,9 +14,9 @@
 int main(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
-    QUrl default_url(QStringLiteral("ws://192.168.1.25:8080"));
+    //QUrl default_url(QStringLiteral("ws://192.168.1.25:8080"));
     //QUrl default_url(QStringLiteral("ws://147.210.110.84:8080"));
-    //QUrl default_url(QStringLiteral("ws://192.168.2.118:8080"))
+    QUrl default_url(QStringLiteral("ws://192.168.2.118:8080"));
 
     // initialize modules
     quarre::UserDataManager data_manager;
@@ -42,19 +42,6 @@ int main(int argc, char *argv[]) {
                                  &sensor_manager, &data_manager,
                                  &scenario_follower, &interaction_db,
                                  &module_manager, &w);
-    controller.setInteractionModulesReferences(module_manager.getInteractionModulesAccesses());
-    w.stackInteractionModules(module_manager.getInteractionModulesAccesses());
-
-    QObject::connect(&ws_manager, SIGNAL(incomingInteraction(QList<int>)), &controller, SLOT(processIncomingInteraction(QList<int>)));
-    QObject::connect(&ws_manager, SIGNAL(beginningInteraction(int)), &controller, SLOT(processingInteractionBeginning(int)));
-    QObject::connect(&ws_manager, SIGNAL(endingInteraction(int)), &controller, SLOT(processInteractionEnding(int)));
-    QObject::connect(&ws_manager, SIGNAL(interruptAll()), &controller, SLOT(processGlobalInterruption()));
-    QObject::connect(&ws_manager, SIGNAL(receivedIdFromServer(int)), &controller, SLOT(processReceivedIdFromServer(int)));
-    QObject::connect(&ws_manager, SIGNAL(connectedToServer()), &controller, SLOT(processServerConnection()));
-    QObject::connect(&ws_manager, SIGNAL(readIndexUpdate(int)), &controller, SLOT(processReadIndexUpdate(int)));
-    QObject::connect(&ws_manager, SIGNAL(reset()), &controller, SLOT(processReset()));
-    QObject::connect(&ws_manager, SIGNAL(scenarioHasStarted()), &controller, SLOT(processScenarioBeginning()));
-    QObject::connect(&ws_manager, SIGNAL(scenarioHasEnded()), &controller, SLOT(processScenarioEnding()));
 
     // exec application
     ws_manager.connect();

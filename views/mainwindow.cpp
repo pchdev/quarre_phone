@@ -104,7 +104,6 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     m_prefs_button->setFont(label_button);
 
     // SIGNAL / SLOTS UI CONNECTIONS
-    QObject::connect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(processServerConnectionRequest()));
     QObject::connect(m_prefs_button, SIGNAL(pressed()), this, SLOT(onPrefsButtonPressing()));
     QObject::connect(m_combo_box, SIGNAL(activated(int)), m_stacked_widget, SLOT(setCurrentIndex(int)));
     QObject::connect(m_scenario_timer, SIGNAL(timeout()), this, SLOT(updateTimerTick()));
@@ -155,17 +154,22 @@ void MainWindow::updateUserId(int id) {
 
 void MainWindow::setConnected() {
     m_connect_button->setText("connected");
+    m_connect_button->setStyleSheet("color: black;");
     QObject::disconnect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(processServerConnectionRequest()));}
 
 void MainWindow::setDisconnected() {
-    m_connect_button->setText("connect to server");
+    m_connect_button->setText("DISCONNECTED");
+    m_connect_button->setStyleSheet("color: red;");
     QObject::connect(m_connect_button, SIGNAL(pressed()), r_control, SLOT(processServerConnectionRequest()));}
 
 void MainWindow::setController(quarre::Control *control) {
     r_control = control;
     m_current_countdown->setControl(control);
     QObject::connect(m_network_popup, SIGNAL(networkHostChange(QString)),
-                     r_control, SLOT(processServerIpChange(QString)));}
+                     r_control, SLOT(processServerIpChange(QString)));
+    QObject::connect(m_connect_button, SIGNAL(pressed()),
+                     r_control, SLOT(processServerConnectionRequest()));
+}
 
 void MainWindow::startScenarioTimer() { m_scenario_timer->start(1000); }
 void MainWindow::stopScenarioTimer() {

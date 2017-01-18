@@ -4,6 +4,10 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QFile>
 
 namespace quarre {
 
@@ -16,8 +20,10 @@ public:
     ~NetworkPopupWindow();
 
 private:
+    void loadNetworkPresets();
     QComboBox *m_combo_box;
     QLineEdit *m_line_edit;
+    QJsonArray am_network_presets;
 
 signals:
     void networkHostChange(QString ip);
@@ -25,6 +31,7 @@ signals:
 protected slots:
     void onOk();
     void onCancel();
+    void processIndexChange(int index);
 
 };
 }

@@ -1,129 +1,138 @@
 {
-	"interaction_0": {
-		"title": "Néant",
-		"description": "Aucune interaction",
-        "module_type": "AI_NULL",
-        "gesture_responses": [],
-        "sensor_responses": []
-    },
+    "ARBRE_INTEGRAL" : [
+        "interaction_0": {
+            "title": "Néant",
+            "description": "Aucune interaction",
+            "module_type": "AI_NULL",
+            "gesture_responses": [],
+            "sensor_responses": []
+        },
 
-    "interaction_1": {
-        "title": "Introduction",
-        "description": "présentation de l'installation",
-        "module_type": "AI_INTRODUCTION",
-        "gesture_responses": [],
-        "sensor_responses": []
-    },
+        "interaction_1": {
+            "title": "Introduction",
+            "description": "présentation de l'installation",
+            "module_type": "AI_INTRODUCTION",
+            "gesture_responses": [],
+            "sensor_responses": []
+        },
 
-    "interaction_2": {
-        "title": "\"LOGIN\"",
-        "description": "press pad to login.",
-        "module_type": "AI_LOGIN",
-        "gesture_responses": [],
-        "sensor_responses": []
-    },
+        "interaction_2": {
+            "title": "\"LOGIN\"",
+            "description": "press pad to login.",
+            "module_type": "AI_LOGIN",
+            "gesture_responses": [],
+            "sensor_responses": []
+        },
 
-    "interaction_3": {
-        "title": "Persite, Perce... // Fouet",
-        "description": "BIOLOGIQUE_1 : geste de fouet",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": ["whip"],
-        "sensor_responses": []
-    },
+        "interaction_3": {
+            "title": "Persite, Perce... // Fouet",
+            "description": "BIOLOGIQUE_1 : geste de fouet",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": ["whip"],
+            "sensor_responses": []
+        },
 
-    "interaction_4": {
-        "title": "Perfore, Plonge -- Fouet",
-        "description": "BIOLOGIQUE_1 : geste de fouet",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": ["whip"],
-        "sensor_responses": []
-    },
+        "interaction_4": {
+            "title": "Perfore, Plonge -- Fouet",
+            "description": "BIOLOGIQUE_1 : geste de fouet",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": ["whip"],
+            "sensor_responses": []
+        },
 
-    "interaction_5": {
-        "title": "Reverse -- Fouet",
-        "description": "BIOLOGIQUE_2 : déclenchement du texte en reverse - Fouet",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": ["whip"],
-        "sensor_responses": []
-    },
+        "interaction_5": {
+            "title": "Reverse -- Fouet",
+            "description": "BIOLOGIQUE_2 : déclenchement du texte en reverse - Fouet",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": ["whip"],
+            "sensor_responses": []
+        },
 
-    "interaction_6": {
-        "title": "Coup de ciseaux -- Fouet",
-        "description": "BIOLOGIQUE_2 : déclenchement inversion spatiale - Fouet",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": ["whip"],
-        "sensor_responses": []
-    },
+        "interaction_6": {
+            "title": "Coup de ciseaux -- Fouet",
+            "description": "BIOLOGIQUE_2 : déclenchement inversion spatiale - Fouet",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": ["whip"],
+            "sensor_responses": []
+        },
 
-    "interaction_7": {
-        "title": "Agripper les failles -- Fouet",
-        "description": "BIOLOGIQUE_2 : délitement progressif",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": ["whip"],
-        "sensor_responses": []
-    },
+        "interaction_7": {
+            "title": "Agripper les failles -- Fouet",
+            "description": "BIOLOGIQUE_2 : délitement progressif",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": ["whip"],
+            "sensor_responses": []
+        },
 
-    "interaction_8": {
-        "title": "'Est-il un autre centre' // Fouet",
-        "description": "BIOLOGIQUE_2 : enlève-mot à chaque répétition",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": ["whip"],
-        "sensor_responses": []
-    },
+        "interaction_8": {
+            "title": "'Est-il un autre centre' // Fouet",
+            "description": "BIOLOGIQUE_2 : enlève-mot à chaque répétition",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": ["whip"],
+            "sensor_responses": []
+        },
 
-    "interaction_9": {
-        "title": "SYMBOL - spat.",
-        "description": "SYMBOLIQUE : spatialisation",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": ["cover"],
-        "sensor_responses": []
-    },
+        "interaction_9": {
+            "title": "SYMBOL - spat.",
+            "description": "SYMBOLIQUE : spatialisation",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": ["cover"],
+            "sensor_responses": []
+        },
 
-    "interaction_10": {
-        "title": "SYMBIO - réponse 1",
-        "description": "Le feu te ressemble davantage... - TWIST",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": ["cover"],
-        "sensor_responses": []
-    },
+        "interaction_10": {
+            "title": "SYMBIO - réponse 1",
+            "description": "Le feu te ressemble davantage... - TWIST",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": ["cover"],
+            "sensor_responses": []
+        },
 
-    "interaction_11": {
-        "title": "SYMBIO - réponse 2",
-        "description": "Et macéré... - TWIST",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": ["cover"],
-        "sensor_responses": []
-    },
+        "interaction_11": {
+            "title": "SYMBIO - réponse 2",
+            "description": "Et macéré... - TWIST",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": ["cover"],
+            "sensor_responses": []
+        },
 
-    "interaction_12": {
-        "title": "SYMBIO - réponse 3",
-        "description": "Cueillir la foudre.... - TWIST",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": ["cover"],
-        "sensor_responses": []
-    },
+        "interaction_12": {
+            "title": "SYMBIO - réponse 3",
+            "description": "Cueillir la foudre.... - TWIST",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": ["cover"],
+            "sensor_responses": []
+        },
 
-    "interaction_13": {
-        "title": "SYMBIO - réponse 4",
-        "description": "Et je m'incline... - TWIST",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": ["cover"],
-        "sensor_responses": []
-    },
+        "interaction_13": {
+            "title": "SYMBIO - réponse 4",
+            "description": "Et je m'incline... - TWIST",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": ["cover"],
+            "sensor_responses": []
+        },
 
-    "interaction_14": {
-        "title": "RHIZOM - boucles",
-        "description": "RHIZOMIQUE : PADS -- déclenchement de boucles",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": [],
-        "sensor_responses": []
-    },
+        "interaction_14": {
+            "title": "RHIZOM - boucles",
+            "description": "RHIZOMIQUE : PADS -- déclenchement de boucles",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": [],
+            "sensor_responses": []
+        }
+      ],
 
-    "interaction_15": {
-        "title": "I-SCORE DEMO",
-        "description": "WHIP: ON, COVER: OFF",
-        "module_type": "AI_TEXTVIEWER",
-        "gesture_responses": ["whip", "cover"],
-        "sensor_responses": []
-    }
+    "DEMOS": [
+        "interaction_1": {
+            "title": "I-SCORE DEMO",
+            "description": "WHIP: ON, COVER: OFF",
+            "module_type": "AI_TEXTVIEWER",
+            "gesture_responses": ["whip", "cover"],
+            "sensor_responses": []
+        }
+    ],
+
+    "QUARRE": [
+    ]
+
+
 }
