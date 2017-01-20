@@ -7,29 +7,7 @@
 
 namespace quarre {
 
-// MODULES
-
-typedef enum {
-    AI_NULL,
-    AI_INTRODUCTION,
-    AI_LOGIN,
-    AI_TEXTVIEWER,
-    AI_GESTURE,
-    AI_LOOPCONTROL,
-    MODULE_ENUMSIZE // <-- always keep this one last, please, but static_assert has to be reimplemented with correct constexpr non-compatible with QLists.size()
-} InteractionModuleEnum;
-
-static const QList<QString> module_names = { // necessary for json parsing
-    "AI_NULL",
-    "AI_INTRODUCTION",
-    "AI_LOGIN",
-    "AI_TEXTVIEWER",
-    "AI_GESTURE",
-    "AI_LOOPCONTROL"
-};
-
 // QGESTURE
-
 typedef enum {
     Cover,
     DoubleTap,
@@ -60,7 +38,6 @@ static const QList<QString> qgesture_names = {
 };
 
 // RAW SENSOR DATA
-
 typedef enum {
     Accelerometer_x,
     Accelerometer_y,

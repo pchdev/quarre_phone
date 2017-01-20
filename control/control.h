@@ -57,7 +57,6 @@ public slots:
     void processIncomingInteraction(QList<int> interaction) const;
     void processingInteractionBeginning(int interaction_id) const;
     void processInteractionEnding(int interaction_id) const;
-    void processReadIndexUpdate(int index) const;
     void processReset() const;
     void processWebSocketIdRequest() const;
 
