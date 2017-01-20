@@ -38,8 +38,9 @@ void WebSocketManager::reConnect(QUrl host_url) {
     m_socket->open(host_url);
 }
 
-void WebSocketManager::sendMessage(QString message) const {
+void WebSocketManager::sendMessage(QString message, bool addPhonePrefix) const {
     // double check against osc specs & then send...
+    if(addPhonePrefix) message = "/phone" + message;
     m_socket->sendTextMessage(message);
 }
 

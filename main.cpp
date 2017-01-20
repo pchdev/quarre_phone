@@ -14,8 +14,6 @@
 int main(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
-    //QUrl default_url(QStringLiteral("ws://192.168.1.25:8080"));
-    //QUrl default_url(QStringLiteral("ws://147.210.110.84:8080"));
     QUrl default_url(QStringLiteral("ws://192.168.2.118:8080"));
 
     // initialize modules

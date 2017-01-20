@@ -67,7 +67,7 @@ void Control::processServerDisconnection() const {
     r_mainwindow->setDisconnected(); }
 
 void Control::processWebSocketIdRequest() const {
-    r_ws_manager->sendMessage("/id phone");
+    r_ws_manager->sendMessage("/id phone", false);
 }
 
 void Control::processServerConnectionRequest() const { r_ws_manager->connect();}

@@ -29,6 +29,7 @@ InteractionDatabase::InteractionDatabase() {
 
         QJsonObject interaction = chosen_namespace[i].toObject();
         QString title = interaction["title"].toString();
+        qDebug() << title;
         QString description = interaction["description"].toString();
         QString string_module_type = interaction["module_type"].toString();
         int module_enum_id = quarre::module_names.indexOf(string_module_type);

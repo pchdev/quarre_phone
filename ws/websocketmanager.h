@@ -12,7 +12,7 @@ class WebSocketManager : public QObject {
 public:
     WebSocketManager(QUrl url, bool connect_on_startup);
     ~WebSocketManager();
-    void sendMessage(QString message) const;
+    void sendMessage(QString message, bool addPhonePrefix = true) const;
     void connect();
     void setServerUrl(QUrl url);
     void reConnect(QUrl host_url);
