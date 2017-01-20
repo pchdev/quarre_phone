@@ -179,7 +179,6 @@ void Control::processInteractionEnding(int interaction_id) const {
     interaction->setCurrentLength(NULL);
 
     // stop sensor manager activity, void its current targets
-    QList<quarre::QGestureEnum> empty_gesture_enum;
     r_sensor_manager->stopGestureRecognition();
     r_sensor_manager->stopSensorPolling();
     r_sensor_manager->voidPolledSensors();
