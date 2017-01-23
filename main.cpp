@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
     QUrl default_url(QStringLiteral("ws://192.168.2.118:8080"));
 
     // initialize modules
-    quarre::UserDataManager data_manager;
     quarre::WebSocketManager ws_manager(default_url, true);
     quarre::InteractionDatabase interaction_db;
     quarre::ScenarioFollower scenario_follower;
@@ -35,8 +34,8 @@ int main(int argc, char *argv[]) {
 
     // initialize connections
     controller.initModuleLinking(&os_bridge, &ws_manager,
-                                 &sensor_manager, &data_manager,
-                                 &scenario_follower, &interaction_db,
+                                 &sensor_manager, &scenario_follower,
+                                 &interaction_db,
                                  &module_manager, &w);
 
     // exec application

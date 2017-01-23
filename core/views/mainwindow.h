@@ -52,7 +52,6 @@ protected slots:
     void updateTimerTick();
 
 private:
-    Ui::MainWindow *ui;
     quarre::Control *r_control;
     quarre::CountdownWidget *m_next_countdown;
     quarre::CountdownWidget *m_current_countdown;

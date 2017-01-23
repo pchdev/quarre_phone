@@ -17,11 +17,8 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     r_control(control),
     m_timer_count(60),
     m_scenario_timer(new QTimer(this)),
-    m_network_popup(new quarre::NetworkPopupWindow(this)),
-    ui(new Ui::MainWindow) {
+    m_network_popup(new quarre::NetworkPopupWindow(this)) {
 
-
-    ui->setupUi(this);
     setWindowTitle("QUARRE PHONE USER WINDOW");
 
     // SCREEN_SIZE
@@ -109,7 +106,7 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
 
 }
 
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow() {}
 
 #ifdef Q_OS_ANDROID
 

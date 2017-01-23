@@ -9,7 +9,6 @@ Control::~Control() {}
 void Control::initModuleLinking(OSBridge *os_control,
                                 WebSocketManager *ws_manager,
                                 SensorManager *sensor_manager,
-                                UserDataManager *data_manager,
                                 ScenarioFollower *scenario_follower,
                                 InteractionDatabase *interaction_db,
                                 InteractionModuleManager *module_manager,
@@ -19,7 +18,6 @@ void Control::initModuleLinking(OSBridge *os_control,
     r_os_control = os_control;
     r_ws_manager = ws_manager;
     r_sensor_manager = sensor_manager;
-    r_data_manager = data_manager;
     r_scenario_follower = scenario_follower;
     r_interaction_db = interaction_db;
     r_module_manager = module_manager;
@@ -46,10 +44,10 @@ void Control::initModuleLinking(OSBridge *os_control,
 }
 
 void Control::setInteractionModulesReferences(QList<InteractionModule *> interaction_modules) {
-    ar_interaction_modules = interaction_modules;
+    /*ar_interaction_modules = interaction_modules;
     foreach(quarre::InteractionModule *module, ar_interaction_modules) {
         module->setController(this);
-    }
+    }*/
 }
 
 // SERVER RELATED
@@ -72,7 +70,6 @@ void Control::processWebSocketIdRequest() const {
 
 void Control::processServerConnectionRequest() const { r_ws_manager->connect();}
 void Control::processReceivedIdFromServer(int id) const {
-    r_data_manager->setUserId(id);
     r_mainwindow->updateUserId(id);
 }
 
@@ -142,9 +139,9 @@ void Control::processingInteractionBeginning(int interaction_id) const {
     r_sensor_manager->setPolledSensors(interaction->getRawSensorDataPollingRequirements());
 
     // get matching module, set it as the active module in the module manager, activate it
-    quarre::InteractionModule *module = ar_interaction_modules[interaction->getModuleId()];
+    quarre::InteractionModule *module; // tbi
     r_module_manager->setActiveModule(module);
-    module->startModule();
+    module->start();
 
     // update the current interaction in the mainwindow
     r_mainwindow->updateCurrentInteraction(interaction);
@@ -187,7 +184,7 @@ void Control::processInteractionEnding(int interaction_id) const {
     // stop module
     quarre::InteractionModule *module = r_module_manager->getActiveModule();
     r_module_manager->setActiveModule(nullptr);
-    module->stopModule();
+    module->stop();
 
     // void interaction from scenario follower and mainwindow
     r_mainwindow->voidCurrentInteraction();
@@ -222,5 +219,13 @@ void Control::processSensorCallback(QRawSensorDataEnum sensor, qreal value) cons
     if(!module->getQRawSensorDataRequirements().isEmpty()) module->onReceivedSensorData(sensor, value);}
 
 // add an address request for module
-void Control::processReadIndexUpdate(int index) const {
-    ar_interaction_modules[3]->onReceivedMiscData("/read_index", index);}
+
+void Control::processMiscMessage(QString address, QList<qreal> values) const {
+   quarre::InteractionModule *module = r_module_manager->getActiveModule();
+   QList<QString> responder_addresses = module->getCustomResponderAddresses();
+   foreach(QString rspaddress, responder_addresses) {
+       if(address == rspaddress) module->onReceivedCustomData(address, values);
+   }
+}
+
+

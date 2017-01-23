@@ -12,12 +12,12 @@ class Interaction {
 
 public:
     Interaction(int id, QString title, QString description,
-                quarre::InteractionModuleEnum module_type);
+                QString module_id);
     Interaction(int id, QString title, QString description,
-                quarre::InteractionModuleEnum module_type,
+                QString module_id,
                 QList<quarre::QGestureEnum> gesture_responses);
     Interaction(int id, QString title, QString description,
-                quarre::InteractionModuleEnum module_type,
+                QString module_id,
                 QList<quarre::QGestureEnum> gesture_responses,
                 QList<quarre::QRawSensorDataEnum> raw_sensor_responses);
     ~Interaction();
@@ -26,7 +26,7 @@ public:
     QString getTitle() const;
     QString getDescription() const;
     int getCurrentLength() const;
-    quarre::InteractionModuleEnum getModuleId() const;
+    QString getModuleId() const;
     QList<quarre::QGestureEnum> getGesturePollingRequirements() const;
     QList<quarre::QRawSensorDataEnum> getRawSensorDataPollingRequirements() const;
     bool isActive() const;
@@ -40,7 +40,7 @@ private:
     QString m_description;
     int m_current_length;
     bool is_active;
-    quarre::InteractionModuleEnum m_module_type;
+    QString m_module_id;
     QList<quarre::QGestureEnum> am_gesture_responses;
     QList<quarre::QRawSensorDataEnum> am_raw_sensor_responses;
 };

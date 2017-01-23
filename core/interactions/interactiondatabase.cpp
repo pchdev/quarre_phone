@@ -31,9 +31,8 @@ InteractionDatabase::InteractionDatabase() {
         QString title = interaction["title"].toString();
         qDebug() << title;
         QString description = interaction["description"].toString();
-        QString string_module_type = interaction["module_type"].toString();
-        int module_enum_id = quarre::module_names.indexOf(string_module_type);
-        quarre::InteractionModuleEnum module_type = static_cast<quarre::InteractionModuleEnum>(module_enum_id);
+        QString module_id = interaction["module_id"].toString();
+
         QJsonArray gesture_array = interaction["gesture_responses"].toArray();
         QJsonArray sensor_array = interaction["sensor_responses"].toArray();
 
@@ -56,7 +55,7 @@ InteractionDatabase::InteractionDatabase() {
             sensor_responses << sensor_enum;
         }
 
-        quarre::Interaction *interaction_object = new quarre::Interaction(i, title, description, module_type, gesture_responses, sensor_responses);
+        quarre::Interaction *interaction_object = new quarre::Interaction(i, title, description, module_id, gesture_responses, sensor_responses);
         am_interactions << interaction_object;
     }
 
