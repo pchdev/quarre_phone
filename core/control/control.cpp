@@ -25,9 +25,9 @@ void Control::initModuleLinking(OSBridge *os_control,
 
     r_sensor_manager->setController(this);
     r_mainwindow->setController(this);
-    QList<quarre::InteractionModule*> modules = r_module_manager->getInteractionModulesAccesses();
-    setInteractionModulesReferences(modules);
-    r_mainwindow->stackInteractionModules(modules);
+    //QList<quarre::InteractionModule*> modules = r_module_manager->getInteractionModulesAccesses();
+    //setInteractionModulesReferences(modules);
+    //r_mainwindow->stackInteractionModules(modules);
 
     QObject::connect(r_ws_manager, SIGNAL(incomingInteraction(QList<int>)), this, SLOT(processIncomingInteraction(QList<int>)));
     QObject::connect(r_ws_manager, SIGNAL(beginningInteraction(int)), this, SLOT(processingInteractionBeginning(int)));

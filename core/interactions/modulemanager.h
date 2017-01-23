@@ -2,6 +2,7 @@
 #define MODULEMANAGER_H
 
 #include "../../plugins/quarreplugininterface.h"
+#include <QPluginLoader>
 
 namespace quarre {
 
@@ -13,7 +14,7 @@ class InteractionModuleManager {
 public:
     InteractionModuleManager();
     ~InteractionModuleManager();
-    QList<quarre::InteractionModule*> getInteractionModulesAccesses() const;
+    QList<quarre::InteractionModule*> getInteractionModulesReferences() const;
     void setActiveModule(quarre::InteractionModule *module);
     quarre::InteractionModule* getActiveModule() const;
     void setControl(quarre::Control *controller);

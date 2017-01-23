@@ -50,6 +50,7 @@ typedef enum {
 static const QList<QString> qrawsensor_names = {
     "accelerometers/x",
     "accelerometers/y",
+    "accelerometers/z",
     "azimuth",
     "rotation/x",
     "rotation/y",

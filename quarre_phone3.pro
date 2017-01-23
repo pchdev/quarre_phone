@@ -53,4 +53,7 @@ DISTFILES += \
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
+RESOURCES += \
+    core/resources/resources.qrc
+
 
