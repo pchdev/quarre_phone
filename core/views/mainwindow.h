@@ -10,9 +10,9 @@
 
 #include "countdownwidget.h"
 #include "networkpopupwindow.h"
-#include "interactions/modules/modulemanager.h"
-#include "interactions/modules/interactionmodule.h"
-#include "interactions/models/interaction.h"
+#include "../interactions/modulemanager.h"
+#include "../interactions/interaction.h"
+#include "../../plugins/quarreplugininterface.h"
 
 // fwds
 namespace Ui {

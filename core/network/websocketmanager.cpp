@@ -18,12 +18,8 @@ void WebSocketManager::setServerUrl(QUrl url) {m_server_url = url;}
 void WebSocketManager::parseReceivedBinaryMessage(QByteArray message) {}
 
 void WebSocketManager::connect() {
+    m_socket->close();
     if(!is_connected) {
-        delete m_socket;
-        m_socket = new QWebSocket;
-        QObject::connect(m_socket, SIGNAL(connected()), this, SLOT(onConnected()));
-        QObject::connect(m_socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
-        QObject::connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(onError(QAbstractSocket::SocketError)));
         m_socket->open(m_server_url);
     }
 }

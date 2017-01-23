@@ -2,9 +2,9 @@
 #define INTERACTION_H
 
 #include <QString>
-#include "../modules/modulemanager.h"
-#include "../../sensors/sensormanager.h"
-#include "../../_fwd/fwd_enum.h"
+
+#include "modulemanager.h"
+#include "../../plugins/quarreplugininterface.h"
 
 namespace quarre {
 

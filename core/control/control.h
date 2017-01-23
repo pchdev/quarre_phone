@@ -3,15 +3,14 @@
 
 #include <QObject>
 
-#include "../interactions/modules/interactionmodule.h"
-#include "../interactions/modules/modulemanager.h"
-#include "../interactions/db/interactiondatabase.h"
-#include "../ws/websocketmanager.h"
-#include "../os/osbridge.h"
+#include "../interactions/modulemanager.h"
+#include "../interactions/interactiondatabase.h"
+#include "../network/websocketmanager.h"
+#include "../platform/osbridge.h"
 #include "../sensors/sensormanager.h"
-#include "../data/userdatamanager.h"
 #include "../views/mainwindow.h"
 #include "scenariofollower.h"
+#include "../../plugins/quarreplugininterface.h"
 
 class MainWindow;
 

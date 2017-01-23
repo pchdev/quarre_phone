@@ -2,7 +2,7 @@
 #define SENSORMANAGER_H
 
 #include "../control/control.h"
-#include "../_fwd/fwd_enum.h"
+#include "../../plugins/quarreplugininterface.h"
 
 #include <QAccelerometerReading>
 #include <QRotationReading>
@@ -10,10 +10,6 @@
 #include <QTimer>
 #include <QSensorGestureManager>
 #include <QSensorGesture>
-
-// should have a separate timer to poll data in order to refresh view ?
-// thus control should have a separate callback
-
 
 namespace quarre {
 

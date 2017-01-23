@@ -1,15 +1,12 @@
 #ifndef MODULEMANAGER_H
 #define MODULEMANAGER_H
 
-#include "interactionmodule.h"
+#include "../../plugins/quarreplugininterface.h"
 
 namespace quarre {
 
 class Control;
 class InteractionModule;
-
-// add the module ref enum name to the enum in _fwd/fwd_enum.h (this is mandatory)
-// and don't forget to push back an instance of the module class in the module manager constructor
 
 class InteractionModuleManager {
 

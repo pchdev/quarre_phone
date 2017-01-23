@@ -1,15 +1,13 @@
-#include <QApplication>
+#include "core/control/control.h"
+#include "core/control/scenariofollower.h"
+#include "core/interactions/interactiondatabase.h"
+#include "core/interactions/modulemanager.h"
+#include "core/network/websocketmanager.h"
+#include "core/platform/osbridge.h"
+#include "core/views/mainwindow.h"
 
-#include "ws/websocketmanager.h"
-#include "os/osbridge.h"
-#include "sensors/sensormanager.h"
-#include "control/control.h"
-#include "control/scenariofollower.h"
-#include "data/userdatamanager.h"
-#include "interactions/modules/modulemanager.h"
-#include "interactions/db/interactiondatabase.h"
-#include "views/mainwindow.h"
 #include <QtDebug>
+#include <QApplication>
 
 int main(int argc, char *argv[]) {
 
@@ -45,4 +43,5 @@ int main(int argc, char *argv[]) {
     ws_manager.connect();
     w.show();
     return a.exec();
+
 }

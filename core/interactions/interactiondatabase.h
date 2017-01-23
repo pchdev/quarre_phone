@@ -1,7 +1,7 @@
 #ifndef INTERACTIONDATABASE_H
 #define INTERACTIONDATABASE_H
 
-#include "../models/interaction.h"
+#include "interaction.h"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>

@@ -12,61 +12,37 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = quarre_phone
 TEMPLATE = app
 
-SOURCES += main.cpp\
-    ws/websocketmanager.cpp \
-    os/osbridge.cpp \
-    interactions/modules/modulemanager.cpp \
-    interactions/modules/interactionmodule.cpp \
-    control/control.cpp \
-    sensors/sensormanager.cpp \
-    views/countdownwidget.cpp \
-    views/mainwindow.cpp \
-    data/userdatamanager.cpp \
-    control/scenariofollower.cpp \
-    interactions/models/interaction.cpp \
-    interactions/db/interactiondatabase.cpp \
-    interactions/modules/touchspatmodule.cpp \
-    interactions/modules/zrotationspatmodule.cpp \
-    interactions/modules/logininteraction.cpp \
-    interactions/modules/textviewer.cpp \
-    interactions/modules/introduction.cpp \
-    interactions/modules/nullmodule.cpp \
-    interactions/modules/subelements/pad.cpp \
-    interactions/modules/gesture.cpp \
-    views/networkpopupwindow.cpp \
-    interactions/modules/loopcontrol.cpp
+SOURCES += main.cpp \
+    core/control/control.cpp \
+    core/control/scenariofollower.cpp \
+    core/interactions/interaction.cpp \
+    core/interactions/interactiondatabase.cpp \
+    core/interactions/modulemanager.cpp \
+    core/network/websocketmanager.cpp \
+    core/platform/osbridge.cpp \
+    core/sensors/sensormanager.cpp \
+    core/views/countdownwidget.cpp \
+    core/views/mainwindow.cpp \
+    core/views/networkpopupwindow.cpp
 
-HEADERS  += ws/websocketmanager.h \
-    os/osbridge.h \
-    interactions/modules/modulemanager.h \
-    interactions/modules/interactionmodule.h \
-    control/control.h \
-    sensors/sensormanager.h \
-    views/countdownwidget.h \
-    views/mainwindow.h \
-    data/userdatamanager.h \
-    control/scenariofollower.h \
-    interactions/models/interaction.h \
-    interactions/db/interactiondatabase.h \
-    interactions/modules/touchspatmodule.h \
-    interactions/modules/zrotationspatmodule.h \
-    _fwd/fwd_enum.h \
-    interactions/modules/logininteraction.h \
-    interactions/modules/textviewer.h \
-    interactions/modules/introduction.h \
-    interactions/modules/nullmodule.h \
-    interactions/modules/subelements/pad.h \
-    interactions/modules/gesture.h \
-    views/networkpopupwindow.h \
-    interactions/modules/loopcontrol.h
-
-FORMS    += views/mainwindow.ui
+HEADERS  += \
+    plugins/quarreplugininterface.h \
+    core/control/control.h \
+    core/control/scenariofollower.h \
+    core/interactions/interaction.h \
+    core/interactions/interactiondatabase.h \
+    core/interactions/modulemanager.h \
+    core/network/websocketmanager.h \
+    core/platform/osbridge.h \
+    core/sensors/sensormanager.h \
+    core/views/countdownwidget.h \
+    core/views/mainwindow.h \
+    core/views/networkpopupwindow.h
 
 CONFIG += mobility
 MOBILITY = 
 
 DISTFILES += \
-    interactions/db/interactions.json \
     android/AndroidManifest.xml \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/gradlew \
@@ -77,6 +53,4 @@ DISTFILES += \
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
-RESOURCES += \
-    interactions/db/resources.qrc
 

@@ -1,7 +1,7 @@
 #ifndef SCENARIOFOLLOWER_H
 #define SCENARIOFOLLOWER_H
 
-#include "../interactions/models/interaction.h"
+#include "../interactions/interaction.h"
 
 namespace quarre {
 
