@@ -29,6 +29,12 @@ InteractionModuleManager::~InteractionModuleManager() {
         delete module;}
 }
 
+quarre::InteractionModule* InteractionModuleManager::getModuleReferenceByName(QString target) const {
+    foreach(quarre::InteractionModule *module, am_interaction_modules) {
+        if(module->getModuleIdentifier() == target) return module;
+    }
+}
+
 QList<quarre::InteractionModule*> InteractionModuleManager::getInteractionModulesReferences() const {
     return am_interaction_modules;
 }

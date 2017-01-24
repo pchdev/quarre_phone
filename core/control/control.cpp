@@ -25,9 +25,12 @@ void Control::initModuleLinking(OSBridge *os_control,
 
     r_sensor_manager->setController(this);
     r_mainwindow->setController(this);
-    //QList<quarre::InteractionModule*> modules = r_module_manager->getInteractionModulesAccesses();
-    //setInteractionModulesReferences(modules);
-    //r_mainwindow->stackInteractionModules(modules);
+
+    // bind modules to ui & controller
+    QList<quarre::InteractionModule*> modules = r_module_manager->getInteractionModulesReferences();
+    foreach(quarre::InteractionModule *module, modules) {
+        QObject::connect(module, SIGNAL(sendBackData(QString,qreal,bool)), this, SLOT(processModuleCallback(QString, qreal, bool)));}
+    r_mainwindow->stackInteractionModules(modules);
 
     QObject::connect(r_ws_manager, SIGNAL(incomingInteraction(QList<int>)), this, SLOT(processIncomingInteraction(QList<int>)));
     QObject::connect(r_ws_manager, SIGNAL(beginningInteraction(int)), this, SLOT(processingInteractionBeginning(int)));
@@ -43,19 +46,10 @@ void Control::initModuleLinking(OSBridge *os_control,
 
 }
 
-void Control::setInteractionModulesReferences(QList<InteractionModule *> interaction_modules) {
-    /*ar_interaction_modules = interaction_modules;
-    foreach(quarre::InteractionModule *module, ar_interaction_modules) {
-        module->setController(this);
-    }*/
-}
-
 // SERVER RELATED
 
 void Control::processServerIpChange(QString ip) const {
-    QString address = "ws://" + ip;
-    qDebug() << address;
-    QUrl url(address);
+    QUrl url("ws://" + ip);
     r_ws_manager->reConnect(url);}
 
 void Control::processServerConnection() const {
@@ -139,7 +133,7 @@ void Control::processingInteractionBeginning(int interaction_id) const {
     r_sensor_manager->setPolledSensors(interaction->getRawSensorDataPollingRequirements());
 
     // get matching module, set it as the active module in the module manager, activate it
-    quarre::InteractionModule *module; // tbi
+    quarre::InteractionModule *module = r_module_manager->getModuleReferenceByName(interaction->getModuleId());
     r_module_manager->setActiveModule(module);
     module->start();
 
@@ -160,9 +154,7 @@ void Control::processingInteractionBeginning(int interaction_id) const {
     r_mainwindow->voidNextInteraction();
 }
 
-void Control::forceInteractionBeginning(int interaction_id) const {
-
-}
+void Control::forceInteractionBeginning(int interaction_id) const {}
 
 void Control::processInteractionEnding(int interaction_id) const {
 

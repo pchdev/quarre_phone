@@ -17,6 +17,7 @@ public:
     QList<quarre::InteractionModule*> getInteractionModulesReferences() const;
     void setActiveModule(quarre::InteractionModule *module);
     quarre::InteractionModule* getActiveModule() const;
+    quarre::InteractionModule* getModuleReferenceByName(QString target) const;
     void setControl(quarre::Control *controller);
 
 private:

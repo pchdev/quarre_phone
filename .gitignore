@@ -6,6 +6,6 @@
 
 # temp
 
-.DS_Store
+*.DS_Store
 *.user
 *.autosave

@@ -37,11 +37,6 @@ public:
                            quarre::InteractionModuleManager *module_manager,
                            MainWindow *mainwindow);
 
-    // plugin related
-    void setInteractionModulesReferences(QList<InteractionModule*> interaction_modules);
-    void processModuleCallback(QString address, qreal value, bool vibrate) const;
-    void processModuleCallback(QString address, bool vibrate) const;
-
 public slots: // core functions -- should not be accessed by plugins!!
     void processServerIpChange(QString ip) const;
     void processServerConnectionRequest() const;
@@ -58,10 +53,11 @@ public slots: // core functions -- should not be accessed by plugins!!
     void processSensorCallback(quarre::QRawSensorDataEnum sensor, qreal value) const;
     void processGestureCallback(quarre::QGestureEnum gesture, qreal value) const;
     void processMiscMessage(QString address, QList<qreal> values) const;
+    void processModuleCallback(QString address, qreal value, bool vibrate) const;
+    void processModuleCallback(QString address, bool vibrate) const;
 
 private:
     void forceInteractionBeginning(int interaction_id) const;
-    QList<InteractionModule*> ar_interaction_modules;
     quarre::OSBridge *r_os_control;
     quarre::WebSocketManager *r_ws_manager;
     quarre::SensorManager *r_sensor_manager;

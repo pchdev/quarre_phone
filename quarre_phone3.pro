@@ -54,5 +54,18 @@ DISTFILES += \
 # libs/plugins have to be placed in: $$PWD/android/libs/plugins
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
+android {
+    INTERACTIONS_INSTALL_PATH=/assets/interactions
+} else {
+    INTERACTIONS_INSTALL_PATH=/$$OUT_PWD/interactions
+}
+
+interactions.path = &&INTERACTIONS_INSTALL_PATH
+interactions.files += &&INTERACTIONS_FILES
+interactions.depends += FORCE
+
+INSTALLS += interactions
+
+
 RESOURCES += \
     core/resources/resources.qrc
