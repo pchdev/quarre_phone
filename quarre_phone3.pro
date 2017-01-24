@@ -51,9 +51,8 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat
 
+# libs/plugins have to be placed in: $$PWD/android/libs/plugins
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 RESOURCES += \
     core/resources/resources.qrc
-
-

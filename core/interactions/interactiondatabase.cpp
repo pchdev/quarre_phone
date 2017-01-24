@@ -20,7 +20,7 @@ InteractionDatabase::InteractionDatabase() {
     QJsonDocument loaded_json = QJsonDocument::fromJson(saved_data, &error);
     if(loaded_json.isNull()) qDebug() << error.errorString();
 
-    // PARSING, BUILDING C++ OBJECTS
+    // PARSING, LOADING C++ OBJECTS
     QJsonObject main_object = loaded_json.object();
     QJsonArray chosen_namespace = main_object[JSON_NAMESPACE].toArray();
 
@@ -29,10 +29,8 @@ InteractionDatabase::InteractionDatabase() {
 
         QJsonObject interaction = chosen_namespace[i].toObject();
         QString title = interaction["title"].toString();
-        qDebug() << title;
         QString description = interaction["description"].toString();
         QString module_id = interaction["module_id"].toString();
-
         QJsonArray gesture_array = interaction["gesture_responses"].toArray();
         QJsonArray sensor_array = interaction["sensor_responses"].toArray();
 

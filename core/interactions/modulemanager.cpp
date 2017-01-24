@@ -1,15 +1,27 @@
 #include "modulemanager.h"
 #include <QtDebug>
+#include <QCoreApplication>
+#include <QDir>
 
 using namespace quarre;
 
 InteractionModuleManager::InteractionModuleManager() :
     r_active_module(nullptr) {
 
-    QPluginLoader test_loader("libquarre_plugin_test.1.0.0");
-    if(!test_loader.load()) qDebug() << "FAILED TO LOAD TEST PLUGIN";
-    else qDebug() << "PLUGIN SUCCESFULLY LOADED!";
+    QString path(QCoreApplication::applicationDirPath());
+    QDir dir(path);
 
+    // load each plugin
+    foreach(QString file, dir.entryList()) {
+        if(file.startsWith("libquarre_plugin")) {
+            QPluginLoader loader(file);
+            if(!loader.load()) qDebug() << "FAILED TO LOAD QUARRE PLUGIN: " << file;
+            else {
+                qDebug() << "PLUGIN SUCCESFULLY LOADED: " << file;
+                am_interaction_modules << qobject_cast<quarre::InteractionModule*>(loader.instance());
+            }
+        }
+    }
 }
 
 InteractionModuleManager::~InteractionModuleManager() {
