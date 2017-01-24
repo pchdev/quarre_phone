@@ -1,5 +1,7 @@
 #include "interactiondatabase.h"
 #include <QtDebug>
+#include <QCoreApplication>
+#include <QDir>
 
 using namespace quarre;
 
@@ -9,11 +11,19 @@ InteractionDatabase::~InteractionDatabase() {}
 quarre::Interaction* InteractionDatabase::getInteraction(int id) const {return am_interactions[id];}
 InteractionDatabase::InteractionDatabase() {
 
+    // get android assets path
+    QString application_path(QCoreApplication::applicationDirPath());
+    QDir dir(path);
+
+
+}
+
+void InteractionDatabase::loadInteractionNamespace(QString json_file_name) {
     // open json file
-    QFile loaded_interactions(":/json/interactions.json");
+    QFile loaded_interactions("assets:/" + json_file_name + ".json");
     if(!loaded_interactions.open(QIODevice::ReadOnly)) {
-        qDebug() << "error: couldn't open interactions.json";
-    } else {  qDebug() << "interactions.json succesfully loaded!";}
+        qDebug() << "error: couldn't open .json namespace file";
+    } else {  qDebug() << json_file_name << ".json namespace file succesfully loaded!";}
 
     QJsonParseError error;
     QByteArray saved_data = loaded_interactions.readAll();

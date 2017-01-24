@@ -51,21 +51,9 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat
 
-# libs/plugins have to be placed in: $$PWD/android/libs/plugins
+# libs/plugins have to be placed in: $$PWD/android/libs/[target-platform] (meaning armeabi-v7a or x86)
+# interaction .json namespace files should be put in the $$PWD/android/assets folder
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-
-android {
-    INTERACTIONS_INSTALL_PATH=/assets/interactions
-} else {
-    INTERACTIONS_INSTALL_PATH=/$$OUT_PWD/interactions
-}
-
-interactions.path = &&INTERACTIONS_INSTALL_PATH
-interactions.files += &&INTERACTIONS_FILES
-interactions.depends += FORCE
-
-INSTALLS += interactions
-
 
 RESOURCES += \
     core/resources/resources.qrc

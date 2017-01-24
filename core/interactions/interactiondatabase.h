@@ -18,6 +18,7 @@ public:
     InteractionDatabase();
     ~InteractionDatabase();
     quarre::Interaction* getInteraction(int id) const;
+    void loadInteractionNamespace(QString json_file_name);
 
 private:
     QList<quarre::Interaction*> am_interactions;

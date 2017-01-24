@@ -17,6 +17,8 @@ int main(int argc, char *argv[]) {
     // initialize modules
     quarre::WebSocketManager ws_manager(default_url, true);
     quarre::InteractionDatabase interaction_db;
+    interaction_db.loadInteractionNamespace("arbre-integral");
+
     quarre::ScenarioFollower scenario_follower;
     quarre::InteractionModuleManager module_manager;
     quarre::OSBridge os_bridge;
