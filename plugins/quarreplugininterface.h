@@ -1,8 +1,8 @@
 #ifndef QUARREPLUGININTERFACE_H
 #define QUARREPLUGININTERFACE_H
 
+#include <QtPlugin>
 #include <QString>
-#include <QList>
 #include <QWidget>
 
 namespace quarre {
@@ -59,14 +59,14 @@ static const QList<QString> qrawsensor_names = {
 
 #define EMPTY_QRAWSENSORREQLIST QList<quarre::QRawSensorDataEnum>()
 #define EMPTY_QGESTUREREQLIST QList<quarre::QGestureEnum>()
-#define EMPTY_RESPADDRESSES Qlist<QString>()
+#define EMPTY_RESPADDRESSES QList<QString>()
 
 class InteractionModule : public QWidget {
 
     Q_OBJECT
 
 public:
-    virtual ~InteractionModule();
+    virtual ~InteractionModule() {}
     virtual void start() = 0;
     virtual void stop() = 0;
     virtual QString getModuleIdentifier() = 0;
@@ -78,10 +78,13 @@ public:
     virtual void onReceivedCustomData(QString sender, QList<qreal> values) = 0;
 
 signals:
-    void sendBackData(QString address, qreal value, bool vibrate);
+   void sendBackData(QString address, qreal value, bool vibrate);
 };
 
 }
+
+#define InteractionModule_iid "org.quarre.fr.phone.plugins.interfaces.moduleinterface"
+Q_DECLARE_INTERFACE(quarre::InteractionModule, InteractionModule_iid)
 
 
 #endif // QUARREPLUGININTERFACE_H

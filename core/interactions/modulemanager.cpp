@@ -2,6 +2,7 @@
 #include <QtDebug>
 #include <QCoreApplication>
 #include <QDir>
+#include <QObject>
 
 using namespace quarre;
 
@@ -15,11 +16,12 @@ InteractionModuleManager::InteractionModuleManager() :
     foreach(QString file, dir.entryList()) {
         if(file.startsWith("libquarre_plugin")) {
             QPluginLoader loader(file);
-            if(!loader.load()) qDebug() << "FAILED TO LOAD QUARRE PLUGIN: " << file;
-            else {
-                qDebug() << "PLUGIN SUCCESFULLY LOADED: " << file;
-                am_interaction_modules << qobject_cast<quarre::InteractionModule*>(loader.instance());
+            quarre::InteractionModule* module_instance = qobject_cast<quarre::InteractionModule*>(loader.instance());
+            if(!module_instance) {
+                qDebug() << "could not instantiate module instance";
+                qDebug() << loader.errorString();
             }
+            else qDebug() << module_instance->getModuleIdentifier();
         }
     }
 }

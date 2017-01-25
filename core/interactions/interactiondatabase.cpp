@@ -13,7 +13,7 @@ InteractionDatabase::InteractionDatabase() {
 
     // get android assets path
     QString application_path(QCoreApplication::applicationDirPath());
-    QDir dir(path);
+    QDir dir(application_path);
 
 
 }
