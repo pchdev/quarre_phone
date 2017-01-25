@@ -3,7 +3,7 @@
 
 #include <QString>
 
-#include "modulemanager.h"
+#include "../modules/modulemanager.h"
 #include "../../plugins/quarreplugininterface.h"
 
 namespace quarre {

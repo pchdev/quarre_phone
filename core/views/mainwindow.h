@@ -10,7 +10,7 @@
 
 #include "countdownwidget.h"
 #include "networkpopupwindow.h"
-#include "../interactions/modulemanager.h"
+#include "../modules/modulemanager.h"
 #include "../interactions/interaction.h"
 #include "../../plugins/quarreplugininterface.h"
 

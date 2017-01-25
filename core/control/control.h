@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "../interactions/modulemanager.h"
+#include "../modules/modulemanager.h"
 #include "../interactions/interactiondatabase.h"
 #include "../network/websocketmanager.h"
 #include "../platform/osbridge.h"
@@ -53,6 +53,8 @@ public slots: // core functions -- should not be accessed by plugins!!
     void processSensorCallback(quarre::QRawSensorDataEnum sensor, qreal value) const;
     void processGestureCallback(quarre::QGestureEnum gesture, qreal value) const;
     void processMiscMessage(QString address, QList<qreal> values) const;
+
+    // plugin related, linking is done with signal-slots connections with plugins-modules
     void processModuleCallback(QString address, qreal value, bool vibrate) const;
     void processModuleCallback(QString address, bool vibrate) const;
 

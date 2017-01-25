@@ -64,9 +64,9 @@ void Control::processWebSocketIdRequest() const {
 }
 
 void Control::processServerConnectionRequest() const { r_ws_manager->connect();}
-void Control::processReceivedIdFromServer(int id) const {
+/*void Control::processReceivedIdFromServer(int id) const {
     r_mainwindow->updateUserId(id);
-}
+}*/
 
 void Control::processReset() const {
     // void current and next interaction

@@ -17,13 +17,13 @@ SOURCES += main.cpp \
     core/control/scenariofollower.cpp \
     core/interactions/interaction.cpp \
     core/interactions/interactiondatabase.cpp \
-    core/interactions/modulemanager.cpp \
     core/network/websocketmanager.cpp \
     core/platform/osbridge.cpp \
     core/sensors/sensormanager.cpp \
     core/views/countdownwidget.cpp \
     core/views/mainwindow.cpp \
-    core/views/networkpopupwindow.cpp
+    core/views/networkpopupwindow.cpp \
+    core/modules/modulemanager.cpp
 
 HEADERS  += \
     plugins/quarreplugininterface.h \
@@ -31,13 +31,13 @@ HEADERS  += \
     core/control/scenariofollower.h \
     core/interactions/interaction.h \
     core/interactions/interactiondatabase.h \
-    core/interactions/modulemanager.h \
     core/network/websocketmanager.h \
     core/platform/osbridge.h \
     core/sensors/sensormanager.h \
     core/views/countdownwidget.h \
     core/views/mainwindow.h \
-    core/views/networkpopupwindow.h
+    core/views/networkpopupwindow.h \
+    core/modules/modulemanager.h
 
 CONFIG += mobility
 MOBILITY = 

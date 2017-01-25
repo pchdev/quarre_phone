@@ -1,7 +1,7 @@
 #include "core/control/control.h"
 #include "core/control/scenariofollower.h"
 #include "core/interactions/interactiondatabase.h"
-#include "core/interactions/modulemanager.h"
+#include "core/modules/modulemanager.h"
 #include "core/network/websocketmanager.h"
 #include "core/platform/osbridge.h"
 #include "core/views/mainwindow.h"
