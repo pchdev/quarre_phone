@@ -42,7 +42,7 @@ public slots: // core functions -- should not be accessed by plugins!!
     void processServerConnectionRequest() const;
     void processServerConnection() const;
     void processServerDisconnection() const;
-    void processReceivedIdFromServer(int id) const;
+    //void processReceivedIdFromServer(int id) const;
     void processScenarioBeginning() const;
     void processScenarioEnding() const;
     void processIncomingInteraction(QList<int> interaction) const;

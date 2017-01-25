@@ -3,6 +3,10 @@
 *.exe
 *.out
 *.app
+*.moc
+*.o
+Makefile
+
 
 # temp
 

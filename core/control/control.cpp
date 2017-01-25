@@ -37,10 +37,9 @@ void Control::initModuleLinking(OSBridge *os_control,
     QObject::connect(r_ws_manager, SIGNAL(incomingInteraction(QList<int>)), this, SLOT(processIncomingInteraction(QList<int>)));
     QObject::connect(r_ws_manager, SIGNAL(beginningInteraction(int)), this, SLOT(processingInteractionBeginning(int)));
     QObject::connect(r_ws_manager, SIGNAL(endingInteraction(int)), this, SLOT(processInteractionEnding(int)));
-    QObject::connect(r_ws_manager, SIGNAL(receivedIdFromServer(int)), this, SLOT(processReceivedIdFromServer(int)));
+    //QObject::connect(r_ws_manager, SIGNAL(receivedIdFromServer(int)), this, SLOT(processReceivedIdFromServer(int)));
     QObject::connect(r_ws_manager, SIGNAL(connectedToServer()), this, SLOT(processServerConnection()));
     QObject::connect(r_ws_manager, SIGNAL(disconnectedFromServer()), this, SLOT(processServerDisconnection()));
-    QObject::connect(r_ws_manager, SIGNAL(readIndexUpdate(int)), this, SLOT(processReadIndexUpdate(int)));
     QObject::connect(r_ws_manager, SIGNAL(reset()), this, SLOT(processReset()));
     QObject::connect(r_ws_manager, SIGNAL(scenarioHasStarted()), this, SLOT(processScenarioBeginning()));
     QObject::connect(r_ws_manager, SIGNAL(scenarioHasEnded()), this, SLOT(processScenarioEnding()));
