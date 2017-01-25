@@ -32,6 +32,7 @@ int main(int argc, char *argv[]) {
 
     // misc.
     qRegisterMetaType<QList<int> >("QList<int>");
+    qRegisterMetaType<QList<qreal>>("QList<qreal>");
     qRegisterMetaType<QAbstractSocket::SocketError>("QAbstractSocket::SocketError");
 
     // initialize connections

@@ -32,8 +32,8 @@ signals:
     void incomingInteraction(QList<int>);
     void beginningInteraction(int);
     void endingInteraction(int);
-    void readIndexUpdate(int);
     void reset();
+    void customMessageReceived(QString, QList<qreal>);
 
 protected slots:
     void onConnected();

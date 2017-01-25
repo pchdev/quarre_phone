@@ -16,16 +16,12 @@ WebSocketManager::~WebSocketManager() {delete m_socket;}
 void WebSocketManager::onError(QAbstractSocket::SocketError) { qDebug() << m_socket->errorString();}
 void WebSocketManager::setServerUrl(QUrl url) {m_server_url = url;}
 void WebSocketManager::parseReceivedBinaryMessage(QByteArray message) {}
-
 void WebSocketManager::connect() {
     m_socket->close();
-    if(!is_connected) {
-        m_socket->open(m_server_url);
-    }
+    if(!is_connected) m_socket->open(m_server_url);
 }
 
 void WebSocketManager::reConnect(QUrl host_url) {
-    qDebug() << "reconnecting at: " << host_url;
     delete m_socket;
     m_socket = new QWebSocket;
     QObject::connect(m_socket, SIGNAL(connected()), this, SLOT(onConnected()));
@@ -85,7 +81,10 @@ void WebSocketManager::parseReceivedTextMessage(QString message) {
 
     else if(address == "/phone/interactions/next/begin") emit beginningInteraction(splitted_message.at(1).toInt());
     else if(address == "/phone/interactions/current/end") emit endingInteraction(splitted_message.at(1).toInt());
-    else if(address == "/phone/read_index") emit readIndexUpdate(splitted_message.at(1).toInt());
+    else if(address == "/phone/read_index") {
+        QList<qreal> values = { splitted_message.at(1) };
+        emit customMessageReceived(address, values);
+    }
 
 }
 

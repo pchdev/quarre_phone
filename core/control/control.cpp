@@ -44,6 +44,7 @@ void Control::initModuleLinking(OSBridge *os_control,
     QObject::connect(r_ws_manager, SIGNAL(scenarioHasStarted()), this, SLOT(processScenarioBeginning()));
     QObject::connect(r_ws_manager, SIGNAL(scenarioHasEnded()), this, SLOT(processScenarioEnding()));
     QObject::connect(r_ws_manager, SIGNAL(requestedWebSocketId()), this, SLOT(processWebSocketIdRequest()));
+    QObject::connect(r_ws_manager, SIGNAL(customMessageReceived(QString,QList<qreal>)), this, SLOT(processMiscMessage(QString,QList<qreal>)));
 
 }
 
