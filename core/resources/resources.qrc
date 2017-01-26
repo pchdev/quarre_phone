@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/network">
+        <file>hosts_ip.json</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,15 @@
+# Executables
+
+*.exe
+*.out
+*.app
+*.moc
+*.o
+Makefile
+
+
+# temp
+
+*.DS_Store
+*.user
+*.autosave

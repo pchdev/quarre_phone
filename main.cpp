@@ -1,15 +1,13 @@
-#include <QApplication>
+#include "core/control/control.h"
+#include "core/control/scenariofollower.h"
+#include "core/interactions/interactiondatabase.h"
+#include "core/modules/modulemanager.h"
+#include "core/network/websocketmanager.h"
+#include "core/platform/osbridge.h"
+#include "core/views/mainwindow.h"
 
-#include "ws/websocketmanager.h"
-#include "os/osbridge.h"
-#include "sensors/sensormanager.h"
-#include "control/control.h"
-#include "control/scenariofollower.h"
-#include "data/userdatamanager.h"
-#include "interactions/modules/modulemanager.h"
-#include "interactions/db/interactiondatabase.h"
-#include "views/mainwindow.h"
 #include <QtDebug>
+#include <QApplication>
 
 int main(int argc, char *argv[]) {
 
@@ -17,9 +15,10 @@ int main(int argc, char *argv[]) {
     QUrl default_url(QStringLiteral("ws://192.168.2.118:8080"));
 
     // initialize modules
-    quarre::UserDataManager data_manager;
     quarre::WebSocketManager ws_manager(default_url, true);
     quarre::InteractionDatabase interaction_db;
+    interaction_db.loadInteractionNamespace("arbre-integral");
+
     quarre::ScenarioFollower scenario_follower;
     quarre::InteractionModuleManager module_manager;
     quarre::OSBridge os_bridge;
@@ -33,16 +32,18 @@ int main(int argc, char *argv[]) {
 
     // misc.
     qRegisterMetaType<QList<int> >("QList<int>");
+    qRegisterMetaType<QList<qreal>>("QList<qreal>");
     qRegisterMetaType<QAbstractSocket::SocketError>("QAbstractSocket::SocketError");
 
     // initialize connections
     controller.initModuleLinking(&os_bridge, &ws_manager,
-                                 &sensor_manager, &data_manager,
-                                 &scenario_follower, &interaction_db,
+                                 &sensor_manager, &scenario_follower,
+                                 &interaction_db,
                                  &module_manager, &w);
 
     // exec application
     ws_manager.connect();
     w.show();
     return a.exec();
+
 }
