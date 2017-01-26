@@ -108,7 +108,7 @@ void TextViewer::processModuleRightTouch() {
 }
 
 void TextViewer::onReceivedCustomData(QString sender, QList<qreal> values) {
-    if(sender == "/read_index") {
+    if(sender == "/phone/read_index") {
         m_index = values[0];
         m_current_text->setText(m_texts[m_index]);
     }
