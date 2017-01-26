@@ -22,6 +22,7 @@ InteractionModuleManager::InteractionModuleManager() :
                 qDebug() << loader.errorString();
             }
             else qDebug() << module_instance->getModuleIdentifier();
+            am_interaction_modules << module_instance;
         }
     }
 }
@@ -34,6 +35,12 @@ InteractionModuleManager::~InteractionModuleManager() {
 quarre::InteractionModule* InteractionModuleManager::getModuleReferenceByName(QString target) const {
     foreach(quarre::InteractionModule *module, am_interaction_modules) {
         if(module->getModuleIdentifier() == target) return module;
+    }
+}
+
+int InteractionModuleManager::getModuleIndexByName(QString target) const {
+    for(int i = 0; i < am_interaction_modules.size(); i++) {
+        if(am_interaction_modules[i]->getModuleIdentifier() == target) return i;
     }
 }
 

@@ -82,7 +82,7 @@ void WebSocketManager::parseReceivedTextMessage(QString message) {
     else if(address == "/phone/interactions/next/begin") emit beginningInteraction(splitted_message.at(1).toInt());
     else if(address == "/phone/interactions/current/end") emit endingInteraction(splitted_message.at(1).toInt());
     else if(address == "/phone/read_index") {
-        QList<qreal> values = { splitted_message.at(1) };
+        QList<qreal> values = { splitted_message.at(1).toInt() };
         emit customMessageReceived(address, values);
     }
 

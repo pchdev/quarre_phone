@@ -125,11 +125,13 @@ void MainWindow::stackInteractionModules(QList<quarre::InteractionModule*> inter
         m_stacked_widget->addWidget(module);
         m_combo_box->addItem(tr("Interaction Module"));}}
 
-void MainWindow::updateCurrentInteraction(quarre::Interaction *interaction) {
+void MainWindow::updateCurrentInteraction(quarre::Interaction *interaction, int module_index) {
     m_current_countdown->triggerTimer(interaction->getCurrentLength());
     m_curr_interaction_title->setText(interaction->getTitle());
     m_curr_interaction_descr->setText(interaction->getDescription());
-    m_combo_box->activated(interaction->getModuleId());}
+    m_combo_box->activated(module_index);
+
+}
 
 void MainWindow::updateNextInteraction(quarre::Interaction *interaction, int countdown_value) {
     m_next_countdown->triggerTimer(countdown_value);

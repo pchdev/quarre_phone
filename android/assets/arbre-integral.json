@@ -3,7 +3,7 @@
 		"interaction_id": 0,
 		"title": "Néant",
 		"description": "Aucune interaction",
-		"module_id": "spat_test",
+		"module_id": "AI_TEXTVIEWER",
 		"gesture_responses": [],
 		"sensor_responses": []
 	},
@@ -12,7 +12,7 @@
 		"interaction_id": 1,
 		"title": "Introduction",
 		"description": "présentation de l'installation",
-		"module_id": "AI_INTRODUCTION",
+		"module_id": "AI_TEXTVIEWER",
 		"gesture_responses": [],
 		"sensor_responses": []
 	},

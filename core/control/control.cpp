@@ -120,10 +120,14 @@ void Control::processingInteractionBeginning(int interaction_id) const {
         return;
     }
 
+    qDebug() << "interaction awaited";
+
     // check the validity of interaction id, set it to active
     quarre::Interaction *interaction = r_scenario_follower->getNextInteraction();
     if(interaction_id != interaction->getId()) return;
     interaction->setActive(true);
+
+    qDebug() << "interaction set to active";
 
     // if current interaction has not ended, shut it down
     if(r_scenario_follower->getCurrentInteraction() != nullptr) {
@@ -134,13 +138,27 @@ void Control::processingInteractionBeginning(int interaction_id) const {
     r_sensor_manager->setRecognizedGestures(interaction->getGesturePollingRequirements());
     r_sensor_manager->setPolledSensors(interaction->getRawSensorDataPollingRequirements());
 
+    qDebug() << "retrieved sensor requirements";
+
     // get matching module, set it as the active module in the module manager, activate it
-    quarre::InteractionModule *module = r_module_manager->getModuleReferenceByName(interaction->getModuleId());
+    QString module_identifier = interaction->getModuleId();
+    qDebug() << module_identifier;
+    quarre::InteractionModule *module = r_module_manager->getModuleReferenceByName(module_identifier);
+    if(module != nullptr) qDebug() << "succesfully retrieved matching module";
+
+    int module_index = r_module_manager->getModuleIndexByName(module_identifier);
+    qDebug() << "retrieved module index";
+
     r_module_manager->setActiveModule(module);
+    qDebug() << "module set to active";
+
     module->start();
+    qDebug() << "module started";
 
     // update the current interaction in the mainwindow
-    r_mainwindow->updateCurrentInteraction(interaction);
+    r_mainwindow->updateCurrentInteraction(interaction, module_index);
+
+    qDebug() << "succesfully updated ui with matching module";
 
     // poll sensors & gestures
     r_sensor_manager->startGestureRecognition();

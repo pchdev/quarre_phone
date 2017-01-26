@@ -31,13 +31,12 @@ void InteractionDatabase::loadInteractionNamespace(QString json_file_name) {
     if(loaded_json.isNull()) qDebug() << error.errorString();
 
     // PARSING, LOADING C++ OBJECTS
-    QJsonObject main_object = loaded_json.object();
-    QJsonArray chosen_namespace = main_object[JSON_NAMESPACE].toArray();
+    QJsonArray main_object = loaded_json.array();
 
     // EACH NAMESPACE CONTAINS AN ARRAY OF INTERACTIONS
-    for(int i = 0; i < chosen_namespace.count(); i++) {
+    for(int i = 0; i < main_object.count(); i++) {
 
-        QJsonObject interaction = chosen_namespace[i].toObject();
+        QJsonObject interaction = main_object[i].toObject();
         QString title = interaction["title"].toString();
         QString description = interaction["description"].toString();
         QString module_id = interaction["module_id"].toString();

@@ -32,7 +32,7 @@ class MainWindow : public QMainWindow {
 public:
     explicit MainWindow(QWidget *parent = 0, quarre::Control *control = 0);
     ~MainWindow();
-    void updateCurrentInteraction(quarre::Interaction *interaction);
+    void updateCurrentInteraction(quarre::Interaction *interaction, int module_index);
     void updateNextInteraction(quarre::Interaction *interaction, int countdown_value);
     void voidNextInteraction();
     void voidCurrentInteraction();

@@ -18,6 +18,7 @@ public:
     void setActiveModule(quarre::InteractionModule *module);
     quarre::InteractionModule* getActiveModule() const;
     quarre::InteractionModule* getModuleReferenceByName(QString target) const;
+    int getModuleIndexByName(QString target) const;
     void setControl(quarre::Control *controller);
 
 private:
