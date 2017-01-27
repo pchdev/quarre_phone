@@ -28,12 +28,13 @@ void Control::initModuleLinking(OSBridge *os_control,
 
     // bind modules to ui & controller
     QList<quarre::InteractionModule*> modules = r_module_manager->getInteractionModulesReferences();
-    foreach(quarre::InteractionModule *module, modules) {
+    foreach(quarre::InteractionModule *module, modules) { // catch inherited signals for sending back data
         QObject::connect(module, SIGNAL(sendBackData(QString,qreal,bool)), this, SLOT(processModuleCallback(QString, qreal, bool)));
     }
 
     r_mainwindow->stackInteractionModules(modules);
 
+    // signal slot connections network-manager>controller
     QObject::connect(r_ws_manager, SIGNAL(incomingInteraction(QList<int>)), this, SLOT(processIncomingInteraction(QList<int>)));
     QObject::connect(r_ws_manager, SIGNAL(beginningInteraction(int)), this, SLOT(processingInteractionBeginning(int)));
     QObject::connect(r_ws_manager, SIGNAL(endingInteraction(int)), this, SLOT(processInteractionEnding(int)));
@@ -189,11 +190,11 @@ void Control::processInteractionEnding(int interaction_id) const {
 
 void Control::processModuleCallback(QString address, qreal value, bool vibrate) const {
     if(vibrate) r_os_control->vibrate(50);
-    r_ws_manager->sendMessage(address + " " + QString::number(value));}
+    r_ws_manager->sendMessage(address + " " + QString::number(value)); }
 
 void Control::processModuleCallback(QString address, bool vibrate) const { // impulse only
     if(vibrate) r_os_control->vibrate(50);
-    r_ws_manager->sendMessage(address);}
+    r_ws_manager->sendMessage(address); }
 
 void Control::processGestureCallback(QGestureEnum gesture, qreal value) const {
     QString message = "/gestures/" + quarre::qgesture_names[gesture] + " " + QString::number(value);
@@ -201,13 +202,13 @@ void Control::processGestureCallback(QGestureEnum gesture, qreal value) const {
     qDebug() << message;
     quarre::InteractionModule *module = r_module_manager->getActiveModule();
     module->onReceivedGesture(gesture);
-    r_os_control->vibrate(100);}
+    r_os_control->vibrate(100); }
 
 void Control::processSensorCallback(QRawSensorDataEnum sensor, qreal value) const {
     QString message = "/sensors" + quarre::qrawsensor_names[sensor] + " " + QString::number(value);
     r_ws_manager->sendMessage(message);
     quarre::InteractionModule *module = r_module_manager->getActiveModule();
-    if(!module->getQRawSensorDataRequirements().isEmpty()) module->onReceivedSensorData(sensor, value);}
+    if(!module->getQRawSensorDataRequirements().isEmpty()) module->onReceivedSensorData(sensor, value); }
 
 // add an address request for module
 void Control::processMiscMessage(QString address, QList<qreal> values) const {

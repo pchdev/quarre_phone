@@ -40,8 +40,6 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     this->setCentralWidget(m_central_widget);
     QVBoxLayout *info_layout = new QVBoxLayout;
 
-    // CATCH INTERACTION MODULES
-
     // MAIN LAYOUT COMPONENTS
     m_main_layout->addLayout(info_layout, 0);
     m_main_layout->addWidget(m_stacked_widget, 0, Qt::AlignCenter);

@@ -12,9 +12,9 @@ WebSocketManager::WebSocketManager(QUrl url, bool connect_on_startup) :
     QObject::connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(onError(QAbstractSocket::SocketError)));
 }
 
-WebSocketManager::~WebSocketManager() {delete m_socket;}
-void WebSocketManager::onError(QAbstractSocket::SocketError) { qDebug() << m_socket->errorString();}
-void WebSocketManager::setServerUrl(QUrl url) {m_server_url = url;}
+WebSocketManager::~WebSocketManager() { delete m_socket; }
+void WebSocketManager::onError(QAbstractSocket::SocketError) { qDebug() << m_socket->errorString(); }
+void WebSocketManager::setServerUrl(QUrl url) { m_server_url = url; }
 void WebSocketManager::parseReceivedBinaryMessage(QByteArray message) {}
 void WebSocketManager::connect() {
     m_socket->close();
