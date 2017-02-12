@@ -10,15 +10,6 @@
 
 	{
 		"interaction_id": 1,
-		"title": "Introduction",
-		"description": "présentation de l'installation",
-		"module_id": "AI_TEXTVIEWER",
-		"gesture_responses": [],
-		"sensor_responses": []
-	},
-
-	{
-		"interaction_id": 2,
 		"title": "\"LOGIN\"",
 		"description": "press pad to login.",
 		"module_id": "AI_LOGIN",
@@ -27,7 +18,7 @@
 	},
 
 	{
-		"interaction_id": 3,
+		"interaction_id": 2,
 		"title": "Persite, Perce... // Fouet",
 		"description": "BIOLOGIQUE_1 : geste de fouet",
 		"module_id": "AI_TEXTVIEWER",
@@ -36,7 +27,7 @@
 	},
 
 	{
-		"interaction_id": 4,
+		"interaction_id": 3,
 		"title": "Perfore, Plonge -- Fouet",
 		"description": "BIOLOGIQUE_1 : geste de fouet",
 		"module_id": "AI_TEXTVIEWER",
@@ -45,7 +36,7 @@
 	},
 
 	{
-		"interaction_id": 5,
+		"interaction_id": 4,
 		"title": "Reverse -- Fouet",
 		"description": "BIOLOGIQUE_2 : déclenchement du texte en reverse - Fouet",
 		"module_id": "AI_TEXTVIEWER",
@@ -54,7 +45,7 @@
 	},
 
 	{
-		"interaction_id": 6,
+		"interaction_id": 5,
 		"title": "Coup de ciseaux -- Fouet",
 		"description": "BIOLOGIQUE_2 : déclenchement inversion spatiale - Fouet",
 		"module_id": "AI_TEXTVIEWER",
@@ -63,7 +54,7 @@
 	},
 
 	{
-		"interaction_id": 7,
+		"interaction_id": 6,
 		"title": "Agripper les failles -- Fouet",
 		"description": "BIOLOGIQUE_2 : délitement progressif",
 		"module_id": "AI_TEXTVIEWER",
@@ -72,7 +63,7 @@
 	},
 
 	{
-		"interaction_id": 8,
+		"interaction_id": 7,
 		"title": "'Est-il un autre centre' // Fouet",
 		"description": "BIOLOGIQUE_2 : enlève-mot à chaque répétition",
 		"module_id": "AI_TEXTVIEWER",
@@ -81,16 +72,7 @@
 	},
 
 	{
-		"interaction_id": 9,
-		"title": "SYMBOL - spat.",
-		"description": "SYMBOLIQUE : spatialisation",
-		"module_id": "AI_TEXTVIEWER",
-		"gesture_responses": ["cover"],
-		"sensor_responses": []
-	},
-
-	{
-		"interaction_id": 10,
+		"interaction_id": 8,
 		"title": "SYMBIO - réponse 1",
 		"description": "Le feu te ressemble davantage... - TWIST",
 		"module_id": "AI_TEXTVIEWER",
@@ -99,7 +81,7 @@
 	},
 
 	{
-		"interaction_id": 11,
+		"interaction_id": 9,
 		"title": "SYMBIO - réponse 2",
 		"description": "Et macéré... - TWIST",
 		"module_id": "AI_TEXTVIEWER",
@@ -108,7 +90,7 @@
 	},
 
 	{
-		"interaction_id": 12,
+		"interaction_id": 10,
 		"title": "SYMBIO - réponse 3",
 		"description": "Cueillir la foudre.... - TWIST",
 		"module_id": "AI_TEXTVIEWER",
@@ -117,7 +99,7 @@
 	},
 
 	{
-		"interaction_id": 13,
+		"interaction_id": 11,
 		"title": "SYMBIO - réponse 4",
 		"description": "Et je m'incline... - TWIST",
 		"module_id": "AI_TEXTVIEWER",

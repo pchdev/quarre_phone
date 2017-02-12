@@ -43,6 +43,7 @@ public:
     void setController(quarre::Control *control);
     void startScenarioTimer();
     void stopScenarioTimer();
+    quarre::InteractionModule* getDisplayedModule() const;
 
 protected:
     void keyReleaseEvent(QKeyEvent *event) Q_DECL_OVERRIDE;

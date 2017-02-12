@@ -11,5 +11,14 @@
         "name": "SMC-router",
         "ip": "192.168.2.118",
         "port": 8080
+    }, {
+        "name": "AI-MINIMAC",
+        "ip": "192.168.1.53",
+        "port": 8080
+    }, {
+        "name": "AI-MACBOOK",
+        "ip": "192.168.1.187",
+        "port": 8080
     }
+
 ]

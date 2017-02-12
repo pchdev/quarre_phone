@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
     m_label_id(new QLabel("0")),
     m_next_interaction_title(new QLabel("néant")),
     r_control(control),
-    m_timer_count(60),
+    m_timer_count(0),
     m_scenario_timer(new QTimer(this)),
     m_network_popup(new quarre::NetworkPopupWindow(this)) {
 
@@ -123,7 +123,11 @@ void MainWindow::onPrefsButtonPressing() {
 void MainWindow::stackInteractionModules(QList<quarre::InteractionModule*> interaction_modules) {
     foreach(quarre::InteractionModule *module, interaction_modules) {
         m_stacked_widget->addWidget(module);
-        m_combo_box->addItem(tr("Interaction Module"));}}
+        m_combo_box->addItem(tr("Interaction Module"));
+    }
+
+    m_combo_box->activated(1);
+}
 
 void MainWindow::updateCurrentInteraction(quarre::Interaction *interaction, int module_index) {
     m_current_countdown->triggerTimer(interaction->getCurrentLength());
@@ -172,7 +176,7 @@ void MainWindow::setController(quarre::Control *control) {
 void MainWindow::startScenarioTimer() { m_scenario_timer->start(1000); }
 void MainWindow::stopScenarioTimer() {
     m_scenario_timer->stop();
-    m_timer_count = 60;
+    m_timer_count = 0;
     m_label_id->setText("00:00");
 }
 void MainWindow::updateTimerTick() {
@@ -180,4 +184,9 @@ void MainWindow::updateTimerTick() {
     int min = m_timer_count / 60;
     int sec = m_timer_count % 60;
     m_label_id->setText(QString::number(min) + ":" + QString::number(sec));
+}
+
+quarre::InteractionModule* MainWindow::getDisplayedModule() const {
+    quarre::InteractionModule* module = qobject_cast<quarre::InteractionModule*>(m_stacked_widget->currentWidget());
+    return module;
 }

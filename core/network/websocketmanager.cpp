@@ -50,6 +50,8 @@ void WebSocketManager::onDisconnected() {
 
 void WebSocketManager::parseReceivedTextMessage(QString message) {
 
+    // TODO, add a proper parser
+
     qDebug() << "ws msg received: " << message;
     QStringList splitted_message = message.split(' ');
     QString address = splitted_message.at(0);

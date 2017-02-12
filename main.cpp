@@ -12,7 +12,7 @@
 int main(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
-    QUrl default_url(QStringLiteral("ws://192.168.2.118:8080"));
+    QUrl default_url(QStringLiteral("ws://192.168.1.187:8080"));
 
     // initialize modules
     quarre::WebSocketManager ws_manager(default_url, true);

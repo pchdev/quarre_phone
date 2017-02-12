@@ -21,6 +21,7 @@ InteractionModuleManager::InteractionModuleManager() :
                 qDebug() << "could not instantiate module instance";
                 qDebug() << loader.errorString();
             }
+
             else qDebug() << module_instance->getModuleIdentifier();
             am_interaction_modules << module_instance;
         }

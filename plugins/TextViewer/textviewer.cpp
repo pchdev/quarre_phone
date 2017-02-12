@@ -14,7 +14,7 @@ QList<quarre::QRawSensorDataEnum> TextViewer::getQRawSensorDataRequirements() {
     return EMPTY_QRAWSENSORREQLIST;}
 
 QList<QString> TextViewer::getCustomResponderAddresses() {
-    return QList<QString>() << "/read_index";}
+    return QList<QString>() << "/phone/read_index";}
 
 TextViewer::~TextViewer() {}
 void TextViewer::start() {}
