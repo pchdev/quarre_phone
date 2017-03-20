@@ -1,0 +1,12 @@
+[
+	{
+		"interaction_id": 0,
+		"title": "NEANT",
+		"description": "Aucune interaction",
+		"module_id": "ROTATION_SPAT",
+		"gesture_responses": [],
+		"sensor_responses": ["rotation/z"]
+	}
+	
+
+]

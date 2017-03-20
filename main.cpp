@@ -12,12 +12,12 @@
 int main(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
-    QUrl default_url(QStringLiteral("ws://192.168.1.187:8080"));
+    QUrl default_url(QStringLiteral("ws://147.210.110.83:8080"));
 
     // initialize modules
     quarre::WebSocketManager ws_manager(default_url, true);
     quarre::InteractionDatabase interaction_db;
-    interaction_db.loadInteractionNamespace("arbre-integral");
+    interaction_db.loadInteractionNamespace("quarre2-demo");
 
     quarre::ScenarioFollower scenario_follower;
     quarre::InteractionModuleManager module_manager;

@@ -9,74 +9,115 @@ SensorManager::SensorManager() :
     m_accelerometer(new QAccelerometer()),
     m_compass(new QCompass()),
     m_rotation_sensor(new QRotationSensor()),
-    m_gesture_manager(new QSensorGestureManager()),
-    m_osc_polling_rate(50),
-    m_sensor_timer(new QTimer(this)) {
+    m_gesture_manager(new QSensorGestureManager()) {
 
     foreach(const QString &gesture, m_gesture_manager->gestureIds()) {
         QStringList recognizer_signals = m_gesture_manager->recognizerSignals(gesture);
         qDebug() << gesture; }
+
+    QObject::connect(m_accelerometer, SIGNAL(readingChanged()), this, SLOT(accelerometerReading()));
+    QObject::connect(m_compass, SIGNAL(readingChanged()), this, SLOT(compassReading()));
+    QObject::connect(m_rotation_sensor, SIGNAL(readingChanged()), this, SLOT(rotationReading()));
+
+    qDebug() << "data rates available: " << m_accelerometer->availableDataRates();
+
 }
 
-SensorManager::~SensorManager() {
-    delete m_rotation_reader;
-    delete m_rotation_sensor;
-    delete m_accelerometer_reader;
-    delete m_accelerometer;
-    delete m_compass_reader;
-    delete m_compass;
-    delete m_sensor_timer;
-    delete m_sensor_gesture;
-    delete m_gesture_manager; }
-
+SensorManager::~SensorManager() {}
 void SensorManager::setController(quarre::Control *control) {r_control = control;}
 
-// SENSOR POLLING -- NOT YET IMPLEMENTED
+
+// SENSORS ------------------------------------------------------------
+
 void SensorManager::setPolledSensors(QList<QRawSensorDataEnum> sensors_to_be_polled) {
-    am_sensor_polling = sensors_to_be_polled; }
+    am_sensor_polling = sensors_to_be_polled;
+}
 
-void SensorManager::startSensorPolling() const {
-    if(!am_sensor_polling.isEmpty())
-        m_sensor_timer->start(GRANULARITY); }
+void SensorManager::startSensorPolling() {
 
-void SensorManager::onSensorDataPolled() {
+    if(!am_sensor_polling.isEmpty()) {
+
+        foreach(quarre::QRawSensorDataEnum sensor, am_sensor_polling) {
+
+            switch(sensor) {
+            case quarre::Accelerometer_x:
+                m_accelerometer->start(); break;
+            case quarre::Accelerometer_y:
+                m_accelerometer->start(); break;
+            case quarre::Accelerometer_z:
+                m_accelerometer->start(); break;
+            case quarre::Azimuth:
+                m_compass->start(); break;
+            case quarre::Rotation_x:
+                m_rotation_sensor->start(); break;
+            case quarre::Rotation_y:
+                m_rotation_sensor->start(); break;
+            case quarre::Rotation_z:
+                m_rotation_sensor->start(); break;
+            }
+        }
+    }
+}
+
+void SensorManager::accelerometerReading() {
+
+    qreal value;
 
     foreach(quarre::QRawSensorDataEnum sensor, am_sensor_polling) {
-
-        qreal value;
-
         switch(sensor) {
         case quarre::Accelerometer_x:
-            value = m_accelerometer_reader->x();
-            break;
+            value = m_accelerometer->reading()->x(); break;
         case quarre::Accelerometer_y:
-            value = m_accelerometer_reader->y();
-            break;
+            value = m_accelerometer->reading()->y(); break;
         case quarre::Accelerometer_z:
-            value = m_accelerometer_reader->z();
-            break;
-        case quarre::Azimuth:
-            value = m_compass_reader->azimuth();
-            break;
-        case quarre::Rotation_x:
-            value = m_rotation_reader->x();
-            break;
-        case quarre::Rotation_y:
-            value = m_rotation_reader->y();
-            break;
-        case quarre::Rotation_z:
-            value = m_rotation_reader->z();
-            break;
+            value = m_accelerometer->reading()->z(); break;
         }
 
         r_control->processSensorCallback(sensor, value);
     }
 }
 
-void SensorManager::voidPolledSensors() { am_sensor_polling.clear(); }
-void SensorManager::stopSensorPolling() const { m_sensor_timer->stop(); }
 
-// GESTURE RECOGNITION
+void SensorManager::compassReading() {
+
+    qreal value;
+
+    foreach(quarre::QRawSensorDataEnum sensor, am_sensor_polling) {
+        if(sensor == quarre::Azimuth) value = m_compass->reading()->azimuth();
+        r_control->processSensorCallback(sensor, value);
+    }
+
+}
+
+void SensorManager::rotationReading() {
+
+    qreal value;
+
+    foreach(quarre::QRawSensorDataEnum sensor, am_sensor_polling) {
+
+        switch(sensor) {
+
+        case quarre::Rotation_x:
+            value = m_rotation_sensor->reading()->x(); break;
+        case quarre::Rotation_y:
+            value = m_rotation_sensor->reading()->y(); break;
+        case quarre::Rotation_z:
+            value = m_rotation_sensor->reading()->z(); break;
+        }
+
+        r_control->processSensorCallback(sensor, value);
+    }
+}
+
+
+void SensorManager::voidPolledSensors() { am_sensor_polling.clear(); }
+void SensorManager::stopSensorPolling() {
+    m_accelerometer->stop();
+    m_compass->stop();
+    m_rotation_sensor->stop();
+}
+
+// GESTURES ------------------------------------------------------------
 
 // convert enum to qstrings
 void SensorManager::setRecognizedGestures(QList<QGestureEnum> gestures_to_be_recognized) {

@@ -1,4 +1,5 @@
 #include "rotationspat.h"
+#include <QtDebug>
 
 
 RotationSpat::RotationSpat() : m_azimuth(0.0) {}
@@ -7,9 +8,10 @@ RotationSpat::~RotationSpat() {}
 void RotationSpat::start() {}
 void RotationSpat::stop() {}
 
-QString RotationSpat::getModuleIdentifier() { return "RotationSpat"; }
+QString RotationSpat::getModuleIdentifier() { return "ROTATION_SPAT"; }
 QList<quarre::QGestureEnum> RotationSpat::getQGestureRequirements() { return EMPTY_QGESTUREREQLIST; }
 QList<QString> RotationSpat::getCustomResponderAddresses() { return EMPTY_RESPADDRESSES; }
+
 QList<quarre::QRawSensorDataEnum> RotationSpat::getQRawSensorDataRequirements() {
     QList<quarre::QRawSensorDataEnum> requirements;
     requirements << quarre::Rotation_z;
@@ -19,7 +21,7 @@ QList<quarre::QRawSensorDataEnum> RotationSpat::getQRawSensorDataRequirements() 
 void RotationSpat::paintEvent(QPaintEvent *event) {
     float w = width();
     QPainter painter(this);
-    painter.translate(0, w/10);
+    painter.translate(0, 100);
     QPen pen(Qt::darkGray);
     pen.setWidthF(w*0.002);
     painter.setRenderHint(QPainter::Antialiasing);

@@ -28,28 +28,26 @@ public:
     void voidPolledSensors();
     void startGestureRecognition();
     void stopGestureRecognition();
-    void startSensorPolling() const;
-    void stopSensorPolling() const;
+    void startSensorPolling();
+    void stopSensorPolling() ;
     void setOSCPollingRate();
     void setViewRefreshRate();
 
 
 protected slots:
     void onGestureDetection(QString gesture_id);
-    void onSensorDataPolled();
+    void accelerometerReading();
+    void compassReading();
+    void rotationReading();
+
 
 private:
     QStringList am_gesture_recognizers;
     QList<quarre::QRawSensorDataEnum> am_sensor_polling;
     quarre::Control *r_control;
-    QTimer *m_sensor_timer;
-    int m_osc_polling_rate;
     QCompass *m_compass;
-    QCompassReading *m_compass_reader;
     QAccelerometer *m_accelerometer;
-    QAccelerometerReading *m_accelerometer_reader;
     QRotationSensor *m_rotation_sensor;
-    QRotationReading *m_rotation_reader;
     QSensorGestureManager *m_gesture_manager;
     QSensorGesture *m_sensor_gesture;
 };

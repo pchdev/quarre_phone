@@ -6,7 +6,7 @@
 
 QT       += widgets
 
-TARGET = RotationSpat
+TARGET = quarre_plugin_rotation_spat
 TEMPLATE = lib
 
 DEFINES += ROTATIONSPAT_LIBRARY

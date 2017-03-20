@@ -136,6 +136,7 @@ void Control::processingInteractionBeginning(int interaction_id) const {
     // get matching module, set it as the active module in the module manager, activate it
     QString module_identifier = interaction->getModuleId();
     quarre::InteractionModule *module = r_module_manager->getModuleReferenceByName(module_identifier);
+    qDebug() << module->getModuleIdentifier();
     int module_index = r_module_manager->getModuleIndexByName(module_identifier);
     r_module_manager->setActiveModule(module);
     module->start();
@@ -208,7 +209,7 @@ void Control::processGestureCallback(QGestureEnum gesture, qreal value) const {
     r_os_control->vibrate(50);}
 
 void Control::processSensorCallback(QRawSensorDataEnum sensor, qreal value) const {
-    QString message = "/sensors" + quarre::qrawsensor_names[sensor] + " " + QString::number(value);
+    QString message = "/sensors/" + quarre::qrawsensor_names[sensor] + " " + QString::number(value);
     r_ws_manager->sendMessage(message);
     quarre::InteractionModule *module = r_module_manager->getActiveModule();
     if(!module->getQRawSensorDataRequirements().isEmpty()) module->onReceivedSensorData(sensor, value);}
