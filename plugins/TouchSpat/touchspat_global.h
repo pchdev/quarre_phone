@@ -1,0 +1,12 @@
+#ifndef TOUCHSPAT_GLOBAL_H
+#define TOUCHSPAT_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(TOUCHSPAT_LIBRARY)
+#  define TOUCHSPATSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define TOUCHSPATSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // TOUCHSPAT_GLOBAL_H

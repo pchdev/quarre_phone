@@ -31,11 +31,6 @@ MainWindow::MainWindow(QWidget *parent, quarre::Control *control) :
 
     setFixedSize(screen_size); // lock to full screen
 
-    // DEBUG
-    qDebug() << "available size, width: " << screen_width;
-    qDebug() << "available size: height: " << screen_size.height();
-    qDebug() << "dpi: " << dpi;
-
     // MAIN LAYOUT DEFINITIONS
     this->setCentralWidget(m_central_widget);
     QVBoxLayout *info_layout = new QVBoxLayout;
@@ -124,6 +119,7 @@ void MainWindow::stackInteractionModules(QList<quarre::InteractionModule*> inter
     foreach(quarre::InteractionModule *module, interaction_modules) {
         m_stacked_widget->addWidget(module);
         m_combo_box->addItem(tr("Interaction Module"));
+        module->setFixedSize(width()*0.95, width() * 0.95);
     }
 
     m_combo_box->activated(1);
