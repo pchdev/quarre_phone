@@ -2,6 +2,13 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>quarre.jpg</file>
+        <file>ArbreIntegralMain.qml</file>
+        <file>PrefsWindow.qml</file>
+        <file>InfoView.qml</file>
+        <file>HeaderBar.qml</file>
+        <file>NextInteractionView.qml</file>
+        <file>CurrentInteractionView.qml</file>
+        <file>Sensors.qml</file>
     </qresource>
     <qresource prefix="/background-images"/>
 </RCC>
