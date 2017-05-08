@@ -4,7 +4,7 @@ import Ossia 1.0 as Ossia
 
 Item {
 
-    ProximityReading {
+    /*ProximityReading {
         Ossia.Property on near {
             node: '/phone/sensors/proximity'
         }
@@ -20,5 +20,5 @@ Item {
         Ossia.Property on illuminance {
             node: '/phone/sensors/light'
         }
-    }
+    }*/
 }

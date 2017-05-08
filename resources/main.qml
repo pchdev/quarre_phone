@@ -8,8 +8,8 @@ Window {
     //width: Screen.desktopAvailableWidth
     //height: Screen.desktopAvailableHeight
 
-    width: 1440
-    height: 2560
+    width: 1080
+    height: 1920
 
     color: "#ffffff"
     visible: true
@@ -24,7 +24,7 @@ Window {
     }
 
     PrefsWindow {
-        visible: false
+        visible: true
     }
 
     HeaderBar {
@@ -48,7 +48,7 @@ Window {
     property int nextInteractionBegin
     property int currentInteractionEnd
 
-    Ossia.Property on incomingInteraction {
+    /*Ossia.Property on incomingInteraction {
         node: "/phone/interactions/next/incoming"
     }
 
@@ -58,7 +58,7 @@ Window {
 
     Ossia.Property on currentInteractionEnd {
         node: "/phone/interactions/current/end"
-    }
+    }*/
 
     onIncomingInteractionChanged: {
         if(incomingInteraction.length === 3)
@@ -88,6 +88,6 @@ Window {
         border.width: 0
         border.color: "#000000"
 
-        ArbreIntegralMain {}
+        //ArbreIntegralMain {}
     }
 }

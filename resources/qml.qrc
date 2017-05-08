@@ -9,6 +9,24 @@
         <file>NextInteractionView.qml</file>
         <file>CurrentInteractionView.qml</file>
         <file>Sensors.qml</file>
+        <file>fonts/lato/Lato-Black.ttf</file>
+        <file>fonts/lato/Lato-BlackItalic.ttf</file>
+        <file>fonts/lato/Lato-Bold.ttf</file>
+        <file>fonts/lato/Lato-BoldItalic.ttf</file>
+        <file>fonts/lato/Lato-Hairline.ttf</file>
+        <file>fonts/lato/Lato-HairlineItalic.ttf</file>
+        <file>fonts/lato/Lato-Heavy.ttf</file>
+        <file>fonts/lato/Lato-HeavyItalic.ttf</file>
+        <file>fonts/lato/Lato-Italic.ttf</file>
+        <file>fonts/lato/Lato-Light.ttf</file>
+        <file>fonts/lato/Lato-LightItalic.ttf</file>
+        <file>fonts/lato/Lato-Medium.ttf</file>
+        <file>fonts/lato/Lato-MediumItalic.ttf</file>
+        <file>fonts/lato/Lato-Regular.ttf</file>
+        <file>fonts/lato/Lato-Semibold.ttf</file>
+        <file>fonts/lato/Lato-SemiboldItalic.ttf</file>
+        <file>fonts/lato/Lato-Thin.ttf</file>
+        <file>fonts/lato/Lato-ThinItalic.ttf</file>
     </qresource>
     <qresource prefix="/background-images"/>
 </RCC>

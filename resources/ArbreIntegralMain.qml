@@ -12,9 +12,9 @@ Rectangle {
     property variant aiPages
     property int currentIndex
 
-    Ossia.Property on currentIndex {
+    /*Ossia.Property on currentIndex {
         node: '/phone/modules/arbre-integral/read-index'
-    }
+    }*/
 
     onCurrentIndexChanged: {
         main_text.text = aiPages[currentIndex]
