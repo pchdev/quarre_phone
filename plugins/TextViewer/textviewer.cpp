@@ -46,7 +46,7 @@ TextViewer::TextViewer() :
 
     // json parser for texts
 
-    QFile loaded_interactions("assets:/arbre-integral-textes.json");
+    QFile loaded_interactions("assets:/arbre-integral-textes-esp.json");
     if(!loaded_interactions.open(QIODevice::ReadOnly)) {
         qDebug() << "error: couldn't open arbre_integral textes.json";
     } else {  qDebug() << "textes.json was succesfully opened";}
