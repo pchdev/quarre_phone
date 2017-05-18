@@ -6,7 +6,8 @@ using namespace quarre;
 WebSocketManager::WebSocketManager(QUrl url, bool connect_on_startup) :
     m_socket(new QWebSocket),
     is_connected(false),
-    m_server_url(url) {
+    m_server_url(url)
+{
     QObject::connect(m_socket, SIGNAL(connected()), this, SLOT(onConnected()));
     QObject::connect(m_socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
     QObject::connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(onError(QAbstractSocket::SocketError)));
@@ -16,12 +17,14 @@ WebSocketManager::~WebSocketManager() {delete m_socket;}
 void WebSocketManager::onError(QAbstractSocket::SocketError) { qDebug() << m_socket->errorString();}
 void WebSocketManager::setServerUrl(QUrl url) {m_server_url = url;}
 void WebSocketManager::parseReceivedBinaryMessage(QByteArray message) {}
-void WebSocketManager::connect() {
+void WebSocketManager::connect()
+{
     m_socket->close();
     if(!is_connected) m_socket->open(m_server_url);
 }
 
-void WebSocketManager::reConnect(QUrl host_url) {
+void WebSocketManager::reConnect(QUrl host_url)
+{
     delete m_socket;
     m_socket = new QWebSocket;
     QObject::connect(m_socket, SIGNAL(connected()), this, SLOT(onConnected()));
@@ -30,28 +33,29 @@ void WebSocketManager::reConnect(QUrl host_url) {
     m_socket->open(host_url);
 }
 
-void WebSocketManager::sendMessage(QString message, bool addPhonePrefix) const {
+void WebSocketManager::sendMessage(QString message, bool addPhonePrefix) const
+{
     // double check against osc specs & then send...
     if(addPhonePrefix) message = "/phone" + message;
     m_socket->sendTextMessage(message);
 }
 
-void WebSocketManager::onConnected() {
+void WebSocketManager::onConnected()
+{
     emit connectedToServer();
     is_connected = true;
     QObject::connect(m_socket, SIGNAL(textMessageReceived(QString)), this, SLOT(parseReceivedTextMessage(QString)));
     QObject::connect(m_socket, SIGNAL(binaryMessageReceived(QByteArray)), this, SLOT(parseReceivedBinaryMessage(QByteArray)));
 }
 
-void WebSocketManager::onDisconnected() {
+void WebSocketManager::onDisconnected()
+{
     is_connected = false;
     emit disconnectedFromServer();
 }
 
-void WebSocketManager::parseReceivedTextMessage(QString message) {
-
-    // TODO, add a proper parser
-
+void WebSocketManager::parseReceivedTextMessage(QString message)
+{
     qDebug() << "ws msg received: " << message;
     QStringList splitted_message = message.split(' ');
     QString address = splitted_message.at(0);
@@ -89,6 +93,3 @@ void WebSocketManager::parseReceivedTextMessage(QString message) {
     }
 
 }
-
-
-

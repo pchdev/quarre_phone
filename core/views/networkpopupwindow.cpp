@@ -30,8 +30,8 @@ NetworkPopupWindow::NetworkPopupWindow(QWidget *parent) :
     connect(m_combo_box, SIGNAL(currentIndexChanged(int)), this, SLOT(processIndexChange(int)));
 }
 
-void NetworkPopupWindow::loadNetworkPresets() {
-
+void NetworkPopupWindow::loadNetworkPresets()
+{
     QFile loaded_network_presets(":/network/hosts_ip.json");
     if(!loaded_network_presets.open(QIODevice::ReadOnly))
         qDebug() << "error: couldn't open hosts_ip.json";
@@ -40,35 +40,39 @@ void NetworkPopupWindow::loadNetworkPresets() {
     QJsonParseError error;
     QByteArray saved_data = loaded_network_presets.readAll();
     QJsonDocument loaded_jsondoc = QJsonDocument::fromJson(saved_data, &error);
-    if(loaded_jsondoc.isNull()) {
+    if(loaded_jsondoc.isNull())
+    {
         qDebug() << error.errorString();
         return;
     }
 
     am_network_presets = loaded_jsondoc.array();
-    for(int i = 0; i < am_network_presets.count(); i++) {
+    for(int i = 0; i < am_network_presets.count(); i++)
+    {
         m_combo_box->addItem(am_network_presets[i].toObject()["name"].toString());
     }
 
     m_combo_box->setCurrentIndex(0);
     processIndexChange(0);
-
 }
 
-void NetworkPopupWindow::processIndexChange(int index) {
+void NetworkPopupWindow::processIndexChange(int index)
+{
     QJsonObject chosen_preset = am_network_presets[index].toObject();
     QString address_display = chosen_preset["ip"].toString() + ":" +
             QString::number(chosen_preset["port"].toInt());
     m_line_edit->setText(address_display);
 }
 
-void NetworkPopupWindow::onOk() {
+void NetworkPopupWindow::onOk()
+{
     QString host_address = m_line_edit->text();
     emit networkHostChange(host_address);
     this->close();
 }
 
-void NetworkPopupWindow::onCancel() {
+void NetworkPopupWindow::onCancel()
+{
     this->close();
 }
 

@@ -12,8 +12,8 @@ void Control::initModuleLinking(OSBridge *os_control,
                                 ScenarioFollower *scenario_follower,
                                 InteractionDatabase *interaction_db,
                                 InteractionModuleManager *module_manager,
-                                MainWindow *mainwindow) {
-
+                                MainWindow *mainwindow)
+{
     // set refs
     r_os_control = os_control;
     r_ws_manager = ws_manager;
@@ -49,45 +49,61 @@ void Control::initModuleLinking(OSBridge *os_control,
 
 // SERVER RELATED
 
-void Control::processServerIpChange(QString ip) const {
+void Control::processServerIpChange(QString ip) const
+{
     QUrl url("ws://" + ip);
-    r_ws_manager->reConnect(url);}
+    r_ws_manager->reConnect(url);
+}
 
-void Control::processServerConnection() const {
-    r_mainwindow->setConnected();}
+void Control::processServerConnection() const
+{
+    r_mainwindow->setConnected();
+}
 
-void Control::processServerDisconnection() const {
-    r_mainwindow->setDisconnected(); }
+void Control::processServerDisconnection() const
+{
+    r_mainwindow->setDisconnected();
+}
 
-void Control::processWebSocketIdRequest() const {
+void Control::processWebSocketIdRequest() const
+{
     r_ws_manager->sendMessage("/id phone", false);
 }
 
-void Control::processServerConnectionRequest() const { r_ws_manager->connect();}
-/*void Control::processReceivedIdFromServer(int id) const {
-    r_mainwindow->updateUserId(id);
-}*/
+void Control::processServerConnectionRequest() const
+{
+    r_ws_manager->connect();
+}
 
-void Control::processReset() const {
+void Control::processReset() const
+{
     // void current and next interaction
-    if(r_scenario_follower->getCurrentInteraction() != nullptr) {
+    if(r_scenario_follower->getCurrentInteraction() != nullptr)
+    {
         int id = r_scenario_follower->getCurrentInteraction()->getId();
-        this->processInteractionEnding(id);}
+        this->processInteractionEnding(id);
+    }
 
     r_mainwindow->voidCurrentInteraction();
     r_scenario_follower->voidNextInteraction();
     r_mainwindow->voidNextInteraction();
-    r_os_control->vibrate(25);}
+    r_os_control->vibrate(25);
+}
 
 // INTERACTION & SCENARIO RELATED
 
-void Control::processScenarioBeginning() const {
-    r_mainwindow->startScenarioTimer();}
+void Control::processScenarioBeginning() const
+{
+    r_mainwindow->startScenarioTimer();
+}
 
-void Control::processScenarioEnding() const {
-    r_mainwindow->stopScenarioTimer();}
+void Control::processScenarioEnding() const
+{
+    r_mainwindow->stopScenarioTimer();
+}
 
-void Control::processIncomingInteraction(QList<int> interaction) const { // [id, length, starting_time]
+void Control::processIncomingInteraction(QList<int> interaction) const
+{ // [id, length, starting_time]
 
     // parse list // TBI
     int interaction_id = interaction[0];
@@ -108,13 +124,13 @@ void Control::processIncomingInteraction(QList<int> interaction) const { // [id,
 
     // vibrate
     r_os_control->vibrate(100);
-
 }
 
-void Control::processingInteractionBeginning(int interaction_id) const {
-
+void Control::processingInteractionBeginning(int interaction_id) const
+{
     // if interaction is unannounced, force its triggering
-    if(r_scenario_follower->getNextInteraction() == nullptr) {
+    if(r_scenario_follower->getNextInteraction() == nullptr)
+    {
         this->forceInteractionBeginning(interaction_id);
         return;
     }
@@ -125,7 +141,8 @@ void Control::processingInteractionBeginning(int interaction_id) const {
     interaction->setActive(true);
 
     // if current interaction has not ended, shut it down
-    if(r_scenario_follower->getCurrentInteraction() != nullptr) {
+    if(r_scenario_follower->getCurrentInteraction() != nullptr)
+    {
         this->processInteractionEnding(r_scenario_follower->getCurrentInteraction()->getId());
     }
 
@@ -160,8 +177,8 @@ void Control::processingInteractionBeginning(int interaction_id) const {
 
 void Control::forceInteractionBeginning(int interaction_id) const {}
 
-void Control::processInteractionEnding(int interaction_id) const {
-
+void Control::processInteractionEnding(int interaction_id) const
+{
     // double check id
     quarre::Interaction *interaction = r_scenario_follower->getCurrentInteraction();
     if(interaction == nullptr) return;
@@ -187,40 +204,45 @@ void Control::processInteractionEnding(int interaction_id) const {
     r_scenario_follower->voidCurrentInteraction();
 
     r_os_control->vibrate(50);
-
 }
 
 // CALLBACKS & DATA PASSING
 
-void Control::processModuleCallback(QString address, qreal value, bool vibrate) const {
+void Control::processModuleCallback(QString address, qreal value, bool vibrate) const
+{
     if(vibrate) r_os_control->vibrate(25);
-    r_ws_manager->sendMessage(address + " " + QString::number(value));}
+    r_ws_manager->sendMessage(address + " " + QString::number(value));
+}
 
-void Control::processModuleCallback(QString address, bool vibrate) const { // impulse only
+void Control::processModuleCallback(QString address, bool vibrate) const
+{ // impulse only
     if(vibrate) r_os_control->vibrate(25);
-    r_ws_manager->sendMessage(address);}
+    r_ws_manager->sendMessage(address);
+}
 
-void Control::processGestureCallback(QGestureEnum gesture, qreal value) const {
+void Control::processGestureCallback(QGestureEnum gesture, qreal value) const
+{
     QString message = "/gestures/" + quarre::qgesture_names[gesture] + " " + QString::number(value);
     r_ws_manager->sendMessage(message);
     qDebug() << message;
     quarre::InteractionModule *module = r_module_manager->getActiveModule();
     module->onReceivedGesture(gesture);
-    r_os_control->vibrate(50);}
+    r_os_control->vibrate(50);
+}
 
-void Control::processSensorCallback(QRawSensorDataEnum sensor, qreal value) const {
+void Control::processSensorCallback(QRawSensorDataEnum sensor, qreal value) const
+{
     QString message = "/sensors/" + quarre::qrawsensor_names[sensor] + " " + QString::number(value);
     r_ws_manager->sendMessage(message);
     quarre::InteractionModule *module = r_module_manager->getActiveModule();
-    if(!module->getQRawSensorDataRequirements().isEmpty()) module->onReceivedSensorData(sensor, value);}
+    if(!module->getQRawSensorDataRequirements().isEmpty()) module->onReceivedSensorData(sensor, value);
+}
 
-void Control::processMiscMessage(QString address, QList<qreal> values) const {
+void Control::processMiscMessage(QString address, QList<qreal> values) const
+{
    qDebug() << address;
-
    quarre::InteractionModule *module = r_module_manager->getActiveModule();
-
    if(module == nullptr) module = r_mainwindow->getDisplayedModule();
-
    QList<QString> responder_addresses = module->getCustomResponderAddresses();
    qDebug() << "got custom addresses";
    foreach(QString rspaddress, responder_addresses) {
@@ -230,5 +252,3 @@ void Control::processMiscMessage(QString address, QList<qreal> values) const {
        }
    }
 }
-
-

@@ -19,6 +19,13 @@
         "name": "AI-MACBOOK",
         "ip": "192.168.1.187",
         "port": 8080
+    }, {
+        "name": "FUNDICION",
+        "ip": "192.168.1.29",
+        "port": 8080
+    }, {
+        "name": "CONAN-ROUTER",
+        "ip": "192.168.1.1",
+        "port": 8080
     }
-
 ]

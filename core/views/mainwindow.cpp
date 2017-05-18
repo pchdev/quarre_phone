@@ -105,10 +105,11 @@ MainWindow::~MainWindow() {}
 
 #ifdef Q_OS_ANDROID
 
-void MainWindow::keyReleaseEvent(QKeyEvent *event) { // override to block android back key
-    qDebug() << event->key();
-    if(event->key() == Qt::Key_Back) {
-        event->accept();}}
+void MainWindow::keyReleaseEvent(QKeyEvent *event) // override to block android back key
+{
+    if(event->key() == Qt::Key_Back)
+        event->accept();
+}
 
 #endif
 
