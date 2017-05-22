@@ -13,14 +13,16 @@ CountdownWidget::CountdownWidget(qreal font_ratio) :
     m_time_left_to_display(0),
     m_timer_phase(0.f),
     m_timer_is_inf(false),
-    m_timer(new QTimer(this)) {
-QObject::connect(m_timer, SIGNAL(timeout()), this, SLOT(updateTick()));
-setAttribute(Qt::WA_AcceptTouchEvents);}
+    m_timer(new QTimer(this))
+{
+    QObject::connect(m_timer, SIGNAL(timeout()), this, SLOT(updateTick()));
+    setAttribute(Qt::WA_AcceptTouchEvents);
+}
 
 CountdownWidget::~CountdownWidget() {delete m_timer;}
 
-void CountdownWidget::paintEvent(QPaintEvent *event) {
-
+void CountdownWidget::paintEvent(QPaintEvent *event)
+{
     float r = width()/2.f;
     float phase = -(m_timer_phase*360.f);
 
@@ -44,10 +46,15 @@ void CountdownWidget::paintEvent(QPaintEvent *event) {
     QBrush brush(Qt::darkGray, Qt::SolidPattern);
 
     // if <= 5s left, draw the arc in red, text in white
-    if(m_time_left_to_display <= 5 && m_time_left_to_display != 0 && m_timer_phase >= 0.75) {
+    if(m_time_left_to_display <= 5 && m_time_left_to_display != 0 && m_timer_phase >= 0.75)
+    {
         brush.setColor(Qt::darkRed);
         pen.setColor(Qt::white);
-    } else { pen.setColor(Qt::black);}
+    }
+    else
+    {
+        pen.setColor(Qt::black);
+    }
 
     painter.fillPath(path, brush);
     painter.setFont(QFont("Arial", 40*m_font_ratio, 2));
@@ -62,33 +69,41 @@ void CountdownWidget::paintEvent(QPaintEvent *event) {
 
 }
 
-void CountdownWidget::triggerTimer(int length_in_seconds) {
+void CountdownWidget::triggerTimer(int length_in_seconds)
+{
     m_timer->start(REFRESH_RATE);
     m_timer_end_point = 1000;
     m_time_left_to_display = length_in_seconds;
     if(!length_in_seconds) m_timer_is_inf = true;
     else m_timer_is_inf = false;
-    m_current_tick = 0;}
+    m_current_tick = 0;
+}
 
-void CountdownWidget::stopTimer() {
+void CountdownWidget::stopTimer()
+{
     m_timer_end_point = 0;
     m_timer->stop();
     m_time_left_to_display = 0;
     m_timer_phase = 0.f;
-    this->update();}
+    this->update();
+}
 
-void CountdownWidget::updateTick() {
+void CountdownWidget::updateTick()
+{
     m_current_tick += REFRESH_RATE;
     if(m_current_tick >= m_timer_end_point) m_current_tick -= m_timer_end_point;
     if(m_current_tick == 0) m_time_left_to_display -= 1;
-    if(m_time_left_to_display == 0 && !m_timer_is_inf) {
+    if(m_time_left_to_display == 0 && !m_timer_is_inf)
+    {
         this->stopTimer();
-        emit timeOver();}
+        emit timeOver();
+    }
     m_timer_phase = (float) m_current_tick/m_timer_end_point;
     this->update();
 }
 
-bool CountdownWidget::event(QEvent *event) { // GODMODE, always validate the interaction
+bool CountdownWidget::event(QEvent *event)
+{ // GODMODE, always validate the interaction
     switch(event->type()) {
     case QEvent::TouchBegin: {
         if(r_control != nullptr) {
